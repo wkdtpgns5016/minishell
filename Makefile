@@ -6,7 +6,7 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/07/20 15:20:02 by sehjang          ###   ########.fr        #
+#    Updated: 2022/07/20 15:26:19 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = minishell
 
 SRCS = 
 
-SRCS_MANDATORY = srcs/signal.c
+SRCS_MANDATORY = srcs/signal.c srcs/main.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
