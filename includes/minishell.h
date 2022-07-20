@@ -20,6 +20,12 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
+#include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
+#include <termios.h>
+#include "./signal.h"
 
 void	execute_cmd(char *cmd, char **envp);
 void	ft_free(void **ptr);
