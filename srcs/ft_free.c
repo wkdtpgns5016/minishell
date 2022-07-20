@@ -21,19 +21,17 @@ void	ft_free(void **ptr)
 	}
 }
 
-void	ft_free_arr(char ***arr)
+void	free_cmds(t_cmds *cmds)
 {
-	int	i;
+	t_cmds	*temp;
+	t_cmds	*next;
 
-	i = 0;
-	if (*arr != 0)
+	temp = cmds;
+	while (temp != 0)
 	{
-		while ((*arr)[i] != 0)
-		{
-			if ((*arr)[i] != 0)
-				ft_free((void *)&((*arr)[i]));
-			i++;
-		}
-		ft_free((void *)arr);
+		next = temp->next;
+		ft_free((void **)(&(temp->cmd)));
+		ft_free((void **)(&temp));
+		temp = next;
 	}
 }

@@ -17,7 +17,10 @@ NAME = minishell
 
 SRCS = 
 
-SRCS_MANDATORY = srcs/signal.c srcs/main.c
+SRCS_MANDATORY = srcs/signal.c \
+				 srcs/main.c \
+				 srcs/parsing.c \
+				 srcs/ft_free.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
