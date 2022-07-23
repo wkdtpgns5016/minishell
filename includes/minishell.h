@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <termios.h>
 #include "./signal.h"
-#include "./built_in_cmd.h"
+#include "./builtin_cmd.h"
 
 void	execute_cmd(char *cmd, char **envp);
 void	ft_free(void **ptr);

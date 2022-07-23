@@ -17,55 +17,48 @@ void	ft_pwd(void)
 	printf("%s\n", path);
 }
 
-void	ft_env(char **envp)
+void	ft_env(t_list *envl)
 {
-	int	idx;
-
-	idx = -1;
-	while (envp[++idx])
-		printf("%s\n",envp[idx]);
-}
-/*
-void	sort_envp(char **envp)
-{
-	int	last_idx;
-	int	parent;
-	int	child
-
-	last_idx = 0;
-	while (envp[last_idx])
-		last_idx++;
-	while (last_idx)
+	while (envl)
 	{
-		parent = 1;
-		while (parent - 1 <= last_idx)
-		{
-			child = parent * 2;
-			if (child <= last_idx && envp[parent - 1][0] < envp[child - 1][0])
-				swap_envp
-			else (envp[parent - 1][0] < envp[child * 2][0]
-				swap_envp
-		}
-	}
-}
-*/
-char	**ft_export(char *arg, char **envp)
-{
-	char **new_envp;
-	char	*new_arg;
-
-	/*if (!arg)
-	{
-		sort_envp(char **envp);
-		return (envp);
-	}*/
-	if (ft_strchr(arg, '='))
-		new_envp = plus_envp(arg, envp);
-	else
-	{
-		new_arg = ft_strjoin(arg, "=\'\'")
-		new_envp = plus_envp(arg, envp);
-		free(envp);
+		printf("%s\n",(char *)envl->content);
+		envl = envl->next;
 	}
 }
 
+void	ft_exit(char *arg)
+{
+	long long num;
+	int	mark;
+	char	*cpy;
+
+	cpy = arg;
+	while (9 <= *arg && *arg <= 13)
+		arg++;
+	if (*arg == '+' || *arg == '-')
+	{
+		mark = 1;
+		if (*(arg++) == '-')
+			mark = -1;
+	}
+	num = 0;
+	while ('0' <= *arg && *arg <= '9' && check_num(num, mark, *arg - '0'))
+		num = num * 10 + (*(arg++)  - '0');
+	while (9 <= *arg && *arg <= 13)
+		arg++;
+	printf("exit\n");
+	if (*arg)
+	{
+		ft_error("exit", cpy, "numeric argument required");
+		exit(255);
+	}
+	exit(num);
+}
+
+void	ft_cd(char *path)
+{
+	if (!path)
+		chdir("/Users/sunwchoi");
+	if (chdir(path) < 0)
+		ft_error("cd", path, "No such file or directory");
+}
