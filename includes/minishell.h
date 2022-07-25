@@ -48,5 +48,7 @@ t_info	set_info(char *line, char **envp);
 void	free_cmds(t_cmds *cmds);
 void	exec_cmd(t_info info);
 int		exec_builtin(t_cmds *cmds, char **envp, int flag, int index);
+char	*get_str_before_redir(char *cmd, char redir);
+int		check_num_str(char *str);
 
 #endif
