@@ -20,7 +20,9 @@ SRCS =
 SRCS_MANDATORY = srcs/signal.c \
 				 srcs/main.c \
 				 srcs/parsing.c \
-				 srcs/ft_free.c
+				 srcs/ft_free.c \
+				 srcs/exec_builtin.c \
+				 srcs/exec_cmd.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
