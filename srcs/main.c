@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 		info = set_info(line, envp);
 
 		/* command processing */
-
+		exec_cmd(info);
 		/* free memmory */
 		free_cmds(info.cmds);
 		ft_free((void **)&line);
