@@ -20,16 +20,31 @@
 # include <fcntl.h>
 # include <string.h>
 # include <errno.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <stdlib.h>
-#include <termios.h>
-#include "./signal.h"
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+# include <termios.h>
+# include "./signal.h"
 #include "./builtin_cmd.h"
+
+typedef struct s_cmds
+{
+	char			*cmd;
+	int				fd[2];
+	struct s_cmds	*next;
+	struct s_cmds	*pred;
+}	t_cmds;
+
+typedef struct s_info
+{
+	t_cmds	*cmds;
+	char	**envp;
+}	t_info;
 
 void	execute_cmd(char *cmd, char **envp);
 void	ft_free(void **ptr);
-void	ft_free_arr(char ***arr);
+t_info	set_info(char *line, char **envp);
+void	free_cmds(t_cmds *cmds);
 
 #endif
