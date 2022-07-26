@@ -26,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 		exec_cmd(info);
 		/* free memmory */
 		free_cmds(info.cmds);
+		add_history(line);
 		ft_free((void **)&line);
 	}
 	ret_terminal();
