@@ -36,7 +36,7 @@ void	get_heredoc(char *limiter)
 	close(fd);
 }
 
-void	out_redir(char *outfile, int flag)
+void	out_redir(int src, char *outfile, int flag)
 {
 	int	outfile_fd;
 	int	flag;
@@ -46,48 +46,36 @@ void	out_redir(char *outfile, int flag)
 	else
 		flag = O_WRONLY | O_CREAT | O_TRUNC;
 	outfile_fd = open(outfile, flag);
-	dup2(outfile_fd, 1);
+	dup2(outfile_fd, src);
 }
 
-void	is_redir(t_cmds *cmds)
+void	redirection(t_cmds *cmds)
 {
 	char	**cmd;
-	char	*before;
-	char	*after;
+	int		i;
+	int		flag;
 
 	cmd = cmds->cmd;
-	while (cmd != 0)
+	i = 0;
+	while (cmd[i] != 0)
 	{
-		if (ft_strchr(*cmd, '<'))
+		flag = is_redir(cmd[i]);
+		if (flag)
 		{
-			if (ft_strlen(*cmd) == 1)
-				in_redir(*(cmd + 1), 0);
+			if (i == 0)
+			{
+				process_redir(cmds, flag, i, 1);
+				//remove redir
+			}
 			else
 			{
-				before = get_str_before_redir(cmd);
-				after = get_str_after_redir(cmd);
-				// case1 : [n]<infile case
-				if (check_num_str(before))
-				{
-					if (after == 0)
-						in_redir(*(cmd + 1), ft_atoi(before));
-					else
-						in_redir(after, ft_atoi(before));
-					// cmd 재처리하기
-				}
-				// case2 : [!n]<infile case
+				if (is_num_str(cmd[i - 1]))
+					process_redir(cmds, flag, i, 0);
 				else
-				{
-					if (after == 0)
-						in_redir(*(cmd + 1), 0);
-					else
-						in_redir(after, 0);
-					// cmd 재처리하기
-				}
-				ft_free((void **)&before);
-				ft_free((void **)&after);
+					process_redir(cmds, flag, i, 1);
+				//remove redir
 			}
 		}
-		cmd++;
+		i++;
 	}
 }

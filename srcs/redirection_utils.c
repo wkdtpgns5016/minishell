@@ -1,44 +1,35 @@
 #include "../includes/minishell.h"
 
-int	check_num_str(char *str)
+int	get_index_arr(char **cmd)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (cmd[i] != 0)
+		i++;
+	return (i);
+}
+
+char	**remove_redir(char **cmd, int start, int end)
+{
+	char	**new;
+	int		len;
+	int		remove_num;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	len = get_index_arr(cmd);
+	remove_num = end - start + 1;
+	new = (char **)malloc(sizeof(char *) * (len - remove_num + 1));
+	while (j < len - remove_num + 1)
 	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
+		if (i >= start && i <= end)
+			i++;
+		else
+			new[j++] = cmd[i++];
 	}
-	return (1);
-}
-
-char	*get_str_before_redir(char *cmd, char redir)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	while (cmd[i] != redir)
-		i++;
-	str = ft_substr(cmd, 0, i - 1);
-	if (str == 0)
-		return (0);
-	return (str);
-}
-
-char	*get_str_after_redir(char *cmd, char redir)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	while (cmd[i] != redir)
-		i++;
-	if (cmd[i] == '\0')
-		return (0);
-	else
-		str = ft_substr(cmd, i, ft_strlen(cmd) - i);
-	return (str);
+	new[j] = 0;
+	return (new);
 }
