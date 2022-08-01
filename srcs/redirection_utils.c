@@ -23,12 +23,12 @@ char	**remove_redir(char **cmd, int start, int end)
 	len = get_index_arr(cmd);
 	remove_num = end - start + 1;
 	new = (char **)malloc(sizeof(char *) * (len - remove_num + 1));
-	while (j < len - remove_num + 1)
+	while (j < len - remove_num)
 	{
 		if (i >= start && i <= end)
 			i++;
 		else
-			new[j++] = cmd[i++];
+			new[j++] = ft_strdup(cmd[i++]);
 	}
 	new[j] = 0;
 	return (new);

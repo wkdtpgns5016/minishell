@@ -45,9 +45,15 @@ void	execute_cmd(char *cmd, char **envp);
 void	ft_free(void **ptr);
 t_info	set_info(char *line, char **envp);
 void	free_cmds(t_cmds *cmds);
+void	ft_free_arr(char ***arr);
 char	*make_cmd_redir(char *content);
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
 void	process_redir(char **cmd, int flag, int index, int mode);
+void	redirection(t_cmds *cmds);
+void	out_redir(int src, char *outfile, int flag);
+void	get_heredoc(char *limiter);
+void	in_redir(int dst, char *infile);
+int		is_num_str(char *str);
 
 #endif
