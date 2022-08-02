@@ -49,12 +49,11 @@ t_cmds	*set_cmds(char *line)
 	ft_free((void **)&cmds);
 	return (cmd_list);
 }
-
-t_info	set_info(char *line, char **envp)
+/*
+t_info	set_info(char *line)
 {
 	t_info	info;
 
 	info.cmds = set_cmds(line);
-	info.envp = envp;
 	return (info);
-}
+}*/

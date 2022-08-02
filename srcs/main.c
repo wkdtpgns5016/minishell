@@ -9,6 +9,8 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	set_terminal();
 	signal(CTRL_C, handler);
+	signal(CTRL_SLASH, handler);
+	get_ev(&info.ev, envp);
 	while (1)
 	{
 		line = readline("minishell$ ");
@@ -19,12 +21,11 @@ int	main(int ac, char **av, char **envp)
 			printf("exit\n");
 			return (0);
 		}
-		/* data parsing */
-		info = set_info(line, envp);
-
-		/* command processing */
-		exec_cmd(info);
-		/* free memmory */
+		 //data parsing 
+		info.cmds = set_cmds(line);
+		//command processing 
+		exec_cmd(&info);
+		 //free memmory 
 		free_cmds(info.cmds);
 		add_history(line);
 		ft_free((void **)&line);

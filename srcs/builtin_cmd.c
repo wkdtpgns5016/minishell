@@ -2,7 +2,8 @@
 
 void	ft_echo(int opt, char *arg)
 {
-	printf("%s", arg);
+	if (arg)
+		printf("%s", arg);
 	if (!opt)
 		printf("\n");
 }
@@ -32,6 +33,8 @@ void	ft_exit(char *arg)
 	int	mark;
 	char	*cpy;
 
+	if (!arg)
+		exit(0);
 	cpy = arg;
 	while (9 <= *arg && *arg <= 13)
 		arg++;
@@ -59,6 +62,6 @@ void	ft_cd(char *path)
 {
 	if (!path)
 		chdir("/Users/sunwchoi");
-	if (chdir(path) < 0)
+	else if (chdir(path) < 0)
 		ft_error("cd", path, "No such file or directory");
 }

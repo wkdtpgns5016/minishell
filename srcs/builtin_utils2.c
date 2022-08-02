@@ -25,9 +25,16 @@ int	switch_envl(t_list *new, t_list *now, t_list *last, t_list **envl)
 
 	s = (char *)now->content;
 	arg = (char *)new->content;
-	if (ft_strlen(arg) != ft_strlen(s) - ft_strlen(ft_strchr(s, '=')) && \
-		ft_strlen(arg) != ft_strlen(s))
-		return (0);
+	if (ft_strchr(s, '='))
+	{
+		if (ft_strlen(arg) != ft_strlen(s) - ft_strlen(ft_strchr(s, '=')))
+			return (0);
+	}
+	else
+	{
+		if (ft_strlen(arg) != ft_strlen(s))
+			return (0);
+	}
 	if (ft_memcmp(s, arg, ft_strlen(arg)))
 		return (0);
 	if (!last)
@@ -40,25 +47,27 @@ int	switch_envl(t_list *new, t_list *now, t_list *last, t_list **envl)
 	return (1);
 }
 
-void	write_envl(t_list *envl)
+char	**l_to_p(t_list *evl)
 {
 	int	len;
 	char	**s;
 	int	idx;
+	t_list	*now;
 
-	len = ft_lstsize(envl);
+	len = ft_lstsize(evl);
 	s = (char **)malloc(sizeof(char *) * (len + 2));
 	s[0] = NULL;
 	s[len + 1] = NULL;
 	idx = 0;
-	while (envl)
+	now = evl;
+	while (now)
 	{
-		s[++idx] = envl->content;
-		envl = envl->next;
+		s[++idx] = now->content;
+		now = now->next;
 	}
 	sort_s(s, len - 1);
 	write_s(s);
-	free(s);
+	return (s);
 }
 
 int	delete_envl(char *arg, t_list *now, t_list *last, t_list **envl)
