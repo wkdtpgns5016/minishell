@@ -66,25 +66,21 @@ char	*find_cmd(char **cmd_arg, char **envp)
 	return (cmd);
 }
 
-void	execute_cmd(char *cmd, char **envp)
+void	execute_cmd(char **cmd, char **envp)
 {
-	char	**cmd_arg;
 	char	*cmd_path;
 
-	cmd_arg = ft_split(cmd, ' ');
-	if (cmd_arg == 0)
-		return ;
-	if (access(*cmd_arg, X_OK) == 0)
-		cmd_path = ft_strdup(*cmd_arg);
+	if (access(*cmd, X_OK) == 0)
+		cmd_path = ft_strdup(*cmd);
 	else
-		cmd_path = find_cmd(cmd_arg, envp);
+		cmd_path = find_cmd(cmd, envp);
 	if (cmd_path == 0)
 	{
-		printf("minishell: %s: command not found\n", *cmd_arg);
+		printf("minishell: %s: command not found\n", *cmd);
 		return ;
 	}
-	if (execve(cmd_path, cmd_arg, envp) == -1)
+	if (execve(cmd_path, cmd, envp) == -1)
 	{
-		printf("minishell: %s: %s\n", *cmd_arg, strerror(errno));
+		printf("minishell: %s: %s\n", *cmd, strerror(errno));
 	}
 }

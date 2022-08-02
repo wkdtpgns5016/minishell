@@ -1,15 +1,35 @@
 #include "../includes/minishell.h"
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
-	char *str = "a | b | c";
+	char	*line;
 	t_info	info;
 
-	info = set_info(str, envp);
-	while (info.cmds != 0)
+	if (ac < 1 || av == 0 || envp == 0)
+		exit(1);
+	set_terminal();
+	signal(CTRL_C, handler);
+	while (1)
 	{
-		printf("%s\n", (info.cmds)->cmd);
-		(info.cmds) = (info.cmds)->next;
+		line = readline("minishell$ ");
+		if (!line)
+		{
+			printf("\033[1A");
+			printf("\033[11C");
+			printf("exit\n");
+			return (0);
+		}
+		/* data parsing */
+		info = set_info(line, envp);
+		if (info.cmds != 0)
+		{
+			/* command processing */
+			exec_cmd(&info);
+			/* free memmory */
+			free_cmds(&(info.cmds));
+			ft_free((void **)&line);
+		}
+		add_history(line);
 	}
-	free_cmds(info.cmds);
+	ret_terminal();
 }

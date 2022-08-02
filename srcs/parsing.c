@@ -3,13 +3,16 @@
 t_cmds	*make_cmd(char *content)
 {
 	t_cmds	*cmd;
+	char	*new_cmd;
 
 	cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (cmd == 0)
 		return (0);
-	cmd->cmd = ft_split(content, ' ');
+	new_cmd = make_cmd_redir(content);
+	cmd->cmd = ft_split(new_cmd, ' ');
 	cmd->next = 0;
 	cmd->pred = 0;
+	ft_free((void **)&new_cmd);
 	return (cmd);
 }
 
@@ -49,11 +52,21 @@ t_cmds	*set_cmds(char *line)
 	ft_free((void **)&cmds);
 	return (cmd_list);
 }
+
+void	set_info_backup_fd(t_info *info)
+{
+	info->backup[0] = dup(0);
+	info->backup[0] = dup(1);
+}
+
 /*
-t_info	set_info(char *line)
+t_info	set_info(char *line, char **envp)
 {
 	t_info	info;
 
-	info.cmds = set_cmds(line);
+	info.cmds = 0;
+	info.envp = envp;
+	if (line != 0)
+		info.cmds = set_cmds(line);
 	return (info);
 }*/

@@ -22,32 +22,13 @@ int	check_builtin(char **cmd)
 	return (0);
 }
 
-int	exec_another(t_cmds *cmds, char **envp, int index)
-{
-	if (index == 0)
-	{
-		//first_process(cmds, envp);
-		if (envp == 0)
-			return (0);
-		printf("first_process\n");
-	}
-	else if (cmds->next == 0)
-	{
-		//last_process(cmds, envp);
-		printf("last_process\n");
-	}
-	else
-	{
-		//mid_process(cmds, envp);
-		printf("mid_process\n");
-	}
-	return (0);
-}
+
 
 void	exec_controller(t_cmds *cmds, t_ev *ev, int index)
 {
 	int	flag;
 
+	redirection(cmds);
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
 		exec_builtin(cmds, ev, flag, index);
@@ -64,6 +45,7 @@ void	exec_cmd(t_info *info)
 	cmds = info->cmds;
 	while (cmds != 0)
 	{
+		set_info_backup_fd(info);
 		exec_controller(cmds, &info->ev, i);
 		cmds = cmds->next;
 		i++;
