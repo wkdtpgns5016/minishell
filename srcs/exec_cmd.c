@@ -22,8 +22,6 @@ int	check_builtin(char **cmd)
 	return (0);
 }
 
-
-
 void	exec_controller(t_cmds *cmds, t_ev *ev, int index)
 {
 	int	flag;
@@ -34,6 +32,21 @@ void	exec_controller(t_cmds *cmds, t_ev *ev, int index)
 		exec_builtin(cmds, ev, flag, index);
 	else
 		exec_another(cmds, ev->evp, index);
+}
+
+void	exec_after(int backup[2], t_cmds *cmds)
+{
+	t_cmds	*temp;
+
+	temp = cmds;
+	dup2(backup[0], 0);
+	dup2(backup[1], 1);
+	while (temp != 0)
+	{
+		close(temp->fd[0]);
+		close(temp->fd[1]);
+		temp = temp->next;
+	}
 }
 
 void	exec_cmd(t_info *info)
@@ -47,7 +60,9 @@ void	exec_cmd(t_info *info)
 	{
 		set_info_backup_fd(info);
 		exec_controller(cmds, &info->ev, i);
+		unlink("./here_doc");
 		cmds = cmds->next;
 		i++;
 	}
+	exec_after(info->backup, info->cmds);
 }

@@ -63,7 +63,7 @@ void	get_heredoc(char *limiter);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 void	set_info_backup_fd(t_info *info);
-int		exec_builtin(t_cmds *cmds, char **envp, int flag, int index);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
 int		exec_another(t_cmds *cmds, char **envp, int index);
 void	exec_cmd(t_info *info);
 
