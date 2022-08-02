@@ -38,12 +38,12 @@ void	ft_free_arr(char ***arr)
 	}
 }
 
-void	free_cmds(t_cmds *cmds)
+void	free_cmds(t_cmds **cmds)
 {
 	t_cmds	*temp;
 	t_cmds	*next;
 
-	temp = cmds;
+	temp = *cmds;
 	while (temp != 0)
 	{
 		next = temp->next;
@@ -51,4 +51,5 @@ void	free_cmds(t_cmds *cmds)
 		ft_free((void **)(&temp));
 		temp = next;
 	}
+	//ft_free((void **)cmds);
 }

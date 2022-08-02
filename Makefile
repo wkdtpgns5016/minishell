@@ -20,9 +20,15 @@ SRCS =
 SRCS_MANDATORY = srcs/signal.c \
 				 srcs/main.c \
 				 srcs/parsing.c \
+				 srcs/parsing_utils.c \
 				 srcs/ft_free.c \
+				 srcs/exec_cmd.c \
+				 srcs/exec_another.c \
 				 srcs/exec_builtin.c \
-				 srcs/exec_cmd.c
+				 srcs/exec_utils.c \
+				 srcs/redirection.c \
+				 srcs/redirection_utils.c \
+				 srcs/redirection_utils2.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
@@ -43,11 +49,11 @@ HEAD = ./include
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(OBJ_FLAGS) -c -I $(HEAD) $< -o $@
+	$(CC) -g $(CFLAGS) $(OBJ_FLAGS) -c -I $(HEAD) $< -o $@
 
 $(NAME): $(OBJS)
 	$(MAKE) -C ./libft bonus
-	$(CC) $(CFLAGS) $(COMFILE_FLAGS) $(OBJS) -Llibft -lft -o $(NAME)
+	$(CC) -g $(CFLAGS) $(COMFILE_FLAGS) $(OBJS) -Llibft -lft -o $(NAME)
 
 clean:
 	$(MAKE) -C ./libft clean

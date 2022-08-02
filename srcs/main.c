@@ -21,11 +21,10 @@ int	main(int ac, char **av, char **envp)
 		}
 		/* data parsing */
 		info = set_info(line, envp);
-
 		/* command processing */
-		exec_cmd(info);
+		exec_cmd(&info);
 		/* free memmory */
-		free_cmds(info.cmds);
+		free_cmds(&(info.cmds));
 		add_history(line);
 		ft_free((void **)&line);
 	}
