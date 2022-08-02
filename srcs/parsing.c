@@ -59,6 +59,7 @@ void	set_info_backup_fd(t_info *info)
 	info->backup[0] = dup(1);
 }
 
+/*
 t_info	set_info(char *line, char **envp)
 {
 	t_info	info;
@@ -68,4 +69,4 @@ t_info	set_info(char *line, char **envp)
 	if (line != 0)
 		info.cmds = set_cmds(line);
 	return (info);
-}
+}*/

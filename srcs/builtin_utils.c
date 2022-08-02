@@ -63,28 +63,6 @@ void	write_s(char **s)
 	}
 }
 
-t_list *get_envl(char **envp)
-{
-	int	idx;
-	t_list	*envl;
-	t_list	*new;
-	char	*content;
-
-	idx = -1;
-	envl = NULL;
-	while (envp[++idx])
-	{
-		content = ft_strdup(envp[idx]);
-		if (!content)
-			exit (1); //alloc error
-		new = ft_lstnew(content);
-		if (!new)
-			exit (1); //alloc  error
-		ft_lstadd_back(&envl, new);
-	}
-	return (envl);
-}
-
 void	ft_error(char *cmd, char *arg, char *msg)
 {
 	printf("minishell: %s: %s: %s", cmd, arg, msg);

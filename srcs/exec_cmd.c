@@ -4,7 +4,7 @@ int	check_builtin(char **cmd)
 {
 	if (ft_strncmp(*cmd, "echo", ft_strlen(*cmd)) == 0)
 	{
-		if (ft_strncmp(*(cmd + 1), "-n", ft_strlen(*cmd)) == 0)
+		//if (ft_strncmp(*(cmd + 1), "-n", ft_strlen(*cmd)) == 0)
 			return (1);
 	}
 	else if (ft_strncmp(*cmd, "env", ft_strlen(*cmd)) == 0)
@@ -22,16 +22,18 @@ int	check_builtin(char **cmd)
 	return (0);
 }
 
-void	exec_controller(t_cmds *cmds, char **envp, int index)
+
+
+void	exec_controller(t_cmds *cmds, t_ev *ev, int index)
 {
 	int	flag;
 
 	redirection(cmds);
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
-		exec_builtin(cmds, envp, flag, index);
+		exec_builtin(cmds, ev, flag, index);
 	else
-		exec_another(cmds, envp, index);
+		exec_another(cmds, ev->evp, index);
 }
 
 void	exec_cmd(t_info *info)
@@ -44,7 +46,7 @@ void	exec_cmd(t_info *info)
 	while (cmds != 0)
 	{
 		set_info_backup_fd(info);
-		exec_controller(cmds, info->envp, i);
+		exec_controller(cmds, &info->ev, i);
 		cmds = cmds->next;
 		i++;
 	}

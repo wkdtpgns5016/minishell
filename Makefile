@@ -17,7 +17,7 @@ NAME = minishell
 
 SRCS = 
 
-SRCS_MANDATORY = srcs/signal.c \
+SRCS_MANDATORY = srcs/setting.c \
 				 srcs/main.c \
 				 srcs/parsing.c \
 				 srcs/parsing_utils.c \
@@ -25,15 +25,20 @@ SRCS_MANDATORY = srcs/signal.c \
 				 srcs/exec_cmd.c \
 				 srcs/exec_another.c \
 				 srcs/exec_builtin.c \
+				 srcs/builtin_cmd.c \
+				 srcs/builtin_cmd2.c \
+				 srcs/builtin_utils.c \
+				 srcs/builtin_utils2.c
 				 srcs/exec_utils.c \
 				 srcs/redirection.c \
 				 srcs/redirection_utils.c \
 				 srcs/redirection_utils2.c
 SRCS_BONUS = 
 
-COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
-OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
-
+#COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
+#OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
+COMFILE_FLAGS= -lreadline -L/usr/local/opt/readline/lib
+OBJ_FLAGS=-I/usr/local/opt/readline/include
 OBJS = $(SRCS:.c=.o)
 OBJS_MANDATORY = $(SRCS_MANDATORY:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)

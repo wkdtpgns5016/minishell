@@ -25,6 +25,8 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <termios.h>
+# include "./setting.h"
+# include "./builtin_cmd.h"
 # include "./signal.h"
 
 typedef struct s_cmds
@@ -38,12 +40,16 @@ typedef struct s_cmds
 typedef struct s_info
 {
 	t_cmds	*cmds;
+	t_ev	ev;
 	int		backup[2];
 	char	**envp;
 }	t_info;
 
 void	execute_cmd(char **cmd, char **envp);
 void	ft_free(void **ptr);
+//t_info	set_info(t_info info, char **line);
+t_cmds  *set_cmds(char *line);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
 t_info	set_info(char *line, char **envp);
 void	free_cmds(t_cmds **cmds);
 void	ft_free_arr(char ***arr);

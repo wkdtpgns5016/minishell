@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
-
-void	ft_unset(char *arg, t_list **envl)
+/*
+void	ft_unset(char *arg, t_list **evl)
 {
 	t_list	*last;
 	t_list	*now;
@@ -22,8 +22,9 @@ void	ft_unset(char *arg, t_list **envl)
 		now = now->next;
 	}
 }
+*/
 
-void	ft_export(char *arg, t_list **envl)
+void	ft_export(char *arg, t_ev *ev)
 {
 	char	*content;
 	t_list	*last;
@@ -32,7 +33,7 @@ void	ft_export(char *arg, t_list **envl)
 
 	if (!arg)
 	{
-		write_envl(*envl);
+		write_s(ev->evp);
 		return ;
 	}
 	content = ft_strdup(arg);
@@ -41,14 +42,16 @@ void	ft_export(char *arg, t_list **envl)
 	new = ft_lstnew(content);
 	if (!new)
 		exit(1);
-	now = *envl;
+	now = ev->evl;
 	last = NULL;
 	while (now)
 	{
-		if (switch_envl(new, now, last, envl))
-			return ;
+		if (switch_envl(new, now, last, &ev->evl))
+			break ;
 		last = now;
 		now = now->next;
 	}
-	ft_lstadd_back(envl, new);
+	if (!now)
+		ft_lstadd_back(&ev->evl, new);
+	ev->evp = l_to_p(ev->evl);
 }
