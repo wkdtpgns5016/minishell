@@ -53,11 +53,19 @@ t_cmds	*set_cmds(char *line)
 	return (cmd_list);
 }
 
+void	set_info_backup_fd(t_info *info)
+{
+	info->backup[0] = dup(0);
+	info->backup[0] = dup(1);
+}
+
 t_info	set_info(char *line, char **envp)
 {
 	t_info	info;
 
-	info.cmds = set_cmds(line);
+	info.cmds = 0;
 	info.envp = envp;
+	if (line != 0)
+		info.cmds = set_cmds(line);
 	return (info);
 }

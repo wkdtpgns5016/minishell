@@ -24,7 +24,7 @@ int	get_index_redir(char *temp, int index)
 			break ;
 		i++;
 	}
-	if (i == ft_strlen(temp))
+	if (i == (int)ft_strlen(temp))
 		return (-1);
 	return (i);
 }
@@ -61,7 +61,7 @@ char	*sub_make_cmd(char *cmd, char *content, int *i, int *j)
 	char	*new;
 
 	str = cmd;
-	while (*j < ft_strlen(content))
+	while (*j < (int)ft_strlen(content))
 	{
 		*i = get_index_redir(content, *j);
 		if (*i < 0)
