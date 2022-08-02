@@ -28,7 +28,7 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/builtin_cmd.c \
 				 srcs/builtin_cmd2.c \
 				 srcs/builtin_utils.c \
-				 srcs/builtin_utils2.c
+				 srcs/builtin_utils2.c \
 				 srcs/exec_utils.c \
 				 srcs/redirection.c \
 				 srcs/redirection_utils.c \
