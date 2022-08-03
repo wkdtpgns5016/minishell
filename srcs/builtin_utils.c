@@ -62,8 +62,3 @@ void	write_s(char **s)
 		printf("\n");
 	}
 }
-
-void	ft_error(char *cmd, char *arg, char *msg)
-{
-	printf("minishell: %s: %s: %s", cmd, arg, msg);
-}

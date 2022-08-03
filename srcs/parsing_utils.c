@@ -1,18 +1,5 @@
 #include "../includes/minishell.h"
 
-int	is_redir(char *c)
-{
-	if (*c == '<' && *(c + 1) != '<')
-		return (1);
-	else if (*c == '<' && *(c + 1) == '<')
-		return (2);
-	else if (*c == '>' && *(c + 1) != '>')
-		return (3);
-	else if (*c == '>' && *(c + 1) == '>')
-		return (4);
-	return (0);
-}
-
 int	get_index_redir(char *temp, int index)
 {
 	int	i;
@@ -39,13 +26,13 @@ char	*add_str_between_space(char	*str, char *new, int redir)
 	result = ft_strjoin(temp, " ");
 	ft_free((void **)&temp);
 	temp = result;
-	if (redir == 1)
+	if (redir == INPUT_REDIR)
 		result = ft_strjoin(temp, "<");
-	if (redir == 2)
+	if (redir == HERE_DOC_REDIR)
 		result = ft_strjoin(temp, "<<");
-	if (redir == 3)
+	if (redir == OUTPUT_TRUNC_REDIR)
 		result = ft_strjoin(temp, ">");
-	if (redir == 4)
+	if (redir == OUTPUT_APPAND_REDIR)
 		result = ft_strjoin(temp, ">>");
 	ft_free((void **)&temp);
 	temp = result;
@@ -94,7 +81,8 @@ char	*make_cmd_redir(char *content)
 	new = ft_substr(content, j, i - j);
 	cmd = add_str_between_space("", new, is_redir(content + i));
 	ft_free((void **)&new);
-	if (is_redir(content + i) % 2 == 0)
+	if (is_redir(content + i) == HERE_DOC_REDIR || \
+	is_redir(content + i) == OUTPUT_APPAND_REDIR)
 		j = i + 2;
 	else
 		j = i + 1;
@@ -103,4 +91,15 @@ char	*make_cmd_redir(char *content)
 	cmd = ft_strjoin(temp, content + j);
 	ft_free((void **)&temp);
 	return (cmd);
+}
+
+char	*make_cmd_pipe_amd_redir(char *line)
+{
+	char	*temp;
+	char	*new;
+
+	temp = make_cmd_redir(line);
+	new = make_cmd_pipe(temp);
+	ft_free((void **)&temp);
+	return (new);
 }

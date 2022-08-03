@@ -57,6 +57,8 @@ void	exec_cmd(t_info *info)
 
 	i = 0;
 	cmds = info->cmds;
+	if (cmds == 0)
+		return ;
 	while (cmds != 0)
 	{
 		set_info_backup_fd(info);

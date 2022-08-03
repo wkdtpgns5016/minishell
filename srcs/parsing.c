@@ -1,18 +1,21 @@
 #include "../includes/minishell.h"
 
+void	set_info_backup_fd(t_info *info)
+{
+	info->backup[0] = dup(0);
+	info->backup[0] = dup(1);
+}
+
 t_cmds	*make_cmd(char *content)
 {
 	t_cmds	*cmd;
-	char	*new_cmd;
 
 	cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (cmd == 0)
 		return (0);
-	new_cmd = make_cmd_redir(content);
-	cmd->cmd = ft_split(new_cmd, ' ');
+	cmd->cmd = ft_split(content, ' ');
 	cmd->next = 0;
 	cmd->pred = 0;
-	ft_free((void **)&new_cmd);
 	return (cmd);
 }
 
@@ -32,15 +35,27 @@ void	add_cmd_back(t_cmds **cmds, t_cmds *node)
 	}
 }
 
-t_cmds	*set_cmds(char *line)
+t_cmds	*set_cmds(t_info *info, char *line)
 {
-	char	**cmds;
 	t_cmds	*cmd_list;
+	char	**cmds;
+	char	*new;
 	int		i;
 
 	cmd_list = 0;
 	i = 0;
-	cmds = ft_split(line, '|');
+	new = make_cmd_pipe_amd_redir(line);
+	printf("%s", new);
+	getchar();
+	if (new == 0)
+		return (0);
+	if (check_readline(new))
+	{
+		info->recent_exit_code = 258;
+		return (0);
+	}
+	cmds = ft_split(new, '|');
+	ft_free((void **)&new);
 	if (cmds == 0)
 		return (0);
 	while (cmds[i] != 0)
@@ -53,20 +68,9 @@ t_cmds	*set_cmds(char *line)
 	return (cmd_list);
 }
 
-void	set_info_backup_fd(t_info *info)
+void	set_info(t_info *info, char *line)
 {
-	info->backup[0] = dup(0);
-	info->backup[0] = dup(1);
-}
-
-/*
-t_info	set_info(char *line, char **envp)
-{
-	t_info	info;
-
-	info.cmds = 0;
-	info.envp = envp;
+	info->cmds = 0;
 	if (line != 0)
-		info.cmds = set_cmds(line);
-	return (info);
-}*/
+		info->cmds = set_cmds(info, line);
+}

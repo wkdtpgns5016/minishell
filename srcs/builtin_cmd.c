@@ -51,10 +51,7 @@ void	ft_exit(char *arg)
 		arg++;
 	printf("exit\n");
 	if (*arg)
-	{
-		ft_error("exit", cpy, "numeric argument required");
-		exit(255);
-	}
+		error_excute("exit", cpy, "numeric argument required", 255);
 	exit(num);
 }
 
@@ -63,5 +60,5 @@ void	ft_cd(char *path)
 	if (!path)
 		chdir("/Users/sunwchoi");
 	else if (chdir(path) < 0)
-		ft_error("cd", path, "No such file or directory");
+		error_excute("cd", path, "No such file or directory", 1);
 }

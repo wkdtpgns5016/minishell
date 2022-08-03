@@ -22,12 +22,12 @@ int	main(int ac, char **av, char **envp)
 			return (0);
 		}
 		 //data parsing 
-		info.cmds = set_cmds(line);
+		set_info(&info, line);
 		//command processing 
 		exec_cmd(&info);
+		add_history(line);
 		 //free memmory 
 		free_cmds(&(info.cmds));
-		add_history(line);
 		ft_free((void **)&line);
 	}
 	ret_terminal();

@@ -6,8 +6,7 @@ int	child_process(t_cmds *cmds, char **envp)
 
 	pid = fork();
 	if (pid == -1)
-		// ft_error("Fork error", 1);
-		return (0);
+		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
 		redirection(cmds);
@@ -37,8 +36,7 @@ int	last_process(t_cmds *cmds, char **envp)
 	pid = fork();
 	status = 0;
 	if (pid == -1)
-		// ft_error("Fork error", 1);
-		return (0);
+		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
 		redirection(cmds);
@@ -57,8 +55,10 @@ int	exec_another(t_cmds *cmds, char **envp)
 
 	status = 0;
 	if (pipe(cmds->fd) == -1)
-		// ft_error("Pipe error", 1);
-		return (0);
+	{
+		printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
+		return (1);
+	}
 	if (cmds->next != 0)
 		child_process(cmds, envp);
 	else
