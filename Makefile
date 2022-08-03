@@ -21,6 +21,7 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/main.c \
 				 srcs/parsing.c \
 				 srcs/parsing_utils.c \
+				 srcs/parsing_utils2.c \
 				 srcs/ft_free.c \
 				 srcs/exec_cmd.c \
 				 srcs/exec_another.c \
@@ -32,7 +33,11 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/exec_utils.c \
 				 srcs/redirection.c \
 				 srcs/redirection_utils.c \
-				 srcs/redirection_utils2.c
+				 srcs/redirection_utils2.c \
+				 srcs/error_handling.c \
+				 srcs/check_readline.c \
+				 srcs/check_pipe.c \
+				 srcs/check_redir.c
 SRCS_BONUS = 
 
 #COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib

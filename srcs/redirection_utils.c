@@ -1,5 +1,18 @@
 #include "../includes/minishell.h"
 
+int	is_redir(char *c)
+{
+	if (*c == '<' && *(c + 1) != '<')
+		return (INPUT_REDIR);
+	else if (*c == '<' && *(c + 1) == '<')
+		return (HERE_DOC_REDIR);
+	else if (*c == '>' && *(c + 1) != '>')
+		return (OUTPUT_TRUNC_REDIR);
+	else if (*c == '>' && *(c + 1) == '>')
+		return (OUTPUT_APPAND_REDIR);
+	return (0);
+}
+
 int	get_index_arr(char **cmd)
 {
 	int	i;

@@ -13,6 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+/*
+** include header file
+*/
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <sys/wait.h>
@@ -28,6 +31,15 @@
 # include "./setting.h"
 # include "./builtin_cmd.h"
 # include "./signal.h"
+
+/*
+** flag number
+*/
+# define INPUT_REDIR 1
+# define HERE_DOC_REDIR 2
+# define OUTPUT_TRUNC_REDIR 3
+# define OUTPUT_APPAND_REDIR 4
+# define PIPE_LINE 5
 
 typedef struct s_cmds
 {
@@ -46,15 +58,19 @@ typedef struct s_info
 	char	**envp;
 }	t_info;
 
-void	execute_cmd(char **cmd, char **envp);
 void	ft_free(void **ptr);
-//t_info	set_info(t_info info, char **line);
-t_cmds  *set_cmds(char *line);
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
-t_info	set_info(char *line, char **envp);
 void	free_cmds(t_cmds **cmds);
 void	ft_free_arr(char ***arr);
+
+//t_info	set_info(t_info info, char **line);
+
+void	set_info(t_info *info, char *line);
+t_cmds	*set_cmds(t_info *info, char *line);
+
 char	*make_cmd_redir(char *content);
+char	*make_cmd_pipe(char *content);
+char	*make_cmd_pipe_amd_redir(char *line);
+
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
 void	process_redir(char **cmd, int flag, int index, int mode);
@@ -63,10 +79,21 @@ void	out_redir(int src, char *outfile, int flag);
 void	get_heredoc(char *limiter);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
-void	set_info_backup_fd(t_info *info);
+
 int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
 int		exec_another(t_cmds *cmds, char **envp);
 void	exec_cmd(t_info *info);
+void	execute_cmd(char **cmd, char **envp);
+void	set_info_backup_fd(t_info *info);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
 
-int	first_process(t_cmds *cmds, char **envp);
+void	error_excute(char *cmd, char *token, char *msg, int exit_code);
+int		print_error_message_syntax(char *token);
+
+int		is_include_str(char *big, char *little, int len);
+int		check_str_before_and_after(char **token_arr, int index);
+int		check_pipe(char **token_arr, int i);
+int		check_redir(char **token, int i);
+int		check_readline(char *line);
+
 #endif

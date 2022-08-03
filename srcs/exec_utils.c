@@ -76,11 +76,10 @@ void	execute_cmd(char **cmd, char **envp)
 		cmd_path = find_cmd(cmd, envp);
 	if (cmd_path == 0)
 	{
-		printf("minishell: %s: command not found\n", *cmd);
-		return ;
+		error_excute(*cmd, 0, "command not found", 127);
 	}
 	if (execve(cmd_path, cmd, envp) == -1)
 	{
-		printf("minishell: %s: %s\n", *cmd, strerror(errno));
+		error_excute(*cmd, 0, strerror(errno), errno);
 	}
 }
