@@ -45,8 +45,6 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	cmd_list = 0;
 	i = 0;
 	new = make_cmd_pipe_amd_redir(line);
-	printf("%s", new);
-	getchar();
 	if (new == 0)
 		return (0);
 	if (check_readline(new))

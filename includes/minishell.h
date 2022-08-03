@@ -80,12 +80,12 @@ void	get_heredoc(char *limiter);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag);
 int		exec_another(t_cmds *cmds, char **envp);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index);
+int		get_exit_status(int status);
 
 void	error_excute(char *cmd, char *token, char *msg, int exit_code);
 int		print_error_message_syntax(char *token);
