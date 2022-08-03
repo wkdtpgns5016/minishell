@@ -22,16 +22,17 @@ int	check_builtin(char **cmd)
 	return (0);
 }
 
-void	exec_controller(t_cmds *cmds, t_ev *ev, int index)
+int	exec_controller(t_cmds *cmds, t_ev *ev, int index)
 {
+	int	status;
 	int	flag;
 
-	redirection(cmds);
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
-		exec_builtin(cmds, ev, flag, index);
+		status = exec_builtin(cmds, ev, flag, index);
 	else
-		exec_another(cmds, ev->evp, index);
+		status = exec_another(cmds, ev->evp);
+	return (status);
 }
 
 void	exec_after(int backup[2], t_cmds *cmds)
@@ -59,7 +60,7 @@ void	exec_cmd(t_info *info)
 	while (cmds != 0)
 	{
 		set_info_backup_fd(info);
-		exec_controller(cmds, &info->ev, i);
+		info->recent_exit_code = exec_controller(cmds, &info->ev, i);
 		unlink("./here_doc");
 		cmds = cmds->next;
 		i++;
