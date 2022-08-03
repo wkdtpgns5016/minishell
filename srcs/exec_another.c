@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	first_process(t_cmds *cmds, char **envp)
+int	child_process(t_cmds *cmds, char **envp)
 {
 	pid_t	pid;
 
@@ -10,37 +10,58 @@ int	first_process(t_cmds *cmds, char **envp)
 		return (0);
 	if (pid == 0)
 	{
-		// close(cmds->fd[0]);
-		// dup2(cmds->fd[1], 1);
+		redirection(cmds);
+		close(cmds->fd[0]);
+		dup2(cmds->fd[1], 1);
 		execute_cmd(cmds->cmd, envp);
 	}
 	else if (pid > 0)
 	{
-		// close(cmds->fd[1]);
-		// dup2(cmds->fd[0], 0);
+		close(cmds->fd[1]);
+		dup2(cmds->fd[0], 0);
 		waitpid(pid, 0, 0);
 	}
 	return (0);
 }
 
-int	exec_another(t_cmds *cmds, char **envp, int index)
+int	get_exit_status(int status)
 {
-	if (index == 0)
+	return (((status) & 0xff00) >> 8);
+}
+
+int	last_process(t_cmds *cmds, char **envp)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	status = 0;
+	if (pid == -1)
+		// ft_error("Fork error", 1);
+		return (0);
+	if (pid == 0)
 	{
-		if (pipe(cmds->fd) == -1)
-			// ft_error("Pipe error", 1);
-			return (0);
-		first_process(cmds, envp);
+		redirection(cmds);
+		execute_cmd(cmds->cmd, envp);
 	}
-	else if (cmds->next == 0)
+	else if (pid > 0)
 	{
-		//last_process(cmds, envp);
-		printf("last_process\n");
+		waitpid(pid, &status, 0);
 	}
+	return (get_exit_status(status));
+}
+
+int	exec_another(t_cmds *cmds, char **envp)
+{
+	int	status;
+
+	status = 0;
+	if (pipe(cmds->fd) == -1)
+		// ft_error("Pipe error", 1);
+		return (0);
+	if (cmds->next != 0)
+		child_process(cmds, envp);
 	else
-	{
-		//mid_process(cmds, envp);
-		printf("mid_process\n");
-	}
-	return (0);
+		status = last_process(cmds, envp);
+	return (status);
 }
