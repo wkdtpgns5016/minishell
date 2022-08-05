@@ -1,5 +1,5 @@
 #include "../includes/minishell.h"
-
+/*
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -31,4 +31,25 @@ int	main(int ac, char **av, char **envp)
 		ft_free((void **)&line);
 	}
 	ret_terminal();
+}
+*/
+int main(int ac, char **av, char **envp)
+{
+	t_ev	ev;
+
+	av[ac] = 0;
+	get_ev(&ev, envp);
+	ft_export(NULL, &ev);
+	printf("\n\n");
+	
+	ft_export("f", &ev);
+	ft_export(NULL, &ev);
+	printf("\n\n");
+
+	ft_env(ev.evl);
+	printf("\n\n");
+	
+	ft_unset("f", &ev);
+	ft_export(NULL, &ev);	
+	printf("\n\n");
 }
