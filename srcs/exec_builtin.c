@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	first_builtin(char **cmd, t_ev *ev, int flag)
+void	execute_builtin(char **cmd, t_ev *ev, int flag)
 {
 	if (flag == 1)
 		ft_echo(0, cmd[1]);
@@ -18,23 +18,63 @@ void	first_builtin(char **cmd, t_ev *ev, int flag)
 		//ft_unset(cmd[1], ev);
 }
 
-int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int index)
+int	child_builtin(t_cmds *cmds, t_ev *ev, int flag)
 {
-	if (index == 0)
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
+	if (pid == 0)
 	{
-		first_builtin(cmds->cmd, ev, flag);
-		if (ev->evp == 0 || flag == 0)
-			return (0);
+		redirection(cmds);
+		close(cmds->fd[0]);
+		dup2(cmds->fd[1], 1);
+		execute_builtin(cmds->cmd, ev, flag);
 	}
-	else if (cmds->next == 0)
+	else if (pid > 0)
 	{
-		//last_builtin(cmds, envp, flag);
-		printf("last_builtin\n");
-	}
-	else
-	{
-		//mid_builtin(cmds, envp, flag);
-		printf("mid_builtin\n");
+		close(cmds->fd[1]);
+		dup2(cmds->fd[0], 0);
+		waitpid(pid, 0, 0);
 	}
 	return (0);
+}
+
+int	last_builtin(t_cmds *cmds, t_ev *ev, int flag)
+{
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	status = 0;
+	if (pid == -1)
+		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
+	if (pid == 0)
+	{
+		redirection(cmds);
+		execute_builtin(cmds->cmd, ev, flag);
+	}
+	else if (pid > 0)
+	{
+		waitpid(pid, &status, 0);
+	}
+	return (get_exit_status(status));
+}
+
+int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag)
+{
+	int	status;
+
+	status = 0;
+	if (pipe(cmds->fd) == -1)
+	{
+		printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
+		return (1);
+	}
+	if (cmds->next != 0)
+		child_builtin(cmds, ev, flag);
+	else
+		status = last_builtin(cmds, ev, flag);
+	return (status);
 }
