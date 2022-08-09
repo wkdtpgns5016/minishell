@@ -73,15 +73,16 @@ char	*make_cmd_pipe_amd_redir(char *line);
 
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
-void	process_redir(char **cmd, int flag, int index, int mode);
-void	redirection(t_cmds *cmds);
+void	process_redir(char **cmd, int flag, int index, int backup[2]);
+void	process_redir_with_num(char **cmd, int flag, int index, int backup[2]);
 void	out_redir(int src, char *outfile, int flag);
-void	get_heredoc(char *limiter);
+void	get_heredoc(char *limiter, int backup_in);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
+void	redirection(t_cmds *cmds, int backup[2]);
 
 int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag);
-int		exec_another(t_cmds *cmds, char **envp);
+int		exec_another(t_cmds *cmds, char **envp, int backup[2]);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);

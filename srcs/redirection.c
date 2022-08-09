@@ -8,31 +8,32 @@ void	in_redir(int dst, char *infile)
 	dup2(infile_fd, dst);
 }
 
-void	get_heredoc(char *limiter)
+void	get_heredoc(char *limiter, int backup_in)
 {
-	char	buffer[1024];
+	char	*buffer;
 	int		fd;
 	int		size;
-	char	*check;
+	int		backup_fd;
 
-	check = ft_strjoin(limiter, "\n");
-	if (check == 0)
-		return ;
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		return ;
+	backup_fd = dup(0);
+	dup2(backup_in, 0);
 	while (1)
 	{
-		ft_putstr_fd(">", 1);
-		size = read(0, buffer, 1024);
-		if (size < 0)
-			return ;
-		buffer[size] = '\0';
-		if (ft_strncmp(buffer, check, ft_strlen(buffer)) == 0)
+		buffer = readline("> ");
+		if (ft_strlen(buffer) > ft_strlen(limiter))
+			size = ft_strlen(buffer);
+		else
+			size = ft_strlen(limiter);
+		if (ft_strncmp(buffer, limiter, size) == 0)
 			break ;
 		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
+		ft_free((void **)&buffer);
 	}
-	ft_free((void **)&check);
+	dup2(backup_fd, 0);
 	close(fd);
 }
 
@@ -49,7 +50,7 @@ void	out_redir(int src, char *outfile, int flag)
 	dup2(outfile_fd, src);
 }
 
-void	redirection(t_cmds *cmds)
+void	redirection(t_cmds *cmds, int backup[2])
 {
 	char	**temp;
 	int		i;
@@ -64,19 +65,19 @@ void	redirection(t_cmds *cmds)
 			temp = cmds->cmd;
 			if (i == 0)
 			{
-				process_redir(temp, flag, i, 1);
+				process_redir(temp, flag, i, backup);
 				cmds->cmd = remove_redir(temp, i, i + 1);
 			}
 			else
 			{
 				if (is_num_str(temp[i - 1]))
 				{
-					process_redir(temp, flag, i, 0);
+					process_redir_with_num(temp, flag, i, backup);
 					cmds->cmd = remove_redir(temp, i - 1, i + 1);
 				}
 				else
 				{
-					process_redir(temp, flag, i, 1);
+					process_redir(temp, flag, i, backup);
 					cmds->cmd = remove_redir(temp, i, i + 1);
 				}
 			}
