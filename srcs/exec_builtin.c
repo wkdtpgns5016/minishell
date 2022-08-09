@@ -18,7 +18,7 @@ void	execute_builtin(char **cmd, t_ev *ev, int flag)
 		//ft_unset(cmd[1], ev);
 }
 
-int	child_builtin(t_cmds *cmds, t_ev *ev, int flag)
+int	child_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 {
 	pid_t	pid;
 
@@ -27,7 +27,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, int flag)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, backup);
 		close(cmds->fd[0]);
 		dup2(cmds->fd[1], 1);
 		execute_builtin(cmds->cmd, ev, flag);
@@ -41,7 +41,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, int flag)
 	return (0);
 }
 
-int	last_builtin(t_cmds *cmds, t_ev *ev, int flag)
+int	last_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 {
 	pid_t	pid;
 	int		status;
@@ -52,7 +52,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, int flag)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, backup);
 		execute_builtin(cmds->cmd, ev, flag);
 	}
 	else if (pid > 0)
@@ -62,7 +62,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, int flag)
 	return (get_exit_status(status));
 }
 
-int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag)
+int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 {
 	int	status;
 
@@ -73,8 +73,8 @@ int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag)
 		return (1);
 	}
 	if (cmds->next != 0)
-		child_builtin(cmds, ev, flag);
+		child_builtin(cmds, ev, flag, backup);
 	else
-		status = last_builtin(cmds, ev, flag);
+		status = last_builtin(cmds, ev, flag, backup);
 	return (status);
 }

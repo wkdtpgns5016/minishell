@@ -70,6 +70,7 @@ t_cmds	*set_cmds(t_info *info, char *line);
 char	*make_cmd_redir(char *content);
 char	*make_cmd_pipe(char *content);
 char	*make_cmd_pipe_amd_redir(char *line);
+int		check_last_pipe(char *line);
 
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
@@ -81,7 +82,7 @@ void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 void	redirection(t_cmds *cmds, int backup[2]);
 
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2]);
 int		exec_another(t_cmds *cmds, char **envp, int backup[2]);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
