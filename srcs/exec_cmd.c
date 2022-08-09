@@ -57,9 +57,9 @@ void	exec_cmd(t_info *info)
 	cmds = info->cmds;
 	if (cmds == 0)
 		return ;
+	set_info_backup_fd(info);
 	while (cmds != 0)
 	{
-		set_info_backup_fd(info);
 		info->recent_exit_code = exec_controller(cmds, &info->ev, info->backup);
 		unlink("./here_doc");
 		cmds = cmds->next;
