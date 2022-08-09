@@ -4,7 +4,7 @@ int	check_redir_after(char **token_arr, int index)
 {
 	int	check;
 
-	check = -1;
+	check = 0;
 	if (token_arr[index] == 0)
 		return (print_error_message_syntax("newline"));
 	if (is_include_str(token_arr[index], "|", ft_strlen(token_arr[index])) == 0)
