@@ -82,15 +82,17 @@ void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 void	redirection(t_cmds *cmds, int backup[2]);
 
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2]);
+int		exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size);
 int		exec_another(t_cmds *cmds, char **envp, int backup[2]);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);
 int		get_exit_status(int status);
+int		check_builtin(char **cmd);
 
 void	error_excute(char *cmd, char *token, char *msg, int exit_code);
 int		print_error_message_syntax(char *token);
+void	print_error_message_with_token(char *cmd, char *token, char *msg);
 
 int		is_include_str(char *big, char *little, int len);
 int		check_str_before_and_after(char **token_arr, int index);

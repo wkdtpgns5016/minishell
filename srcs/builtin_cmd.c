@@ -1,30 +1,33 @@
 #include "../includes/minishell.h"
 
-void	ft_echo(int opt, char *arg)
+int	ft_echo(int opt, char *arg)
 {
 	if (arg)
 		printf("%s", arg);
 	if (!opt)
 		printf("\n");
+	return (0);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char *path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
-		return ;
+		return (1);
 	printf("%s\n", path);
+	return (0);
 }
 
-void	ft_env(t_list *envl)
+int	ft_env(t_list *envl)
 {
 	while (envl)
 	{
 		printf("%s\n",(char *)envl->content);
 		envl = envl->next;
 	}
+	return (1);
 }
 
 void	ft_exit(char *arg)
@@ -55,10 +58,14 @@ void	ft_exit(char *arg)
 	exit(num);
 }
 
-void	ft_cd(char *path)
+int	ft_cd(char *path)
 {
 	if (!path)
 		chdir("/Users/sunwchoi");
 	else if (chdir(path) < 0)
-		error_excute("cd", path, "No such file or directory", 1);
+	{
+		print_error_message_with_token("cd", path, "No such file or directory");
+		return (1);
+	}
+	return (0);
 }

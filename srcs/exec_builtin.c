@@ -1,21 +1,25 @@
 #include "../includes/minishell.h"
 
-void	execute_builtin(char **cmd, t_ev *ev, int flag)
+int	execute_builtin(char **cmd, t_ev *ev, int flag)
 {
+	int	status;
+
+	status = 0;
 	if (flag == 1)
-		ft_echo(0, cmd[1]);
+		status = ft_echo(0, cmd[1]);
 	else if (flag == 2)
-		ft_env(ev->evl);
+		status = ft_env(ev->evl);
 	else if (flag == 3)
-		ft_pwd();
+		status = ft_pwd();
 	else if (flag == 4)
-		ft_export(cmd[1], ev);
+		status = ft_export(cmd[1], ev);
 	else if (flag == 5)
-		ft_cd(cmd[1]);
+		status = ft_cd(cmd[1]);
 	else if (flag == 6)
 		ft_exit(cmd[1]);
 	//else if (flag == 7)
 		//ft_unset(cmd[1], ev);
+	return (status);
 }
 
 int	child_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
@@ -62,11 +66,22 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 	return (get_exit_status(status));
 }
 
-int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
+int	solo_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 {
 	int	status;
 
+	redirection(cmds, backup);
+	status = execute_builtin(cmds->cmd, ev, flag);
+	return (status);
+}
+
+int	exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size)
+{
+	int	status;
+	int	flag;
+
 	status = 0;
+	flag = check_builtin(cmds->cmd);
 	if (pipe(cmds->fd) == -1)
 	{
 		printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
@@ -75,6 +90,11 @@ int	exec_builtin(t_cmds *cmds, t_ev *ev, int flag, int backup[2])
 	if (cmds->next != 0)
 		child_builtin(cmds, ev, flag, backup);
 	else
-		status = last_builtin(cmds, ev, flag, backup);
+	{
+		if (size == 1)
+			status = solo_builtin(cmds, ev, flag, backup);
+		else
+			status = last_builtin(cmds, ev, flag, backup);
+	}
 	return (status);
 }
