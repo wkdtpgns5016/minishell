@@ -1,16 +1,16 @@
 #include "../includes/minishell.h"
 
-void	ft_unset(char *arg, t_ev *ev)
+int	ft_unset(char *arg, t_ev *ev)
 {
 	t_list	*last;
 	t_list	*now;
 
 	if (!arg)
-		return ;
+		return (1);
 	if (ft_strchr(arg, '='))
 	{
-		error_excute("unset", arg, "not a valid identifier", 255);
-		return ;
+		print_error_message_with_token("unset", arg, "not a valid identifier");
+		return (255);
 	}
 	last = NULL;
 	now = ev->evl;
@@ -23,10 +23,11 @@ void	ft_unset(char *arg, t_ev *ev)
 	}
 	if (now)
 		ev->evp = l_to_p(ev->evl);
+	return (0);
 }
 
 
-void	ft_export(char *arg, t_ev *ev)
+int	ft_export(char *arg, t_ev *ev)
 {
 	char	*content;
 	t_list	*last;
@@ -36,7 +37,7 @@ void	ft_export(char *arg, t_ev *ev)
 	if (!arg)
 	{
 		write_s(ev->evp);
-		return ;
+		return (0);
 	}
 	content = ft_strdup(arg);
 	new = ft_lstnew(content);
@@ -52,4 +53,5 @@ void	ft_export(char *arg, t_ev *ev)
 	if (!now)
 		ft_lstadd_back(&ev->evl, new);
 	ev->evp = l_to_p(ev->evl);
+	return (0);
 }
