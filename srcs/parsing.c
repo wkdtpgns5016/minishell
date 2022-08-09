@@ -69,6 +69,6 @@ t_cmds	*set_cmds(t_info *info, char *line)
 void	set_info(t_info *info, char *line)
 {
 	info->cmds = 0;
-	if (line != 0)
+	if (*line != 0)
 		info->cmds = set_cmds(info, line);
 }
