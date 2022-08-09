@@ -52,9 +52,10 @@ void	ft_exit(char *arg)
 		num = num * 10 + (*(arg++)  - '0');
 	while (9 <= *arg && *arg <= 13)
 		arg++;
-	printf("exit\n");
 	if (*arg)
 		error_excute("exit", cpy, "numeric argument required", 255);
+	else
+		printf("exit\n");
 	exit(num);
 }
 
