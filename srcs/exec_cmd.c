@@ -29,7 +29,7 @@ int	exec_controller(t_cmds *cmds, t_ev *ev, int backup[2])
 
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
-		status = exec_builtin(cmds, ev, flag);
+		status = exec_builtin(cmds, ev, flag, backup);
 	else
 		status = exec_another(cmds, ev->evp, backup);
 	return (status);

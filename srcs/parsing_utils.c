@@ -97,9 +97,21 @@ char	*make_cmd_pipe_amd_redir(char *line)
 {
 	char	*temp;
 	char	*new;
+	char	*add;
 
 	temp = make_cmd_redir(line);
 	new = make_cmd_pipe(temp);
 	ft_free((void **)&temp);
+	while (check_last_pipe(new))
+	{
+		temp = new;
+		add = readline("> ");
+		new = ft_strjoin(temp, add);
+		ft_free((void **)&temp);
+		temp = make_cmd_redir(new);
+		ft_free((void **)&new);
+		new = make_cmd_pipe(temp);
+		ft_free((void **)&temp);
+	}
 	return (new);
 }
