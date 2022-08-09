@@ -3,7 +3,7 @@
 void	set_info_backup_fd(t_info *info)
 {
 	info->backup[0] = dup(0);
-	info->backup[0] = dup(1);
+	info->backup[1] = dup(1);
 }
 
 t_cmds	*make_cmd(char *content)

@@ -12,37 +12,35 @@ int	is_num_str(char *str)
 	return (1);
 }
 
-void	process_redir(char **cmd, int flag, int index, int mode)
+void	process_redir(char **cmd, int flag, int index, int backup[2])
+{
+	if (flag == INPUT_REDIR)
+		in_redir(0, *(cmd + index + 1));
+	else if (flag == HERE_DOC_REDIR)
+	{
+		get_heredoc(*(cmd + index + 1), backup[0]);
+		in_redir(0, "here_doc");
+	}
+	else if (flag == OUTPUT_TRUNC_REDIR)
+		out_redir(1, *(cmd + index + 1), 0);
+	else
+		out_redir(1, *(cmd + index + 1), 1);
+}
+
+void	process_redir_with_num(char **cmd, int flag, int index, int backup[2])
 {
 	char	*num;
 
-	if (mode)
+	num = *(cmd + index - 1);
+	if (flag == INPUT_REDIR)
+		in_redir(ft_atoi(num), *(cmd + index + 1));
+	else if (flag == HERE_DOC_REDIR)
 	{
-		if (flag == INPUT_REDIR)
-			in_redir(0, *(cmd + index + 1));
-		else if (flag == HERE_DOC_REDIR)
-		{
-			get_heredoc(*(cmd + index + 1));
-			in_redir(0, "here_doc");
-		}
-		else if (flag == OUTPUT_TRUNC_REDIR)
-			out_redir(1, *(cmd + index + 1), 0);
-		else
-			out_redir(1, *(cmd + index + 1), 1);
+		get_heredoc(*(cmd + index + 1), backup[0]);
+		in_redir(0, "here_doc");
 	}
+	else if (flag == OUTPUT_TRUNC_REDIR)
+		out_redir(ft_atoi(num), *(cmd + index + 1), 0);
 	else
-	{
-		num = *(cmd + index - 1);
-		if (flag == INPUT_REDIR)
-			in_redir(ft_atoi(num), *(cmd + index + 1));
-		else if (flag == HERE_DOC_REDIR)
-		{
-			get_heredoc(*(cmd + index + 1));
-			in_redir(0, "here_doc");
-		}
-		else if (flag == OUTPUT_TRUNC_REDIR)
-			out_redir(ft_atoi(num), *(cmd + index + 1), 0);
-		else
-			out_redir(ft_atoi(num), *(cmd + index + 1), 1);
-	}
+		out_redir(ft_atoi(num), *(cmd + index + 1), 1);
 }

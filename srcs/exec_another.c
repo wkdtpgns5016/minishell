@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-int	child_process(t_cmds *cmds, char **envp)
+int	child_process(t_cmds *cmds, char **envp, int backup[2])
 {
 	pid_t	pid;
 
@@ -9,7 +9,7 @@ int	child_process(t_cmds *cmds, char **envp)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, backup);
 		close(cmds->fd[0]);
 		dup2(cmds->fd[1], 1);
 		execute_cmd(cmds->cmd, envp);
@@ -28,7 +28,7 @@ int	get_exit_status(int status)
 	return (((status) & 0xff00) >> 8);
 }
 
-int	last_process(t_cmds *cmds, char **envp)
+int	last_process(t_cmds *cmds, char **envp, int backup[2])
 {
 	pid_t	pid;
 	int		status;
@@ -39,7 +39,7 @@ int	last_process(t_cmds *cmds, char **envp)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, backup);
 		execute_cmd(cmds->cmd, envp);
 	}
 	else if (pid > 0)
@@ -49,7 +49,7 @@ int	last_process(t_cmds *cmds, char **envp)
 	return (get_exit_status(status));
 }
 
-int	exec_another(t_cmds *cmds, char **envp)
+int	exec_another(t_cmds *cmds, char **envp, int backup[2])
 {
 	int	status;
 
@@ -60,8 +60,8 @@ int	exec_another(t_cmds *cmds, char **envp)
 		return (1);
 	}
 	if (cmds->next != 0)
-		child_process(cmds, envp);
+		child_process(cmds, envp, backup);
 	else
-		status = last_process(cmds, envp);
+		status = last_process(cmds, envp, backup);
 	return (status);
 }
