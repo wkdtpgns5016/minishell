@@ -58,11 +58,39 @@ void	ft_exit(char *arg)
 	exit(num);
 }
 
-int	ft_cd(char *path)
+int	ft_cd(char *path, t_list *evl)
 {
+	char *home;
+	char *new_path;
+	int	ret;
+	
+	home = NULL;
+	ret = 0;
+	while (evl)
+	{
+		if (!memcmp("HOME=", evl->content, 5))
+		{
+			home = (char *)evl->content;
+			break;
+		}
+		evl = evl->next;
+	}
 	if (!path)
-		chdir("/Users/sunwchoi");
-	else if (chdir(path) < 0)
+		ret = chdir(home + 5);
+	else if(*path == '~')
+	{
+		if (!path[1])
+			ret = chdir(home + 5);
+		else
+		{
+			new_path = ft_strjoin(home + 5, path + 1);
+			ret = chdir(new_path);
+			free(new_path);
+		}
+	}
+	else 
+		ret = chdir(path);
+	if (ret < 0)
 	{
 		print_error_message_with_token("cd", path, "No such file or directory");
 		return (1);
