@@ -17,8 +17,8 @@ int	execute_builtin(char **cmd, t_ev *ev, int flag)
 		status = ft_cd(cmd[1]);
 	else if (flag == 6)
 		ft_exit(cmd[1]);
-	//else if (flag == 7)
-		//ft_unset(cmd[1], ev);
+	else if (flag == 7)
+		ft_unset(cmd[1], ev);
 	return (status);
 }
 
