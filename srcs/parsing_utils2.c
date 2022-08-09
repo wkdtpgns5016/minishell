@@ -1,15 +1,35 @@
 #include "../includes/minishell.h"
 
+int	get_index_pipe(char *temp, int index)
+{
+	int	i;
+
+	i = index;
+	while (*(temp + i) != '\0')
+	{
+		if (*(temp + i) == '|')
+		{
+			if (*(temp + i + 1) != '|')
+				break ;
+			else
+				i++;
+		}
+		i++;
+	}
+	if (i == (int)ft_strlen(temp))
+		return (-1);
+	return (i);
+}
+
 char	*add_str_between_pipe(char *str, char *add)
 {
 	char	*temp;
 	char	*new;
 
-	new = ft_strjoin(str, " | ");
-	if (new == 0)
+	temp = ft_strjoin(str, add);
+	if (temp == 0)
 		return (0);
-	temp = new;
-	new = ft_strjoin(temp, add);
+	new = ft_strjoin(temp, " | ");
 	if (new == 0)
 		return (0);
 	ft_free((void **)&temp);
@@ -18,38 +38,34 @@ char	*add_str_between_pipe(char *str, char *add)
 
 char	*make_cmd_pipe(char *content)
 {
-	char	**split;
-	char	*new;
+	char	*cmd;
 	char	*temp;
+	char	*new;
 	int		i;
+	int		j;
 
-	split = ft_split(content, '|');
-	if (split == 0)
-		return (0);
-	if (*split == 0)
-	{
-		ft_free_arr((char ***)&split);
+	j = 0;
+	i = get_index_pipe(content, j);
+	if (i < 0)
 		return (ft_strdup(content));
-	}
-	i = 1;
-	new = ft_strdup(split[0]);
-	if (new == 0)
+	new = ft_substr(content, j, i - j);
+	cmd = add_str_between_pipe("", new);
+	ft_free((void **)&new);
+	j = i + 1;
+	while (j < (int)ft_strlen(content))
 	{
-		ft_free_arr((char ***)&split);
-		return (0);
-	}
-	while (split[i] != 0)
-	{
-		temp = new;
-		new = add_str_between_pipe(temp, split[i]);
+		temp = cmd;
+		i = get_index_pipe(content, j);
+		if (i < 0)
+			break ;
+		new = ft_substr(content, j, i - j);
+		cmd = add_str_between_pipe(temp, new);
 		ft_free((void **)&temp);
-		if (new == 0)
-		{
-			ft_free_arr((char ***)&split);
-			return (0);
-		}
-		i++;
+		ft_free((void **)&new);
+		j = i + 1;
 	}
-	ft_free_arr((char ***)&split);
-	return (new);
+	temp = cmd;
+	cmd = ft_strjoin(temp, content + j);
+	ft_free((void **)&temp);
+	return (cmd);
 }
