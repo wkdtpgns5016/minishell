@@ -14,7 +14,7 @@ int	execute_builtin(char **cmd, t_ev *ev, int flag)
 	else if (flag == 4)
 		status = ft_export(cmd[1], ev);
 	else if (flag == 5)
-		status = ft_cd(cmd[1]);
+		status = ft_cd(cmd[1], ev->evl);
 	else if (flag == 6)
 		ft_exit(cmd[1]);
 	else if (flag == 7)

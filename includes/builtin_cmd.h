@@ -7,7 +7,7 @@ int		ft_env(t_list *l);
 int		ft_export(char *arg, t_ev *ev);
 int		ft_unset(char *arg, t_ev *ev);
 void	ft_exit(char *arg);
-int		ft_cd(char *path);
+int		ft_cd(char *path, t_list *evl);
 void	swap_s(char **s, int p, int c);
 void	sort_s(char **s, int len);
 void	write_s(char **s);
