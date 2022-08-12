@@ -58,6 +58,12 @@ typedef struct s_info
 	char	**envp;
 }	t_info;
 
+typedef struct s_builtin_info
+{
+	int		flag;
+	int		backup[2];
+}	t_builtin_info;
+
 void	ft_free(void **ptr);
 void	free_cmds(t_cmds **cmds);
 void	ft_free_arr(char ***arr);

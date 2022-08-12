@@ -11,7 +11,7 @@ int	ft_echo(int opt, char *arg)
 
 int	ft_pwd(void)
 {
-	char *path;
+	char	*path;
 
 	path = getcwd(NULL, 0);
 	if (!path)
@@ -24,20 +24,23 @@ int	ft_env(t_list *envl)
 {
 	while (envl)
 	{
-		printf("%s\n",(char *)envl->content);
+		printf("%s\n", (char *)envl->content);
 		envl = envl->next;
 	}
 	return (1);
 }
 
-void	ft_exit(char *arg)
+void	ft_exit(char *arg, int size)
 {
-	long long num;
-	int	mark;
-	char	*cpy;
+	long long	num;
+	int			mark;
+	char		*cpy;
 
 	if (!arg)
+	{
+		printf("exit\n");
 		exit(0);
+	}
 	cpy = arg;
 	while (9 <= *arg && *arg <= 13)
 		arg++;
@@ -52,18 +55,22 @@ void	ft_exit(char *arg)
 		num = num * 10 + (*(arg++)  - '0');
 	while (9 <= *arg && *arg <= 13)
 		arg++;
-	printf("exit\n");
 	if (*arg)
+	{
+		if (size == 1)
+			printf("exit\n");
 		error_excute("exit", cpy, "numeric argument required", 255);
+	}
+	printf("exit\n");
 	exit(num);
 }
 
 int	ft_cd(char *path, t_list *evl)
 {
-	char *home;
-	char *new_path;
-	int	ret;
-	
+	char	*home;
+	char	*new_path;
+	int		ret;
+
 	home = NULL;
 	ret = 0;
 	while (evl)
@@ -71,13 +78,13 @@ int	ft_cd(char *path, t_list *evl)
 		if (!memcmp("HOME=", evl->content, 5))
 		{
 			home = (char *)evl->content;
-			break;
+			break ;
 		}
 		evl = evl->next;
 	}
 	if (!path)
 		ret = chdir(home + 5);
-	else if(*path == '~')
+	else if (*path == '~')
 	{
 		if (!path[1])
 			ret = chdir(home + 5);
@@ -88,7 +95,7 @@ int	ft_cd(char *path, t_list *evl)
 			free(new_path);
 		}
 	}
-	else 
+	else
 		ret = chdir(path);
 	if (ret < 0)
 	{
