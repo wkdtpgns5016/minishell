@@ -24,7 +24,8 @@ int	ft_env(t_list *envl)
 {
 	while (envl)
 	{
-		printf("%s\n", (char *)envl->content);
+		if(strchr(envl->content, '='))
+			printf("%s\n", (char *)envl->content);
 		envl = envl->next;
 	}
 	return (1);
