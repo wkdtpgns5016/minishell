@@ -76,7 +76,7 @@ char	**l_to_p(t_list *evl)
 		s[++idx] = now->content;
 		now = now->next;
 	}
-	sort_s(s, len - 1);
+	sort_s(s, len);
 	return (s);
 }
 
