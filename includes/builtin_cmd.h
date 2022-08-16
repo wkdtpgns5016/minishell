@@ -17,5 +17,5 @@ int		check_num(long long num, int mark, char plus);
 int		switch_envl(t_list *new, t_list *now, t_list *last, t_list **l);
 int		delete_envl(char *arg, t_list *now, t_list *last, t_list **l);
 char	**l_to_p(t_list *evl);
-
+int	check_envl(char *now, char *new);
 #endif

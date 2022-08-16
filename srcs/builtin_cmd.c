@@ -70,7 +70,7 @@ int	ft_cd(char *path, t_list *evl)
 	char	*home;
 	char	*new_path;
 	int		ret;
-
+  
 	home = NULL;
 	ret = 0;
 	while (evl)
