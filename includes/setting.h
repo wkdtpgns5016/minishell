@@ -11,7 +11,9 @@ typedef struct s_ev
 
 }	t_ev;
 
-void	handler(int sig);
+void	main_handler(int sig);
+void	sub1_handler(int sig);
+void	sub2_handler(int sig);
 void	set_terminal(void);
 void	ret_terminal(void);
 void	get_ev(t_ev *ev, char **envp);

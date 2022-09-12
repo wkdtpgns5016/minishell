@@ -1,6 +1,25 @@
 #include "../includes/minishell.h"
 
-void	handler(int sig)
+void	sub1_handler(int sig)
+{
+	if (sig == CTRL_C)
+		printf("\n");
+	else if (sig == CTRL_SLASH)
+		printf("Quit : 3\n");
+}
+
+void	sub2_handler(int sig)
+{
+	if (sig == CTRL_C)
+		exit(130);
+	else if (sig == CTRL_SLASH)
+	{
+		printf("Quit : 3");
+		exit(131);
+	}
+}
+
+void	main_handler(int sig)
 {
 	if (sig == CTRL_C)
 	{
@@ -15,6 +34,7 @@ void	handler(int sig)
 		rl_redisplay();
 	}
 }
+
 
 void	set_terminal()
 {
