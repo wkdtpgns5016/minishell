@@ -18,7 +18,7 @@ int	child_process(t_cmds *cmds, char **envp, int backup[2])
 	{
 		close(cmds->fd[1]);
 		dup2(cmds->fd[0], 0);
-		waitpid(pid, 0, 0);
+		waitpid(pid, 0, WNOWAIT);
 	}
 	return (0);
 }
