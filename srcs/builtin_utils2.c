@@ -1,24 +1,5 @@
 #include "../includes/minishell.h"
 
-int	check_num(long long  num, int mark, char plus)
-{
-	if (num >= 922337203685477581)
-		return (0);
-	num *= 10;
-	if (mark > 0)
-	{
-		if (num > 9223372036854775807 - plus)
-			return (0);
-	}
-	else
-	{
-		if (num - 1 > 9223372036854775807 - plus)
-			return (0);
-	}
-	return (1);
-}
-
-
 int	check_envl(char *now, char *new)
 {
 	size_t	now_trash;
@@ -60,9 +41,9 @@ int	switch_envl(t_list *new, t_list *now, t_list *last, t_list **envl)
 
 char	**l_to_p(t_list *evl)
 {
-	int	len;
+	int		len;
 	char	**s;
-	int	idx;
+	int		idx;
 	t_list	*now;
 
 	len = ft_lstsize(evl);

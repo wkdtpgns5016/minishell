@@ -3,10 +3,7 @@
 int	check_builtin(char **cmd)
 {
 	if (ft_strncmp(*cmd, "echo", ft_strlen(*cmd)) == 0)
-	{
-		//if (ft_strncmp(*(cmd + 1), "-n", ft_strlen(*cmd)) == 0)
-			return (1);
-	}
+		return (1);
 	else if (ft_strncmp(*cmd, "env", ft_strlen(*cmd)) == 0)
 		return (2);
 	else if (ft_strncmp(*cmd, "pwd", ft_strlen(*cmd)) == 0)
@@ -76,7 +73,8 @@ void	exec_cmd(t_info *info)
 	size = get_size_cmds(cmds);
 	while (cmds != 0)
 	{
-		info->recent_exit_code = exec_controller(cmds, &info->ev, info->backup, size);
+		info->recent_exit_code = \
+			exec_controller(cmds, &info->ev, info->backup, size);
 		cmds = cmds->next;
 	}
 	exec_after(info->backup, info->cmds);

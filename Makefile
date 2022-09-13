@@ -6,7 +6,7 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/07/20 15:26:19 by sunwchoi         ###   ########.fr        #
+#    Updated: 2022/09/13 23:07:35 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/exec_builtin.c \
 				 srcs/builtin_cmd.c \
 				 srcs/builtin_cmd2.c \
+				 srcs/builtin_cmd3.c \
 				 srcs/builtin_utils.c \
 				 srcs/builtin_utils2.c \
 				 srcs/exec_utils.c \

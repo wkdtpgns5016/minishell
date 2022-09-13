@@ -23,12 +23,9 @@ int	main(int ac, char **av, char **envp)
 			printf("exit\n");
 			return (0);
 		}
-		 //data parsing 
 		set_info(&info, line);
-		//command processing 
 		exec_cmd(&info);
 		add_history(line);
-		 //free memmory 
 		free_cmds(&(info.cmds));
 		ft_free((void **)&line);
 	}

@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/07/20 14:45:01 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/14 01:53:09 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int		check_str_before_and_after(char **token_arr, int index);
 int		check_pipe(char **token_arr, int i);
 int		check_redir(char **token, int i);
 int		check_readline(char *line);
-void	convert_env(char **cmd, t_info *info);
+void	change_cmd(char **cmd, t_info	*info);
 char	**make_heredoc(char *content);
 
 #endif

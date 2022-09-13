@@ -31,7 +31,8 @@ void	sort_s(char **s, int len)
 			c = p * 2;
 			if (c <= last_idx && ft_memcmp(s[p], s[c], ft_strlen(s[p]) + 1) < 0)
 				swap_s(s, p, c);
-			if (c + 1 <= last_idx && ft_memcmp(s[p], s[c + 1], ft_strlen(s[p]) + 1) < 0)
+			if (c + 1 <= last_idx && \
+				ft_memcmp(s[p], s[c + 1], ft_strlen(s[p]) + 1) < 0)
 				swap_s(s, p, c + 1);
 			p++;
 		}
