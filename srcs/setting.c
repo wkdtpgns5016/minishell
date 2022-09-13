@@ -8,17 +8,6 @@ void	sub1_handler(int sig)
 		printf("Quit : 3\n");
 }
 
-void	sub2_handler(int sig)
-{
-	if (sig == CTRL_C)
-		exit(130);
-	else if (sig == CTRL_SLASH)
-	{
-		printf("Quit : 3");
-		exit(131);
-	}
-}
-
 void	main_handler(int sig)
 {
 	if (sig == CTRL_C)
@@ -35,30 +24,27 @@ void	main_handler(int sig)
 	}
 }
 
-
-void	set_terminal()
+void	set_terminal(void)
 {
-	struct termios new_term;
+	struct termios	new_term;
 
 	tcgetattr(0, &new_term);
 	new_term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, &new_term);
-
 }
 
-void	ret_terminal()
+void	ret_terminal(void)
 {
-	struct termios new_term;
+	struct termios	new_term;
 
 	tcgetattr(0, &new_term);
 	new_term.c_lflag &= ECHOCTL;
 	tcsetattr(0, TCSANOW, &new_term);
-
 }
 
 void	get_ev(t_ev *ev, char **envp)
 {
-	int	idx;
+	int		idx;
 	t_list	*new;
 	char	*content;
 	char	**p;

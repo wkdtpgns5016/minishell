@@ -14,7 +14,7 @@ t_cmds	*make_cmd(char *content, t_info *info)
 	if (cmd == 0)
 		return (0);
 	cmd->cmd = ft_split(content, ' ');
-	convert_env(cmd->cmd, info);
+	change_cmd(cmd->cmd, info);
 	cmd->next = 0;
 	cmd->pred = 0;
 	return (cmd);

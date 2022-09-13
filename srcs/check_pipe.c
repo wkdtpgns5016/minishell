@@ -32,7 +32,8 @@ int	check_pipe_after(char **token_arr, int index)
 	check = 0;
 	if (is_include_str(token_arr[index], "|", ft_strlen(token_arr[index])) == 0)
 	{
-		if (is_include_str(token_arr[index], "||", ft_strlen(token_arr[index])) == 0)
+		if (is_include_str(token_arr[index], "||", \
+			ft_strlen(token_arr[index])) == 0)
 			check = print_error_message_syntax("||");
 		else
 			check = print_error_message_syntax("|");
