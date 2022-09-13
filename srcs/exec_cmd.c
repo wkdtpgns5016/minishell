@@ -61,12 +61,44 @@ int	get_size_cmds(t_cmds *cmds)
 	return (size);
 }
 
+int	find_cmds_index(t_cmds *cmds, pid_t pid)
+{
+	int	index;
+
+	index = 0;
+	while (cmds != 0)
+	{
+		if (cmds->pid == pid)
+			return (index);
+		index++;
+		cmds = cmds->next;
+	}
+	return (0);
+}
+
+void	wait_child(t_cmds *cmds, int **exit_code)
+{
+	pid_t	pid;
+	int		status;
+	int		i;
+
+	status = 0;
+	pid = 0;
+	i = 0;
+	pid = waitpid(-1, &status, 0);
+	while (pid > 0)
+	{
+		i = find_cmds_index(cmds, pid);
+		(*exit_code)[i] = get_exit_status(status);
+		pid = waitpid(-1, &status, 0);
+	}
+}
+
 void	exec_cmd(t_info *info)
 {
 	t_cmds	*cmds;
 	int		size;
 	int		*exit_code;
-	int		i;
 
 	cmds = info->cmds;
 	if (cmds == 0)
@@ -76,14 +108,19 @@ void	exec_cmd(t_info *info)
 	if (info->recent_exit_code != 0)
 		ft_free((void **)&info->recent_exit_code);
 	exit_code = (int *)malloc(sizeof(int) * (size + 1));
-	i = 0;
 	while (cmds != 0)
 	{
-		exit_code[i] = exec_controller(cmds, &info->ev, info->backup, size);
+		exec_controller(cmds, &info->ev, info->backup, size);
 		cmds = cmds->next;
-		i++;
 	}
-	exit_code[i] = -1;
+	wait_child(info->cmds, &exit_code);
+	exit_code[size] = -1;
 	info->recent_exit_code = exit_code;
 	exec_after(info->backup, info->cmds);
+	int i = 0;
+	while (i < size)
+	{
+		printf("%d ", info->recent_exit_code[i++]);
+	}
+	printf("\n");
 }

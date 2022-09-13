@@ -45,6 +45,7 @@ typedef struct s_cmds
 {
 	char			**cmd;
 	int				fd[2];
+	pid_t			pid;
 	struct s_cmds	*next;
 	struct s_cmds	*pred;
 }	t_cmds;

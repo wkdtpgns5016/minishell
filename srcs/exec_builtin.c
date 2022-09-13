@@ -33,6 +33,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	int		status;
 
 	pid = fork();
+	cmds->pid = pid;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
@@ -47,7 +48,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	{
 		close(cmds->fd[1]);
 		dup2(cmds->fd[0], 0);
-		waitpid(pid, 0, 0);
+		//waitpid(pid, 0, 0);
 	}
 	return (0);
 }
@@ -58,6 +59,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	int		status;
 
 	pid = fork();
+	cmds->pid = pid;
 	status = 0;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
@@ -69,7 +71,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	}
 	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
+		//waitpid(pid, &status, 0);
 	}
 	return (get_exit_status(status));
 }

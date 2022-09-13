@@ -11,6 +11,7 @@ int	child_process(t_cmds *cmds, char **envp)
 	int		status;
 
 	pid = fork();
+	cmds->pid = pid;
 	status = 0;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
@@ -25,7 +26,7 @@ int	child_process(t_cmds *cmds, char **envp)
 	{
 		close(cmds->fd[1]);
 		dup2(cmds->fd[0], 0);
-		waitpid(pid, &status, WNOWAIT);
+		//waitpid(pid, &status, 0);
 	}
 	return (get_exit_status(status));
 }
@@ -36,6 +37,7 @@ int	last_process(t_cmds *cmds, char **envp)
 	int		status;
 
 	pid = fork();
+	cmds->pid = pid;
 	status = 0;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
@@ -46,7 +48,7 @@ int	last_process(t_cmds *cmds, char **envp)
 	}
 	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
+		//waitpid(pid, &status, 0);
 	}
 	return (get_exit_status(status));
 }
