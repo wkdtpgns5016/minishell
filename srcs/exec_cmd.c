@@ -31,7 +31,7 @@ int	exec_controller(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 	if (flag > 0)
 		status = exec_builtin(cmds, ev, backup, size);
 	else
-		status = exec_another(cmds, ev->evp, backup);
+		status = exec_another(cmds, ev->evp);
 	return (status);
 }
 
@@ -48,6 +48,7 @@ void	exec_after(int backup[2], t_cmds *cmds)
 		close(temp->fd[1]);
 		temp = temp->next;
 	}
+	unlink("./here_doc");
 }
 
 int	get_size_cmds(t_cmds *cmds)
@@ -76,7 +77,6 @@ void	exec_cmd(t_info *info)
 	while (cmds != 0)
 	{
 		info->recent_exit_code = exec_controller(cmds, &info->ev, info->backup, size);
-		unlink("./here_doc");
 		cmds = cmds->next;
 	}
 	exec_after(info->backup, info->cmds);
