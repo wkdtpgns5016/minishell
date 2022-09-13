@@ -105,5 +105,6 @@ int		check_str_before_and_after(char **token_arr, int index);
 int		check_pipe(char **token_arr, int i);
 int		check_redir(char **token, int i);
 int		check_readline(char *line);
-void    convert_env(char **cmd, t_list* evl);
+void    convert_env(char **cmd, t_info* info);
+
 #endif

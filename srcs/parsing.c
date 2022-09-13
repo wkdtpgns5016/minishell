@@ -6,7 +6,7 @@ void	set_info_backup_fd(t_info *info)
 	info->backup[1] = dup(1);
 }
 
-t_cmds	*make_cmd(char *content, t_list *evl)
+t_cmds	*make_cmd(char *content, t_info *info)
 {
 	t_cmds	*cmd;
 
@@ -14,7 +14,7 @@ t_cmds	*make_cmd(char *content, t_list *evl)
 	if (cmd == 0)
 		return (0);
 	cmd->cmd = ft_split(content, ' ');
-	convert_env(cmd->cmd, evl),
+	convert_env(cmd->cmd, info);
 	cmd->next = 0;
 	cmd->pred = 0;
 	return (cmd);
@@ -59,7 +59,7 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		return (0);
 	while (cmds[i] != 0)
 	{
-		add_cmd_back(&cmd_list, make_cmd(cmds[i], info->ev.evl));
+		add_cmd_back(&cmd_list, make_cmd(cmds[i], info));
 		ft_free((void **)(&(cmds[i])));
 		i++;
 	}
