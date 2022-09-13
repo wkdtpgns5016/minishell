@@ -8,12 +8,14 @@ int	main(int ac, char **av, char **envp)
 	if (ac < 1 || av == 0 || envp == 0)
 		exit(1);
 	set_terminal();
-	signal(CTRL_C, handler);
-	signal(CTRL_SLASH, handler);
 	get_ev(&info.ev, envp);
 	while (1)
 	{
+		signal(CTRL_C, main_handler);
+		signal(CTRL_SLASH, main_handler);
 		line = readline("minishell$ ");
+		signal(CTRL_C, sub1_handler);
+		signal(CTRL_SLASH, sub1_handler);
 		if (!line)
 		{
 			printf("\033[1A");
