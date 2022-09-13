@@ -50,7 +50,11 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		return (0);
 	if (check_readline(new))
 	{
-		info->recent_exit_code = 258;
+		if (info->recent_exit_code != 0)
+			ft_free((void **)&info->recent_exit_code);
+		info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+		info->recent_exit_code[0] = 258;
+		info->recent_exit_code[1] = -1;
 		return (0);
 	}
 	cmds = ft_split(new, '|');
