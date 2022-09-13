@@ -1,10 +1,17 @@
 #include "../includes/minishell.h"
 
+int	get_exit_status(int status)
+{
+	return (((status) & 0xff00) >> 8);
+}
+
 int	child_process(t_cmds *cmds, char **envp)
 {
 	pid_t	pid;
+	int		status;
 
 	pid = fork();
+	status = 0;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
@@ -18,14 +25,9 @@ int	child_process(t_cmds *cmds, char **envp)
 	{
 		close(cmds->fd[1]);
 		dup2(cmds->fd[0], 0);
-		waitpid(pid, 0, WNOWAIT);
+		waitpid(pid, &status, WNOWAIT);
 	}
-	return (0);
-}
-
-int	get_exit_status(int status)
-{
-	return (((status) & 0xff00) >> 8);
+	return (get_exit_status(status));
 }
 
 int	last_process(t_cmds *cmds, char **envp)
@@ -60,7 +62,7 @@ int	exec_another(t_cmds *cmds, char **envp)
 		return (1);
 	}
 	if (cmds->next != 0)
-		child_process(cmds, envp);
+		status = child_process(cmds, envp);
 	else
 		status = last_process(cmds, envp);
 	return (status);

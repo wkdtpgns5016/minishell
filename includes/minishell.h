@@ -54,7 +54,7 @@ typedef struct s_info
 	t_cmds	*cmds;
 	t_ev	ev;
 	int		backup[2];
-	int		recent_exit_code;
+	int		*recent_exit_code;
 	char	**envp;
 }	t_info;
 
