@@ -37,7 +37,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds, info.backup);
+		redirection(cmds);
 		close(cmds->fd[0]);
 		dup2(cmds->fd[1], 1);
 		status = execute_builtin(cmds->cmd, ev, info.flag, size);
@@ -63,7 +63,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds, info.backup);
+		redirection(cmds);
 		status = execute_builtin(cmds->cmd, ev, info.flag, size);
 		exit(status);
 	}
@@ -78,7 +78,7 @@ int	solo_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 {
 	int	status;
 
-	redirection(cmds, info.backup);
+	redirection(cmds);
 	status = execute_builtin(cmds->cmd, ev, info.flag, size);
 	return (status);
 }

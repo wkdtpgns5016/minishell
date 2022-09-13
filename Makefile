@@ -24,6 +24,7 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/parsing_utils2.c \
 				 srcs/parsing_utils3.c \
 				 srcs/parsing_utils4.c \
+				 srcs/parsing_utils5.c \
 				 srcs/ft_free.c \
 				 srcs/exec_cmd.c \
 				 srcs/exec_another.c \
