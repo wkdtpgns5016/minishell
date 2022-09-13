@@ -2,11 +2,6 @@
 
 void	terminate_dollar(char *dollar)
 {
-	if (dollar[0] == '?')
-	{
-		dollar[1] = 0;
-		return ;
-	}
 	while (*dollar)
 	{
 		if (!(ft_isalnum((int)*dollar) || *dollar == '_'))
@@ -16,8 +11,6 @@ void	terminate_dollar(char *dollar)
 		}
 		dollar++;
 	}
-	
-
 }
 
 char	*change_cmd(char *cmd, char *env, int org_size)//
@@ -50,11 +43,13 @@ char	*change_cmd(char *cmd, char *env, int org_size)//
 	return (new_cmd);
 }
 
-void	convert_env(char **cmd, t_list* evl)
+void	convert_env(char **cmd, t_info *info)
 {
 	char *dollar;
 	char *new_cmd;
+	t_list *evl;
 
+	evl = info->ev.evl;
 	dollar = NULL;
 	while (*cmd)
 	{
@@ -64,7 +59,15 @@ void	convert_env(char **cmd, t_list* evl)
 			dollar = ft_strdup(dollar + 1);
 			if (!dollar)
 				exit(1);
-			terminate_dollar(dollar);
+			else if (*dollar == '?')
+			{
+				new_cmd = ft_itoa(info->recent_exit_code);
+				if (!new_cmd)
+					exit(1);
+			}
+			else
+			{
+				terminate_dollar(dollar);
 			while (evl)
 			{
 				if (check_envl(evl->content, dollar))
@@ -75,6 +78,7 @@ void	convert_env(char **cmd, t_list* evl)
 				new_cmd = change_cmd(*cmd, " ", ft_strlen(dollar));
 			else
 				new_cmd = change_cmd(*cmd, evl->content, ft_strlen(dollar));
+			}
 			free(*cmd);
 			*cmd = new_cmd;
 			free(dollar);
