@@ -60,7 +60,7 @@ void	dollar2env(char **cmd, t_info *info)
 	if (!dollar)
 		exit(1);
 	else if (*dollar == '?')
-		new_cmd = ft_itoa(info->recent_exit_code);
+		new_cmd = ft_itoa(*info->recent_exit_code);
 	else
 		new_cmd = make_new_cmd(*cmd, change_dollar(dollar, \
 			info->ev.evl), ft_strlen(dollar));

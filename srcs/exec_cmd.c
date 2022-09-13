@@ -65,17 +65,25 @@ void	exec_cmd(t_info *info)
 {
 	t_cmds	*cmds;
 	int		size;
+	int		*exit_code;
+	int		i;
 
 	cmds = info->cmds;
 	if (cmds == 0)
 		return ;
 	set_info_backup_fd(info);
 	size = get_size_cmds(cmds);
+	if (info->recent_exit_code != 0)
+		ft_free((void **)&info->recent_exit_code);
+	exit_code = (int *)malloc(sizeof(int) * (size + 1));
+	i = 0;
 	while (cmds != 0)
 	{
-		info->recent_exit_code = \
-			exec_controller(cmds, &info->ev, info->backup, size);
+		exit_code[i] = exec_controller(cmds, &info->ev, info->backup, size);
 		cmds = cmds->next;
+		i++;
 	}
+	exit_code[i] = -1;
+	info->recent_exit_code = exit_code;
 	exec_after(info->backup, info->cmds);
 }
