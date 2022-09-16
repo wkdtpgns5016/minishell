@@ -34,6 +34,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 
 	pid = fork();
 	cmds->pid = pid;
+	status = 0;
 	if (pid == -1)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
@@ -48,9 +49,9 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	{
 		close(cmds->fd[1]);
 		dup2(cmds->fd[0], 0);
-		//waitpid(pid, 0, 0);
+		close(cmds->fd[0]);
 	}
-	return (0);
+	return (status);
 }
 
 int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
@@ -69,11 +70,7 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 		status = execute_builtin(cmds->cmd, ev, info.flag, size);
 		exit(status);
 	}
-	else if (pid > 0)
-	{
-		//waitpid(pid, &status, 0);
-	}
-	return (get_exit_status(status));
+	return (status);
 }
 
 int	solo_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
@@ -94,13 +91,15 @@ int	exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 	builtin_info.flag = check_builtin(cmds->cmd);
 	builtin_info.backup[0] = backup[0];
 	builtin_info.backup[1] = backup[1];
-	if (pipe(cmds->fd) == -1)
-	{
-		printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
-		return (1);
-	}
 	if (cmds->next != 0)
+	{
+		if (pipe(cmds->fd) == -1)
+		{
+			printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
+			exit(1);
+		}
 		child_builtin(cmds, ev, builtin_info, size);
+	}
 	else
 	{
 		if (size == 1)

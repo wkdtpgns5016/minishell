@@ -24,11 +24,12 @@ int	exec_controller(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 	int	status;
 	int	flag;
 
+	status = 0;
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
 		status = exec_builtin(cmds, ev, backup, size);
 	else
-		status = exec_another(cmds, ev->evp);
+		exec_another(cmds, ev->evp);
 	return (status);
 }
 
@@ -41,10 +42,14 @@ void	exec_after(int backup[2], t_cmds *cmds)
 	dup2(backup[1], 1);
 	while (temp != 0)
 	{
+		if (temp->next == 0)
+			break ;
 		close(temp->fd[0]);
 		close(temp->fd[1]);
 		temp = temp->next;
 	}
+	close(backup[0]);
+	close(backup[1]);
 	unlink("./here_doc");
 }
 
@@ -59,39 +64,6 @@ int	get_size_cmds(t_cmds *cmds)
 		cmds = cmds->next;
 	}
 	return (size);
-}
-
-int	find_cmds_index(t_cmds *cmds, pid_t pid)
-{
-	int	index;
-
-	index = 0;
-	while (cmds != 0)
-	{
-		if (cmds->pid == pid)
-			return (index);
-		index++;
-		cmds = cmds->next;
-	}
-	return (0);
-}
-
-void	wait_child(t_cmds *cmds, int **exit_code)
-{
-	pid_t	pid;
-	int		status;
-	int		i;
-
-	status = 0;
-	pid = 0;
-	i = 0;
-	pid = waitpid(-1, &status, 0);
-	while (pid > 0)
-	{
-		i = find_cmds_index(cmds, pid);
-		(*exit_code)[i] = get_exit_status(status);
-		pid = waitpid(-1, &status, 0);
-	}
 }
 
 void	exec_cmd(t_info *info)

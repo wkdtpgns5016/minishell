@@ -12,74 +12,53 @@
 
 #include "../includes/minishell.h"
 
-char	**find_path(char **envp, char *key)
+void	close_pipe(t_cmds *cmds, int index)
 {
-	char	**arr;
-	char	*path;
-	int		i;
+	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (i < index)
 	{
-		if (ft_strnstr(envp[i], key, ft_strlen(envp[i])))
-		{
-			path = ft_substr(envp[i], ft_strlen(key), ft_strlen(envp[i]));
-			if (path == 0)
-				return (0);
-			break ;
-		}
+		cmds = cmds->next;
 		i++;
 	}
-	arr = ft_split(path, ':');
-	if (arr == 0)
-		return (0);
-	ft_free((void **)&path);
-	return (arr);
+	close(cmds->fd[1]);
+	close(cmds->fd[0]);
 }
 
-char	*find_cmd(char **cmd_arg, char **envp)
+int	find_cmds_index(t_cmds *cmds, pid_t pid)
 {
+	int	index;
+
+	index = 0;
+	while (cmds != 0)
+	{
+		if (cmds->pid == pid)
+			return (index);
+		index++;
+		cmds = cmds->next;
+	}
+	return (0);
+}
+
+void	wait_child(t_cmds *cmds, int **exit_code)
+{
+	pid_t	pid;
+	int		status;
 	int		i;
-	char	*cmd;
-	char	*temp;
-	char	**path;
 
+	status = 0;
+	pid = 0;
 	i = 0;
-	path = find_path(envp, "PATH=");
-	if (path == 0)
-		return (0);
-	while (path[i])
+	pid = waitpid(-1, &status, 0);
+	while (pid > 0)
 	{
-		temp = ft_strjoin(path[i], "/");
-		if (temp == 0)
-			return (0);
-		cmd = ft_strjoin(temp, cmd_arg[0]);
-		ft_free((void **)&temp);
-		if (cmd == 0)
-			return (0);
-		if (access(cmd, X_OK) == 0)
-			break ;
-		ft_free((void **)&cmd);
-		i++;
-	}
-	ft_free_arr(&path);
-	return (cmd);
-}
-
-void	execute_cmd(char **cmd, char **envp)
-{
-	char	*cmd_path;
-
-	if (access(*cmd, X_OK) == 0)
-		cmd_path = ft_strdup(*cmd);
-	else
-		cmd_path = find_cmd(cmd, envp);
-	if (cmd_path == 0)
-	{
-		error_excute(*cmd, 0, "command not found", 127);
-	}
-	if (execve(cmd_path, cmd, envp) == -1)
-	{
-		error_excute(*cmd, 0, strerror(errno), errno);
+		i = find_cmds_index(cmds, pid);
+		close_pipe(cmds, i);
+		if (is_exit_by_signal(status))
+			(*exit_code)[i] = 128 + get_exit_signal_number(status);
+		else
+			(*exit_code)[i] = get_exit_status(status);
+		pid = waitpid(-1, &status, 0);
 	}
 }

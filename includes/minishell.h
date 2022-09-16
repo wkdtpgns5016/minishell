@@ -41,6 +41,9 @@
 # define OUTPUT_APPAND_REDIR 4
 # define PIPE_LINE 5
 
+/*
+** struct define
+*/
 typedef struct s_cmds
 {
 	char			**cmd;
@@ -65,11 +68,12 @@ typedef struct s_builtin_info
 	int		backup[2];
 }	t_builtin_info;
 
+/*
+** ft_free.c
+*/
 void	ft_free(void **ptr);
 void	free_cmds(t_cmds **cmds);
 void	ft_free_arr(char ***arr);
-
-//t_info	set_info(t_info info, char **line);
 
 void	set_info(t_info *info, char *line);
 t_cmds	*set_cmds(t_info *info, char *line);
@@ -90,12 +94,17 @@ int		is_num_str(char *str);
 void	redirection(t_cmds *cmds);
 
 int		exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size);
-int		exec_another(t_cmds *cmds, char **envp);
+void	exec_another(t_cmds *cmds, char **envp);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);
-int		get_exit_status(int status);
 int		check_builtin(char **cmd);
+
+void	wait_child(t_cmds *cmds, int **exit_code);
+
+int		get_exit_status(int status);
+int		is_exit_by_signal(int status);
+int		get_exit_signal_number(int status);
 
 void	error_excute(char *cmd, char *token, char *msg, int exit_code);
 int		print_error_message_syntax(char *token);
