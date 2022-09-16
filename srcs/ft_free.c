@@ -51,5 +51,4 @@ void	free_cmds(t_cmds **cmds)
 		ft_free((void **)(&temp));
 		temp = next;
 	}
-	//ft_free((void **)cmds);
 }
