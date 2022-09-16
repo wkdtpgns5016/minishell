@@ -80,7 +80,7 @@ t_cmds	*set_cmds(t_info *info, char *line);
 
 char	*make_cmd_redir(char *content);
 char	*make_cmd_pipe(char *content);
-char	*make_cmd_pipe_amd_redir(char *line);
+char	*make_cmd_pipe_amd_redir(t_info *info, char *line);
 int		check_last_pipe(char *line);
 
 char	**remove_redir(char **cmd, int start, int end);
