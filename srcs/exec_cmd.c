@@ -24,11 +24,12 @@ int	exec_controller(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 	int	status;
 	int	flag;
 
+	status = 0;
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
 		status = exec_builtin(cmds, ev, backup, size);
 	else
-		status = exec_another(cmds, ev->evp);
+		exec_another(cmds, ev->evp);
 	return (status);
 }
 
@@ -41,10 +42,14 @@ void	exec_after(int backup[2], t_cmds *cmds)
 	dup2(backup[1], 1);
 	while (temp != 0)
 	{
+		if (temp->next == 0)
+			break ;
 		close(temp->fd[0]);
 		close(temp->fd[1]);
 		temp = temp->next;
 	}
+	close(backup[0]);
+	close(backup[1]);
 	unlink("./here_doc");
 }
 
@@ -66,7 +71,6 @@ void	exec_cmd(t_info *info)
 	t_cmds	*cmds;
 	int		size;
 	int		*exit_code;
-	int		i;
 
 	cmds = info->cmds;
 	if (cmds == 0)
@@ -76,14 +80,19 @@ void	exec_cmd(t_info *info)
 	if (info->recent_exit_code != 0)
 		ft_free((void **)&info->recent_exit_code);
 	exit_code = (int *)malloc(sizeof(int) * (size + 1));
-	i = 0;
 	while (cmds != 0)
 	{
-		exit_code[i] = exec_controller(cmds, &info->ev, info->backup, size);
+		exec_controller(cmds, &info->ev, info->backup, size);
 		cmds = cmds->next;
-		i++;
 	}
-	exit_code[i] = -1;
+	wait_child(info->cmds, &exit_code);
+	exit_code[size] = -1;
 	info->recent_exit_code = exit_code;
 	exec_after(info->backup, info->cmds);
+	int i = 0;
+	while (i < size)
+	{
+		printf("%d ", info->recent_exit_code[i++]);
+	}
+	printf("\n");
 }
