@@ -107,6 +107,7 @@ int		is_exit_by_signal(int status);
 int		get_exit_signal_number(int status);
 
 void	error_excute(char *cmd, char *token, char *msg, int exit_code);
+void	print_error_message(char *cmd, char *msg);
 int		print_error_message_syntax(char *token);
 void	print_error_message_with_token(char *cmd, char *token, char *msg);
 
