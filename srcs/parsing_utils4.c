@@ -55,12 +55,16 @@ void	dollar2env(char **cmd, t_info *info)
 {
 	char	*dollar;
 	char	*new_cmd;
+	int		i;
 
 	dollar = ft_strdup(ft_strchr(*cmd, '$') + 1);
+	i = 0;
+	while (info->recent_exit_code[i] >= 0)
+		i++;
 	if (!dollar)
 		exit(1);
 	else if (*dollar == '?')
-		new_cmd = ft_itoa(*info->recent_exit_code);
+		new_cmd = ft_itoa(info->recent_exit_code[i - 1]);
 	else
 		new_cmd = make_new_cmd(*cmd, change_dollar(dollar, \
 			info->ev.evl), ft_strlen(dollar));
@@ -74,16 +78,16 @@ void	dollar2env(char **cmd, t_info *info)
 
 void	pipestatus(char **cmd, int *status)
 {
-	char *main;
-	char *sub1;
-	char *sub2;
+	char	*main;
+	char	*sub1;
+	char	*sub2;
 
 	main = ft_itoa(*status);
 	sub1 = main;
 	while (*++status >= 0)
 	{
 		sub2 = ft_strjoin(" ", ft_itoa(*status));
-		main = ft_strjoin(sub1, ft_strjoin(" ", sub2));
+		main = ft_strjoin(sub1, sub2);
 		free(sub1);
 		free(sub2);
 		sub1 = main;
@@ -96,11 +100,11 @@ void	change_cmd(char **cmd, t_info *info)
 	while (*cmd)
 	{
 		if (ft_strchr(*cmd, '$'))
-		{/*
+		{
 			if (!ft_memcmp(*cmd, "${PIPESTATUS[@]}", ft_strlen(*cmd)))
 				pipestatus(cmd, info->recent_exit_code);
 			else
-		*/		dollar2env(cmd, info);
+				dollar2env(cmd, info);
 		}	
 		else
 			cmd++;

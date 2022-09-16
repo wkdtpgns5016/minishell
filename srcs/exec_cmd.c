@@ -89,10 +89,4 @@ void	exec_cmd(t_info *info)
 	exit_code[size] = -1;
 	info->recent_exit_code = exit_code;
 	exec_after(info->backup, info->cmds);
-	int i = 0;
-	while (i < size)
-	{
-		printf("%d ", info->recent_exit_code[i++]);
-	}
-	printf("\n");
 }
