@@ -41,6 +41,8 @@
 # define OUTPUT_APPAND_REDIR 4
 # define PIPE_LINE 5
 
+# define HERE_DOC_PATH "../here_doc"
+
 /*
 ** struct define
 */

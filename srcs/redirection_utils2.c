@@ -31,7 +31,7 @@ void	process_redir(char **cmd, int flag, int index)
 	else if (flag == HERE_DOC_REDIR)
 	{
 		get_heredoc(*(cmd + index + 1));
-		in_redir(0, "here_doc");
+		in_redir(0, HERE_DOC_PATH);
 	}
 	else if (flag == OUTPUT_TRUNC_REDIR)
 		out_redir(1, *(cmd + index + 1), 0);
