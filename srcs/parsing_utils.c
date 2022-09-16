@@ -135,7 +135,19 @@ char	*make_cmd_pipe_amd_redir(t_info *info, char *line)
 	while (check_last_pipe(new))
 	{
 		temp = new;
+		// 여기서 시그널 ctrl+d가 감지되면 에러처리 되도록 가능한지?
 		add = readline("> ");
+		// 임시조치
+		if (add == 0)
+		{
+			print_error_message("\rsyntax error", "unexpected end of file");
+			if (info->recent_exit_code != 0)
+				ft_free((void **)&info->recent_exit_code);
+			info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+			info->recent_exit_code[0] = 258;
+			info->recent_exit_code[1] = -1;
+			return (0);
+		}
 		new = ft_strjoin(temp, add);
 		ft_free((void **)&temp);
 		temp = make_cmd_redir(new);
