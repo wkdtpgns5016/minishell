@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 NAME = libft.a
 SRCS = ft_atoi.c \
