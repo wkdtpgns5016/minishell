@@ -129,6 +129,7 @@ char	*make_cmd_pipe_amd_redir(t_info *info, char *line)
 		info->recent_exit_code[1] = -1;
 		return (0);
 	}
+	ft_free_arr(&word);
 	temp = make_cmd_redir(line);
 	new = make_cmd_pipe(temp);
 	ft_free((void **)&temp);

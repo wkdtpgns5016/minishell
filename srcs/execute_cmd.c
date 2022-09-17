@@ -19,6 +19,7 @@ char	**find_path(char **envp, char *key)
 	int		i;
 
 	i = 0;
+	path = 0;
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], key, ft_strlen(envp[i])))
@@ -30,6 +31,8 @@ char	**find_path(char **envp, char *key)
 		}
 		i++;
 	}
+	if (path == 0)
+		return (0);
 	arr = ft_split(path, ':');
 	if (arr == 0)
 		return (0);
