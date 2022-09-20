@@ -31,10 +31,10 @@ void	ft_free_arr(char ***arr)
 		while ((*arr)[i] != 0)
 		{
 			if ((*arr)[i] != 0)
-				ft_free((void *)&((*arr)[i]));
+				ft_free((void **)&((*arr)[i]));
 			i++;
 		}
-		ft_free((void *)arr);
+		ft_free((void **)arr);
 	}
 }
 
