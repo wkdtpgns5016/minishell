@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int	g_signal_flag;
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*line;
@@ -23,6 +25,7 @@ int	main(int ac, char **av, char **envp)
 	get_ev(&info.ev, envp);
 	while (1)
 	{
+		g_signal_flag = 0;
 		signal(CTRL_C, main_handler);
 		signal(CTRL_SLASH, main_handler);
 		line = readline("minishell$ ");
@@ -38,6 +41,7 @@ int	main(int ac, char **av, char **envp)
 		set_info(&info, line);
 		exec_cmd(&info);
 		add_history(line);
+		unlink("./here_doc");
 		free_cmds(&(info.cmds));
 		ft_free((void **)&line);
 	}

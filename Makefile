@@ -28,6 +28,7 @@ SRCS_MANDATORY = srcs/setting.c \
 				 srcs/ft_free.c \
 				 srcs/execute_cmd.c \
 				 srcs/exec_cmd.c \
+				 srcs/exec_cmd_utils.c \
 				 srcs/exec_another.c \
 				 srcs/exec_builtin.c \
 				 srcs/wait_status.c \

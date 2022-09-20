@@ -121,11 +121,8 @@ char	*make_cmd_pipe_amd_redir(t_info *info, char *line)
 	if (i == 1 && ft_strncmp(*word, "|", 1) == 0)
 	{
 		print_error_message_syntax("|");
-		if (info->recent_exit_code != 0)
-			ft_free((void **)&info->recent_exit_code);
-		info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 		info->recent_exit_code[0] = 258;
-		info->recent_exit_code[1] = -1;
 		ft_free_arr(&word);
 		return (0);
 	}

@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int	g_signal_flag;
+
 int	get_last_index_arr(char **arr)
 {
 	int	i;
@@ -45,20 +47,26 @@ char	*add_last_cmd(char *str, t_info *info)
 	char	*temp;
 	char	*new;
 	char	*add;
+	int		backup;
 
 	new = str;
+	g_signal_flag = 1;
+	backup = dup(0);
 	while (check_last_pipe(new))
 	{
 		temp = new;
 		add = readline("> ");
 		if (add == 0)
 		{
+			if (g_signal_flag == 2)
+			{
+				dup2(backup, 0);
+				close(backup);
+				return (0);
+			}
 			print_error_message("\rsyntax error", "unexpected end of file");
-			if (info->recent_exit_code != 0)
-				ft_free((void **)&info->recent_exit_code);
-			info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+			info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 			info->recent_exit_code[0] = 258;
-			info->recent_exit_code[1] = -1;
 			return (0);
 		}
 		new = ft_strjoin(temp, add);
