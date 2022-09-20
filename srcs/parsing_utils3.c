@@ -39,3 +39,35 @@ int	check_last_pipe(char *line)
 	ft_free_arr((char ***)&arr);
 	return (0);
 }
+
+char	*add_last_cmd(char *str, t_info *info)
+{
+	char	*temp;
+	char	*new;
+	char	*add;
+
+	new = str;
+	while (check_last_pipe(new))
+	{
+		temp = new;
+		add = readline("> ");
+		if (add == 0)
+		{
+			print_error_message("\rsyntax error", "unexpected end of file");
+			if (info->recent_exit_code != 0)
+				ft_free((void **)&info->recent_exit_code);
+			info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+			info->recent_exit_code[0] = 258;
+			info->recent_exit_code[1] = -1;
+			return (0);
+		}
+		new = ft_strjoin(temp, add);
+		ft_free((void **)&add);
+		ft_free((void **)&temp);
+		temp = make_cmd_redir(new);
+		ft_free((void **)&new);
+		new = make_cmd_pipe(temp);
+		ft_free((void **)&temp);
+	}
+	return (new);
+}

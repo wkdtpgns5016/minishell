@@ -84,6 +84,7 @@ char	*make_cmd_redir(char *content);
 char	*make_cmd_pipe(char *content);
 char	*make_cmd_pipe_amd_redir(t_info *info, char *line);
 int		check_last_pipe(char *line);
+char	*add_last_cmd(char *str, t_info *info);
 
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);

@@ -42,6 +42,8 @@ int	check_pipe_after(char **token_arr, int index)
 	int	check;
 
 	check = 0;
+	if (token_arr[index] == 0)
+		return (check);
 	if (is_include_str(token_arr[index], "|", ft_strlen(token_arr[index])) == 0)
 	{
 		if (is_include_str(token_arr[index], "||", \
