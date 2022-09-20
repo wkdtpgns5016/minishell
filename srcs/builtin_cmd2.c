@@ -33,6 +33,7 @@ int	ft_unset(char *arg, t_ev *ev)
 		last = now;
 		now = now->next;
 	}
+	ft_free((void **)&(ev->evp));
 	if (now)
 		ev->evp = l_to_p(ev->evl);
 	return (0);
@@ -63,6 +64,7 @@ int	ft_export(char *arg, t_ev *ev)
 	}
 	if (!now)
 		ft_lstadd_back(&ev->evl, new);
+	ft_free((void **)&(ev->evp));
 	ev->evp = l_to_p(ev->evl);
 	return (0);
 }
