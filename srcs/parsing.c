@@ -53,6 +53,7 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	t_cmds	*cmd_list;
 	char	**cmds;
 	char	*new;
+	char	*temp;
 	int		i;
 
 	cmd_list = 0;
@@ -67,6 +68,14 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
 		info->recent_exit_code[0] = 258;
 		info->recent_exit_code[1] = -1;
+		ft_free((void **)&new);
+		return (0);
+	}
+	temp = new;
+	new = add_last_cmd(temp, info);
+	if (new == 0)
+	{
+		ft_free((void **)&temp);
 		return (0);
 	}
 	cmds = ft_split(new, '|');
