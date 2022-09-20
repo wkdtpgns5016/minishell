@@ -18,12 +18,7 @@ int	execute_builtin(char **cmd, t_ev *ev, int flag, int size)
 
 	status = 0;
 	if (flag == 1)
-	{
-		if (!ft_memcmp(cmd[1], "-n", 3))
-			status = ft_echo(1, cmd[2]);
-		else
-			status = ft_echo(0, cmd[1]);
-	}
+		status = excute_echo(cmd);
 	else if (flag == 2)
 		status = ft_env(ev->evl);
 	else if (flag == 3)

@@ -12,6 +12,22 @@
 
 #include "../includes/minishell.h"
 
+int	excute_echo(char **cmd)
+{
+	int	status;
+
+	if (cmd[1] != 0)
+	{
+		if (!ft_memcmp(cmd[1], "-n", 3))
+			status = ft_echo(1, cmd[2]);
+		else
+			status = ft_echo(0, cmd[1]);
+	}
+	else
+		status = ft_echo(0, cmd[1]);
+	return (status);
+}
+
 int	ft_echo(int opt, char *arg)
 {
 	if (arg)
