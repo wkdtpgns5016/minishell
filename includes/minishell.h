@@ -96,6 +96,8 @@ void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 void	redirection(t_cmds *cmds);
 
+int		*make_exit_code(int	**arr, int size);
+
 int		exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size);
 void	exec_another(t_cmds *cmds, char **envp);
 void	exec_cmd(t_info *info);

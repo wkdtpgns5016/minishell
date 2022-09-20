@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int	g_signal_flag;
+
 void	in_redir(int dst, char *infile)
 {
 	int	infile_fd;
@@ -26,7 +28,10 @@ void	get_heredoc(char *limiter)
 	int		fd;
 	int		size;
 	int		flag;
+	int		backup;
 
+	g_signal_flag = 1;
+	backup = dup(0);
 	flag = 0;
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
@@ -54,6 +59,8 @@ void	get_heredoc(char *limiter)
 		if (flag)
 			break ;
 	}
+	dup2(backup, 0);
+	close(backup);
 	close(fd);
 }
 

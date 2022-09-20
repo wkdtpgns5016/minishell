@@ -12,11 +12,18 @@
 
 #include "../includes/minishell.h"
 
+int	g_signal_flag;
+
 void	sub1_handler(int sig)
 {
 	if (sig == CTRL_C)
+	{
 		printf("\n");
-	else if (sig == CTRL_SLASH)
+		if (g_signal_flag == 1)
+			close(0);
+		g_signal_flag = 2;
+	}
+	else if (sig == CTRL_SLASH && g_signal_flag != 2)
 		printf("Quit : 3\n");
 }
 
