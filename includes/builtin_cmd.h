@@ -13,6 +13,7 @@
 #ifndef BUILTIN_CMD_H
 # define BUILTIN_CMD_H
 
+int		excute_echo(char **cmd);
 int		ft_echo(int opt, char *str);
 int		ft_pwd(void);
 int		ft_env(t_list *l);
