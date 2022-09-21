@@ -14,15 +14,10 @@
 
 extern int	g_signal_flag;
 
-int	main(int ac, char **av, char **envp)
+int	loop_minishell(t_info info)
 {
 	char	*line;
-	t_info	info;
 
-	if (ac < 1 || av == 0 || envp == 0)
-		exit(1);
-	set_terminal();
-	get_ev(&info.ev, envp);
 	while (1)
 	{
 		g_signal_flag = 0;
@@ -43,5 +38,21 @@ int	main(int ac, char **av, char **envp)
 		free_cmds(&(info.cmds));
 		ft_free((void **)&line);
 	}
+	return (0);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	t_info	info;
+
+	if (ac < 1 || av == 0 || envp == 0)
+	{
+		ft_putstr_fd("minishell: argument error", 2);
+		exit(1);
+	}
+	set_terminal();
+	get_ev(&info.ev, envp);
+	loop_minishell(info);
 	ret_terminal();
+	return (0);
 }
