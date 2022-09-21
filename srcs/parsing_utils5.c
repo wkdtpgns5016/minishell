@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:17 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:18 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 14:13:55 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_signal_flag;
 
-char	**make_heredoc(char *content)
+char	**make_heredoc(t_info *info, char *content)
 {
 	char	**cmd;
 	int		i;
@@ -29,7 +29,7 @@ char	**make_heredoc(char *content)
 			break ;
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
-			get_heredoc(cmd[i + 1]);
+			get_heredoc(info, cmd[i + 1]);
 			ft_free((void **)&cmd[i]);
 			ft_free((void **)&cmd[i + 1]);
 			cmd[i] = ft_strdup("<");

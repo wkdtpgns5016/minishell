@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 11:31:52 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:13:01 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	in_redir(int dst, char *infile)
 	dup2(infile_fd, dst);
 }
 
-void	get_heredoc(char *limiter)
+void	get_heredoc(t_info *info, char *limiter)
 {
 	char	*buffer;
 	int		fd;
@@ -37,9 +37,13 @@ void	get_heredoc(char *limiter)
 		return ;
 	while (1)
 	{
+		get_cursor_position(info->cursor_col, info->cursor_row);
 		buffer = readline("> ");
 		if (buffer == 0)
+		{
+			move_cursor(info->cursor_col, info->cursor_row, 2, -1);
 			break ;
+		}
 		if (ft_strlen(buffer) > ft_strlen(limiter))
 			size = ft_strlen(buffer);
 		else

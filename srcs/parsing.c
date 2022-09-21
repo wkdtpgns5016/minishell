@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:37 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:57:40 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 14:13:28 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmds	*make_cmd(char *content, t_info *info)
 	cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (cmd == 0)
 		return (0);
-	cmd->cmd = make_heredoc(content);
+	cmd->cmd = make_heredoc(info, content);
 	change_cmd(cmd->cmd, info);
 	cmd->next = 0;
 	cmd->pred = 0;

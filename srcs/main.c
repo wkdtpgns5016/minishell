@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 10:45:14 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 14:10:01 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ int	main(int ac, char **av, char **envp)
 
 	if (ac < 1 || av == 0 || envp == 0)
 		exit(1);
-	set_terminal();
-	get_ev(&info.ev, envp);
+	if (!setting(&info, envp))
+		return (1);
 	while (1)
 	{
 		g_signal_flag = 0;
 		signal_process_in_waiting();
+		get_cursor_position(info.cursor_col, info.cursor_row);
 		line = readline("minishell$ ");
 		signal_process_in_command();
 		if (!line)
 		{
-			printf("\033[1A");
-			printf("\033[11C");
+			move_cursor(info.cursor_col, info.cursor_row, 11, -1);
 			printf("exit\n");
 			return (0);
 		}
