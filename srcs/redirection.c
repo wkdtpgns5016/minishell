@@ -27,12 +27,10 @@ void	get_heredoc(char *limiter)
 	char	*buffer;
 	int		fd;
 	int		size;
-	int		flag;
 	int		backup;
 
 	g_signal_flag = 1;
 	backup = dup(0);
-	flag = 0;
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		return ;
@@ -40,10 +38,7 @@ void	get_heredoc(char *limiter)
 	{
 		buffer = readline("> ");
 		if (buffer == 0)
-		{
-			buffer = ft_strdup("");
-			flag = 1;
-		}
+			break ;
 		if (ft_strlen(buffer) > ft_strlen(limiter))
 			size = ft_strlen(buffer);
 		else
@@ -56,8 +51,6 @@ void	get_heredoc(char *limiter)
 		write(fd, buffer, ft_strlen(buffer));
 		write(fd, "\n", 1);
 		ft_free((void **)&buffer);
-		if (flag)
-			break ;
 	}
 	dup2(backup, 0);
 	close(backup);
