@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int	g_signal_flag;
+
 void	set_info_backup_fd(t_info *info)
 {
 	info->backup[0] = dup(0);
@@ -81,6 +83,8 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		return (0);
 	while (cmds[i] != 0)
 	{
+		if (g_signal_flag == 2)
+			break ;
 		add_cmd_back(&cmd_list, make_cmd(cmds[i], info));
 		ft_free((void **)(&(cmds[i])));
 		i++;
