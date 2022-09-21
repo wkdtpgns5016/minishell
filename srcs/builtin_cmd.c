@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:55:04 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:55:04 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 17:43:08 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	excute_echo(char **cmd)
 int	ft_echo(int opt, char *arg)
 {
 	if (arg)
-		printf("%s", arg);
+		write(1, arg, ft_strlen(arg));
 	if (!opt)
-		printf("\n");
+		write(1, "\n", 1);
 	return (0);
 }
 

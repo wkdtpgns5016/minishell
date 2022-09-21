@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 13:47:27 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:53:09 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,5 @@ int	setting(t_info *info, char **envp)
 {
 	set_terminal();
 	get_ev(&info->ev, envp);
-	info->cursor_col = (int *)malloc(sizeof(int));
-	info->cursor_row = (int *)malloc(sizeof(int));
-	if (!info->cursor_col || !info->cursor_row)
-		return (0);
-	//get_cursor_position(info->cursor_col, info->cursor_row);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:37 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 14:13:28 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 16:52:02 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_cmds	*make_cmd(char *content, t_info *info)
 	cmd = (t_cmds *)malloc(sizeof(t_cmds));
 	if (cmd == 0)
 		return (0);
-	cmd->cmd = make_heredoc(info, content);
+	cmd->cmd = make_heredoc(content);
 	change_cmd(cmd->cmd, info);
 	cmd->next = 0;
 	cmd->pred = 0;
@@ -95,6 +95,10 @@ t_cmds	*set_cmds(t_info *info, char *line)
 
 void	set_info(t_info *info, char *line)
 {
+	//t_cursor cursor;
+
+	//get_cursor_position(&cursor.col, &cursor.row);
+	//printf("%d %d", cursor.col, cursor.row);
 	info->cmds = 0;
 	if (*line != 0)
 		info->cmds = set_cmds(info, line);

@@ -57,7 +57,7 @@ void	get_cursor_position(int *col, int *rows)
 		}
 		idx++;
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
 }
 
 int	ft_putchar_int(int c)
@@ -66,7 +66,7 @@ int	ft_putchar_int(int c)
 	return (0);
 }
 
-void	move_cursor(int *cols, int *rows, int col, int row)
+void	move_cursor(int col, int row)
 {
 	char *cm;
 	struct termios term;
@@ -82,7 +82,7 @@ void	move_cursor(int *cols, int *rows, int col, int row)
 
 	tgetent(NULL, "xterm");
 	cm = tgetstr("cm", NULL);
-	tputs(tgoto(cm, *cols +col, *rows + row), 1, ft_putchar_int);
+	tputs(tgoto(cm, col, row), 1, ft_putchar_int);
 	set_terminal();
 	
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);

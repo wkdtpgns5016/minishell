@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:02 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:05 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 16:49:55 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ char	*add_last_cmd(char *str, t_info *info)
 	char	*new;
 	char	*add;
 	int		backup;
+	t_cursor cursor;
 
 	new = str;
 	g_signal_flag = 1;
@@ -64,7 +65,10 @@ char	*add_last_cmd(char *str, t_info *info)
 				close(backup);
 				return (0);
 			}
-			print_error_message("\rsyntax error", "unexpected end of file");
+			printf("%d %d", cursor.col, cursor.row);
+			move_cursor(cursor.col + 2, cursor.row - 1);
+			printf("minishell: syntax error: unexpected end of file\n");
+			//print_error_message("syntax error", "unexpected end of file");
 			info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 			info->recent_exit_code[0] = 258;
 			return (0);

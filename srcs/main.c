@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 14:10:01 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 17:41:37 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	t_info	info;
+	t_cursor cursor;
 
 	if (ac < 1 || av == 0 || envp == 0)
 		exit(1);
@@ -27,13 +28,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		g_signal_flag = 0;
 		signal_process_in_waiting();
-		get_cursor_position(info.cursor_col, info.cursor_row);
 		line = readline("minishell$ ");
 		signal_process_in_command();
 		if (!line)
 		{
-			move_cursor(info.cursor_col, info.cursor_row, 11, -1);
-			printf("exit\n");
+			get_cursor_position(&cursor.col, &cursor.row);
+			move_cursor(cursor.col + 11, cursor.row -1);
+			write(0, "exit\n", 5);
 			return (0);
 		}
 		set_info(&info, line);
