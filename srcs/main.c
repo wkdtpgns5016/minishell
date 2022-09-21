@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:57:32 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 10:45:14 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		g_signal_flag = 0;
-		signal(CTRL_C, main_handler);
-		signal(CTRL_SLASH, main_handler);
+		signal_process_in_waiting();
 		line = readline("minishell$ ");
-		signal(CTRL_C, sub1_handler);
-		signal(CTRL_SLASH, sub1_handler);
+		signal_process_in_command();
 		if (!line)
 		{
 			printf("\033[1A");

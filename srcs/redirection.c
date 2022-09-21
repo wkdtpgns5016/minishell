@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:26 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 11:31:52 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <readline/history.h>
 
 extern int	g_signal_flag;
 
@@ -41,8 +42,13 @@ void	get_heredoc(char *limiter)
 		buffer = readline("> ");
 		if (buffer == 0)
 		{
-			buffer = ft_strdup("");
-			flag = 1;
+			//buffer = ft_strdup("");
+			//flag = 1;
+			//write(fd, "\033[1A", 2);
+			//write(fd, "\033[2C", 2);
+			printf("\033[1A");
+			printf("\033[2C");
+			break ;
 		}
 		if (ft_strlen(buffer) > ft_strlen(limiter))
 			size = ft_strlen(buffer);

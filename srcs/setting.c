@@ -6,42 +6,11 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:48 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 09:39:24 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	g_signal_flag;
-
-void	sub1_handler(int sig)
-{
-	if (sig == CTRL_C)
-	{
-		printf("\n");
-		if (g_signal_flag == 1)
-			close(0);
-		g_signal_flag = 2;
-	}
-	else if (sig == CTRL_SLASH && g_signal_flag != 2)
-		printf("Quit : 3\n");
-}
-
-void	main_handler(int sig)
-{
-	if (sig == CTRL_C)
-	{
-		rl_on_new_line();
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
-	else if (sig == CTRL_SLASH)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}
 
 void	set_terminal(void)
 {
