@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+extern int	g_signal_flag;
+
 char	**make_heredoc(char *content)
 {
 	char	**cmd;
@@ -23,6 +25,8 @@ char	**make_heredoc(char *content)
 		return (0);
 	while (cmd[i] != 0)
 	{
+		if (g_signal_flag == 2)
+			break ;
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
 			get_heredoc(cmd[i + 1]);
