@@ -49,12 +49,17 @@ void	get_cursor_position(int *col, int *rows)
 		if (buf[idx] >= '0' && buf[idx] <= '9')
 		{
 			if (it_s_row)
+			{
 				*rows = ft_atoi(&buf[idx]) - 1;
+				idx += nbr_length(*rows);
+			}
 			else
+			{
 				*col = ft_atoi(&buf[idx]) - 1;
+				idx += nbr_length(*col);
+			}
 			it_s_row = 0;
-			idx += nbr_length(*col + 1) - 1;
-		}
+			}
 		idx++;
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);

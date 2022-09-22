@@ -28,13 +28,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		g_signal_flag = 0;
 		signal_process_in_waiting();
+		get_cursor_position(&cursor.col, &cursor.row);
 		line = readline("minishell$ ");
 		signal_process_in_command();
 		if (!line)
 		{
-			get_cursor_position(&cursor.col, &cursor.row);
 			move_cursor(cursor.col + 11, cursor.row -1);
-			write(0, "exit\n", 5);
+			printf("exit\n");
 			return (0);
 		}
 		set_info(&info, line);

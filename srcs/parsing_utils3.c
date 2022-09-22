@@ -56,6 +56,7 @@ char	*add_last_cmd(char *str, t_info *info)
 	while (check_last_pipe(new))
 	{
 		temp = new;
+		get_cursor_position(&cursor.col, &cursor.row);
 		add = readline("> ");
 		if (add == 0)
 		{
@@ -65,10 +66,8 @@ char	*add_last_cmd(char *str, t_info *info)
 				close(backup);
 				return (0);
 			}
-			printf("%d %d", cursor.col, cursor.row);
-			move_cursor(cursor.col + 2, cursor.row - 1);
-			printf("minishell: syntax error: unexpected end of file\n");
-			//print_error_message("syntax error", "unexpected end of file");
+			move_cursor(cursor.col + 2, cursor.row - 1);/////////////
+			print_error_message("syntax error", "unexpected end of file");
 			info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 			info->recent_exit_code[0] = 258;
 			return (0);
