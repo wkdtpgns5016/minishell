@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:17 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:18 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 15:53:51 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	**make_heredoc(char *content)
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
 			get_heredoc(cmd[i + 1]);
-			ft_free((void **)&cmd[i]);
-			ft_free((void **)&cmd[i + 1]);
+			//ft_free((void **)&cmd[i]);
+			//ft_free((void **)&cmd[i + 1]);
 			cmd[i] = ft_strdup("<");
 			cmd[i + 1] = ft_strdup("here_doc");
 		}

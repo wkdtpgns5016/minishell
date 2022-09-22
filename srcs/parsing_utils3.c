@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:02 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:05 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 16:49:55 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*add_last_cmd(char *str, t_info *info)
 	char	*new;
 	char	*add;
 	int		backup;
+	t_cursor cursor;
 
 	new = str;
 	g_signal_flag = 1;
@@ -73,7 +74,20 @@ char	*add_last_cmd(char *str, t_info *info)
 	while (check_last_pipe(new))
 	{
 		temp = new;
+		get_cursor_position(&cursor.col, &cursor.row);
 		add = readline("> ");
+		if (add == 0)
+		{
+			if (g_signal_flag == 2)
+			{
+				dup2(backup, 0);
+				close(backup);
+				return (0);
+			}
+			move_cursor(cursor.col + 2, cursor.row - 1);
+			print_error_message("syntax error", "unexpected end of file");
+			info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
+			info->recent_exit_code[0] = 258;
 		if (check_null_add(add, info, backup) == 0)
 			return (0);
 		new = ft_strjoin(temp, add);

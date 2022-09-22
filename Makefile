@@ -6,12 +6,12 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/09/21 09:38:09 by sunwchoi         ###   ########.fr        #
+#    Updated: 2022/09/21 13:16:54 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
 
@@ -19,6 +19,7 @@ SRCS =
 
 SRCS_MANDATORY = srcs/signal.c \
 				 srcs/setting.c \
+				 srcs/cursor.c \
 				 srcs/main.c \
 				 srcs/parsing.c \
 				 srcs/parsing_utils.c \
@@ -48,10 +49,10 @@ SRCS_MANDATORY = srcs/signal.c \
 				 srcs/check_redir.c
 SRCS_BONUS = 
 
-COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
-OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
-#COMFILE_FLAGS= -lreadline -L/usr/local/opt/readline/lib
-#OBJ_FLAGS=-I/usr/local/opt/readline/include
+#COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
+#OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
+COMFILE_FLAGS= -lreadline -L/usr/local/opt/readline/lib
+OBJ_FLAGS=-I/usr/local/opt/readline/include
 OBJS = $(SRCS:.c=.o)
 OBJS_MANDATORY = $(SRCS_MANDATORY:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
@@ -71,7 +72,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C ./libft bonus
-	$(CC) -g $(CFLAGS) $(COMFILE_FLAGS) $(OBJS) -Llibft -lft -o $(NAME)
+	$(CC) -g $(CFLAGS) $(COMFILE_FLAGS) $(OBJS) -Llibft -lft -o $(NAME) -lncurses
 
 clean:
 	$(MAKE) -C ./libft clean

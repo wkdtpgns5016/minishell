@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:37 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:57:40 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/21 16:52:02 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ t_cmds	*set_cmds(t_info *info, char *line)
 
 void	set_info(t_info *info, char *line)
 {
+	//t_cursor cursor;
+
+	//get_cursor_position(&cursor.col, &cursor.row);
+	//printf("%d %d", cursor.col, cursor.row);
 	info->cmds = 0;
 	if (*line != 0)
 		info->cmds = set_cmds(info, line);

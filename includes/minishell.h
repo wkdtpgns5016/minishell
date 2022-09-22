@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/14 01:53:09 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:54:12 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <termios.h>
+# include <term.h>
 # include "./setting.h"
 # include "./builtin_cmd.h"
 # include "./signal.h"
-
 /*
 ** flag number
 */
@@ -63,6 +63,12 @@ typedef struct s_info
 	int		*recent_exit_code;
 	char	**envp;
 }	t_info;
+
+typedef struct s_cursor
+{
+	int	col;
+	int	row;
+}	t_cursor;
 
 typedef struct s_builtin_info
 {
@@ -124,4 +130,7 @@ int		check_readline(char *line);
 void	change_cmd(char **cmd, t_info	*info);
 char	**make_heredoc(char *content);
 
+void	get_cursor_position(int *col, int *rows);
+void	move_cursor(int col, int row);
+int		setting(t_info *info, char **envp);
 #endif

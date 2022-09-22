@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 09:39:24 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/21 15:53:09 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdlib.h>
 
 void	set_terminal(void)
 {
@@ -56,4 +57,11 @@ void	get_ev(t_ev *ev, char **envp)
 	}
 	sort_s(p, idx - 1);
 	ev->evp = p;
+}
+
+int	setting(t_info *info, char **envp)
+{
+	set_terminal();
+	get_ev(&info->ev, envp);
+	return (1);
 }
