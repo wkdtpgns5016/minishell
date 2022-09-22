@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/21 12:27:31 by sehjang           #+#    #+#             */
+/*   Updated: 2022/09/21 12:27:37 by sehjang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 #include <signal.h>
 
@@ -16,13 +28,6 @@ void	sub1_handler(int sig)
 		printf("Quit : 3\n");
 }
 
-/*void	sub2_handler(int sig)
-{
-	if (
-
-}
-*/
-
 void	main_handler(int sig)
 {
 	if (sig == CTRL_C)
@@ -39,14 +44,14 @@ void	main_handler(int sig)
 	}
 }
 
-void	signal_process_in_waiting()
+void	signal_process_in_waiting(void)
 {
 	signal(CTRL_C, main_handler);
 	signal(CTRL_SLASH, SIG_IGN);
 }
 
-void	signal_process_in_command()
+void	signal_process_in_command(void)
 {
-		signal(CTRL_C, sub1_handler);
-		signal(CTRL_SLASH, sub1_handler);
+	signal(CTRL_C, sub1_handler);
+	signal(CTRL_SLASH, sub1_handler);
 }

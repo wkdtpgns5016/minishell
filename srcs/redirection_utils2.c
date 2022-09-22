@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:41 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/21 15:45:09 by sunwchoi         ###   ########.fr       */

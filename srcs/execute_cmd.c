@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:21 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/16 18:57:22 by sehjang          ###   ########.fr       */

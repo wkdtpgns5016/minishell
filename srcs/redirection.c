@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/21 15:42:13 by sunwchoi         ###   ########.fr       */
@@ -23,19 +23,13 @@ void	in_redir(int dst, char *infile)
 	dup2(infile_fd, dst);
 }
 
-void	get_heredoc(char *limiter)
+void	write_heredoc(int fd, char *limiter)
 {
 	char	*buffer;
-	int		fd;
 	int		size;
 	int		backup;
 	t_cursor cursor;
 
-	g_signal_flag = 1;
-	backup = dup(0);
-	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return ;
 	while (1)
 	{
 		get_cursor_position(&cursor.col, &cursor.row);
@@ -58,6 +52,19 @@ void	get_heredoc(char *limiter)
 		write(fd, "\n", 1);
 		ft_free((void **)&buffer);
 	}
+}
+
+void	get_heredoc(char *limiter)
+{
+	int		fd;
+	int		backup;
+
+	g_signal_flag = 1;
+	backup = dup(0);
+	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd < 0)
+		return ;
+	write_heredoc(fd, limiter);
 	dup2(backup, 0);
 	close(backup);
 	close(fd);
@@ -89,24 +96,8 @@ void	redirection(t_cmds *cmds)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			if (i == 0)
-			{
-				process_redir(temp, flag, i);
-				cmds->cmd = remove_redir(temp, i, i + 1);
-			}
-			else
-			{
-				if (is_num_str(temp[i - 1]))
-				{
-					process_redir_with_num(temp, flag, i);
-					cmds->cmd = remove_redir(temp, i - 1, i + 1);
-				}
-				else
-				{
-					process_redir(temp, flag, i);
-					cmds->cmd = remove_redir(temp, i, i + 1);
-				}
-			}
+			process_redir(temp, flag, i);
+			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}
 		else

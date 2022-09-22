@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:56:33 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/16 18:56:33 by sehjang          ###   ########.fr       */

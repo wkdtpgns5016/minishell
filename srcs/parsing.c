@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:37 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/21 16:52:02 by sunwchoi         ###   ########.fr       */
@@ -13,12 +13,6 @@
 #include "../includes/minishell.h"
 
 extern int	g_signal_flag;
-
-void	set_info_backup_fd(t_info *info)
-{
-	info->backup[0] = dup(0);
-	info->backup[1] = dup(1);
-}
 
 t_cmds	*make_cmd(char *content, t_info *info)
 {
@@ -50,16 +44,35 @@ void	add_cmd_back(t_cmds **cmds, t_cmds *node)
 	}
 }
 
-t_cmds	*set_cmds(t_info *info, char *line)
+t_cmds	*make_cmds(char *new, t_info *info)
 {
 	t_cmds	*cmd_list;
 	char	**cmds;
-	char	*new;
-	char	*temp;
 	int		i;
 
-	cmd_list = 0;
+	cmds = ft_split(new, '|');
 	i = 0;
+	cmd_list = 0;
+	if (cmds == 0)
+		return (0);
+	while (cmds[i] != 0)
+	{
+		if (g_signal_flag == 2)
+			break ;
+		add_cmd_back(&cmd_list, make_cmd(cmds[i], info));
+		ft_free((void **)(&(cmds[i])));
+		i++;
+	}
+	ft_free((void **)&cmds);
+	return (cmd_list);
+}
+
+t_cmds	*set_cmds(t_info *info, char *line)
+{
+	t_cmds	*cmd_list;
+	char	*new;
+	char	*temp;
+
 	new = make_cmd_pipe_amd_redir(info, line);
 	if (new == 0)
 		return (0);
@@ -77,19 +90,8 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		ft_free((void **)&temp);
 		return (0);
 	}
-	cmds = ft_split(new, '|');
+	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
-	if (cmds == 0)
-		return (0);
-	while (cmds[i] != 0)
-	{
-		if (g_signal_flag == 2)
-			break ;
-		add_cmd_back(&cmd_list, make_cmd(cmds[i], info));
-		ft_free((void **)(&(cmds[i])));
-		i++;
-	}
-	ft_free((void **)&cmds);
 	return (cmd_list);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cmd2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 18:55:17 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:55:18 by sehjang          ###   ########.fr       */
+/*   Created: 2022/09/16 18:55:04 by sehjang           #+#    #+#             */
+/*   Updated: 2022/09/21 12:22:13 by sehjang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,13 @@ int	ft_unset(char *arg, t_ev *ev)
 	return (0);
 }
 
-int	ft_export(char *arg, t_ev *ev)
+void	ft_export_with_arg(char *arg, t_ev *ev)
 {
 	char	*content;
 	t_list	*last;
 	t_list	*now;
 	t_list	*new;
 
-	if (!arg)
-	{
-		write_s(ev->evp);
-		return (0);
-	}
 	content = ft_strdup(arg);
 	new = ft_lstnew(content);
 	now = ev->evl;
@@ -66,5 +61,13 @@ int	ft_export(char *arg, t_ev *ev)
 		ft_lstadd_back(&ev->evl, new);
 	ft_free((void **)&(ev->evp));
 	ev->evp = l_to_p(ev->evl);
+}
+
+int	ft_export(char *arg, t_ev *ev)
+{
+	if (!arg)
+		write_s(ev->evp);
+	else
+		ft_export_with_arg(arg, ev);
 	return (0);
 }

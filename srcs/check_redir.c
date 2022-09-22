@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:56:23 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/16 18:56:25 by sehjang          ###   ########.fr       */
@@ -12,6 +12,22 @@
 
 #include "../includes/minishell.h"
 
+int	check_redir_with_char(char **token_arr, int index, char *ch1, char *ch2)
+{
+	int	check;
+
+	check = 0;
+	if (is_include_str(token_arr[index], ch1, ft_strlen(token_arr[index])) == 0)
+	{
+		if (is_include_str(token_arr[index], ch2, \
+		ft_strlen(token_arr[index])) == 0)
+			check = print_error_message_syntax(ch2);
+		else
+			check = print_error_message_syntax(ch1);
+	}
+	return (check);
+}
+
 int	check_redir_after(char **token_arr, int index)
 {
 	int	check;
@@ -19,27 +35,12 @@ int	check_redir_after(char **token_arr, int index)
 	check = 0;
 	if (token_arr[index] == 0)
 		return (print_error_message_syntax("newline"));
-	if (is_include_str(token_arr[index], "|", ft_strlen(token_arr[index])) == 0)
-	{
-		if (is_include_str(token_arr[index], "||", ft_strlen(token_arr[index])) == 0)
-			check = print_error_message_syntax("||");
-		else
-			check = print_error_message_syntax("|");
-	}
-	else if (is_include_str(token_arr[index], "<", ft_strlen(token_arr[index])) == 0)
-	{
-		if (is_include_str(token_arr[index], "<<", ft_strlen(token_arr[index])) == 0)
-			check = print_error_message_syntax("<<");
-		else
-			check = print_error_message_syntax("<");
-	}
-	else if (is_include_str(token_arr[index], ">", ft_strlen(token_arr[index])) == 0)
-	{
-		if (is_include_str(token_arr[index], ">>", ft_strlen(token_arr[index])) == 0)
-			check = print_error_message_syntax(">>");
-		else
-			check = print_error_message_syntax(">");
-	}
+	if (check == 0)
+		check = check_redir_with_char(token_arr, index, "|", "||");
+	if (check == 0)
+		check = check_redir_with_char(token_arr, index, "<", "<<");
+	if (check == 0)
+		check = check_redir_with_char(token_arr, index, ">", ">>");
 	return (check);
 }
 

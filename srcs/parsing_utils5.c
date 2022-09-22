@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils5.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:17 by sehjang           #+#    #+#             */
 /*   Updated: 2022/09/21 15:53:51 by sunwchoi         ###   ########.fr       */
