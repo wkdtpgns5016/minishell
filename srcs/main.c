@@ -56,7 +56,6 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	}
 	set_terminal();
-	get_ev(&info.ev, envp);
 	loop_minishell(info);
 	ret_terminal();
 	return (0);
