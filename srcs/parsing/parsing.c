@@ -118,6 +118,4 @@ void	set_info(t_info *info, char *line)
 		if (i == length)
 			info->cmds = 0;
 	}
-	info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
-	info->recent_exit_code[0] = 0;
 }

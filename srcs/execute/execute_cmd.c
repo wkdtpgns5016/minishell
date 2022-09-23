@@ -73,6 +73,8 @@ void	execute_cmd(char **cmd, char **envp)
 {
 	char	*cmd_path;
 
+	if (*cmd == 0)
+		exit(0);
 	if (access(*cmd, X_OK) == 0)
 		cmd_path = ft_strdup(*cmd);
 	else
