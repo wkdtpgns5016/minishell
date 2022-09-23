@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 15:42:13 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 09:34:42 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	write_heredoc(int fd, char *limiter)
 
 	while (1)
 	{
+		get_cursor_position(&cursor.col, &cursor.row);
 		buffer = readline("> ");
 		if (buffer == 0)
 		{
-			get_cursor_position(&cursor.col, &cursor.row);
-			move_cursor(cursor.col + 2, cursor.row - 1);
+			move_cursor(cursor.col + 2, cursor.row);
 			break ;
 		}
 		if (ft_strlen(buffer) > ft_strlen(limiter))

@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 15:53:09 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 09:47:46 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdio.h>
 #include <stdlib.h>
 
 void	set_terminal(void)

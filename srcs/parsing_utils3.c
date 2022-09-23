@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:02 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 16:49:55 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 09:32:17 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 			close(backup);
 			return (0);
 		}
-		move_cursor(cursor.col + 2, cursor.row - 1);
+		move_cursor(cursor.col + 2, cursor.row);
 		print_error_message("syntax error", "unexpected end of file");
 		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 		info->recent_exit_code[0] = 258;
