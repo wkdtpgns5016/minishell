@@ -61,6 +61,14 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 	return (1);
 }
 
+void	add_last_redir_pipe(char **temp, char **new)
+{
+	*temp = make_cmd_redir(*new);
+	ft_free((void **)new);
+	*new = make_cmd_pipe(*temp);
+	ft_free((void **)temp);
+}
+
 char	*add_last_cmd(char *str, t_info *info)
 {
 	char		*temp;
@@ -69,7 +77,7 @@ char	*add_last_cmd(char *str, t_info *info)
 	int			backup;
 	t_cursor	cursor;
 
-	new = str;
+	new = ft_strdup(str);
 	g_signal_flag = 1;
 	backup = dup(0);
 	while (check_last_pipe(new))
@@ -78,14 +86,14 @@ char	*add_last_cmd(char *str, t_info *info)
 		get_cursor_position(&cursor.col, &cursor.row);
 		add = readline("> ");
 		if (check_null_add(add, info, backup, cursor) == 0)
+		{
+			ft_free((void **)&new);
 			return (0);
+		}
 		new = ft_strjoin(temp, add);
 		ft_free((void **)&add);
 		ft_free((void **)&temp);
-		temp = make_cmd_redir(new);
-		ft_free((void **)&new);
-		new = make_cmd_pipe(temp);
-		ft_free((void **)&temp);
+		add_last_redir_pipe(&temp, &new);
 	}
 	return (new);
 }
