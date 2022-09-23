@@ -114,7 +114,7 @@ void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);
 int		check_builtin(char **cmd);
 
-void	wait_child(t_cmds *cmds, int **exit_code);
+void	wait_child(t_cmds *cmds, int **exit_code, int status2);
 
 int		get_exit_status(int status);
 int		is_exit_by_signal(int status);

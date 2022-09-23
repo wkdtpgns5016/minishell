@@ -37,7 +37,6 @@ int	loop_minishell(t_info info)
 		exec_cmd(&info);
 		add_history(line);
 		unlink("./here_doc");
-		ft_free((void **)&(info.recent_exit_code));
 		free_cmds(&(info.cmds));
 		ft_free((void **)&line);
 	}

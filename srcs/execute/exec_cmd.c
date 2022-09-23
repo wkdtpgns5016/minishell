@@ -38,7 +38,7 @@ int	exec_controller(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 	int	status;
 	int	flag;
 
-	status = 0;
+	status = -1;
 	flag = check_builtin(cmds->cmd);
 	if (flag > 0)
 		status = exec_builtin(cmds, ev, backup, size);
@@ -85,19 +85,21 @@ void	exec_cmd(t_info *info)
 	t_cmds	*cmds;
 	int		size;
 	int		*exit_code;
+	int		status;
 
 	if (quit_exit_cmd(info, g_signal_flag))
 		return ;
 	cmds = info->cmds;
+	status = 0;
 	set_info_backup_fd(info);
 	size = get_size_cmds(cmds);
 	exit_code = make_exit_code(&(info->recent_exit_code), size);
 	while (cmds != 0)
 	{
-		exec_controller(cmds, &info->ev, info->backup, size);
+		status = exec_controller(cmds, &info->ev, info->backup, size);
 		cmds = cmds->next;
 	}
-	wait_child(info->cmds, &exit_code);
+	wait_child(info->cmds, &exit_code, status);
 	if (info->recent_exit_code != 0)
 		ft_free((void **)&(info->recent_exit_code));
 	info->recent_exit_code = exit_code;

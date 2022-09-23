@@ -41,7 +41,7 @@ int	find_cmds_index(t_cmds *cmds, pid_t pid)
 	return (0);
 }
 
-void	wait_child(t_cmds *cmds, int **exit_code)
+void	wait_child(t_cmds *cmds, int **exit_code, int status2)
 {
 	pid_t	pid;
 	int		status;
@@ -61,4 +61,6 @@ void	wait_child(t_cmds *cmds, int **exit_code)
 			(*exit_code)[i] = get_exit_status(status);
 		pid = waitpid(-1, &status, 0);
 	}
+	if (status2 >= 0)
+		(*exit_code)[0] = status2;
 }
