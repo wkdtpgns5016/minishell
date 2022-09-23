@@ -64,5 +64,7 @@ int	setting(t_info *info, char **envp)
 {
 	set_terminal();
 	get_ev(&info->ev, envp);
+	info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
+	info->recent_exit_code[0] = 0;
 	return (1);
 }
