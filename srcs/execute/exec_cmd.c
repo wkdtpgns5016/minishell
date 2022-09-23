@@ -104,6 +104,8 @@ void	exec_cmd(t_info *info)
 		cmds = cmds->next;
 	}
 	wait_child(info->cmds, &exit_code);
+	if (info->recent_exit_code != 0)
+		ft_free((void **)&(info->recent_exit_code));
 	info->recent_exit_code = exit_code;
 	exec_after(info->backup, info->cmds);
 }
