@@ -85,9 +85,9 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	}
 	temp = new;
 	new = add_last_cmd(temp, info);
+	ft_free((void **)&temp);
 	if (new == 0)
 	{
-		ft_free((void **)&temp);
 		return (0);
 	}
 	cmd_list = make_cmds(new, info);
