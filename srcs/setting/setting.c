@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 09:47:46 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 12:14:01 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,8 @@ int	setting(t_info *info, char **envp)
 {
 	set_terminal();
 	get_ev(&info->ev, envp);
+	info->recent_exit_code = (int *)malloc(sizeof(int) * 2);
+	*(info->recent_exit_code) = 0;
+	*(info->recent_exit_code + 1) = -1;
 	return (1);
 }
