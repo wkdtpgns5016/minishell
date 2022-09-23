@@ -17,36 +17,36 @@ NAME = minishell
 
 SRCS = 
 
-SRCS_MANDATORY = srcs/signal.c \
-				 srcs/setting.c \
-				 srcs/cursor.c \
-				 srcs/main.c \
-				 srcs/parsing.c \
-				 srcs/parsing_utils.c \
-				 srcs/parsing_utils2.c \
-				 srcs/parsing_utils3.c \
-				 srcs/parsing_utils4.c \
-				 srcs/parsing_utils5.c \
-				 srcs/ft_free.c \
-				 srcs/execute_cmd.c \
-				 srcs/exec_cmd.c \
-				 srcs/exec_cmd_utils.c \
-				 srcs/exec_another.c \
-				 srcs/exec_builtin.c \
-				 srcs/wait_status.c \
-				 srcs/builtin_cmd.c \
-				 srcs/builtin_cmd2.c \
-				 srcs/builtin_cmd3.c \
-				 srcs/builtin_utils.c \
-				 srcs/builtin_utils2.c \
-				 srcs/exec_utils.c \
-				 srcs/redirection.c \
-				 srcs/redirection_utils.c \
-				 srcs/redirection_utils2.c \
-				 srcs/error_handling.c \
-				 srcs/check_readline.c \
-				 srcs/check_pipe.c \
-				 srcs/check_redir.c
+SRCS_MANDATORY = srcs/main.c \
+				 srcs/parsing/parsing.c \
+				 srcs/parsing/parsing_utils.c \
+				 srcs/parsing/parsing_utils2.c \
+				 srcs/parsing/parsing_utils3.c \
+				 srcs/parsing/parsing_utils4.c \
+				 srcs/parsing/parsing_utils5.c \
+				 srcs/setting/signal.c \
+				 srcs/setting/setting.c \
+				 srcs/setting/cursor.c \
+				 srcs/utils/ft_free.c \
+				 srcs/utils/wait_status.c \
+				 srcs/utils/error_handling.c \
+				 srcs/execute/execute_cmd.c \
+				 srcs/execute/exec_cmd.c \
+				 srcs/execute/exec_cmd_utils.c \
+				 srcs/execute/exec_another.c \
+				 srcs/execute/exec_builtin.c \
+				 srcs/execute/exec_utils.c \
+				 srcs/execute/builtin/builtin_cmd.c \
+				 srcs/execute/builtin/builtin_cmd2.c \
+				 srcs/execute/builtin/builtin_cmd3.c \
+				 srcs/execute/builtin/builtin_utils.c \
+				 srcs/execute/builtin/builtin_utils2.c \
+				 srcs/redirection/redirection.c \
+				 srcs/redirection/redirection_utils.c \
+				 srcs/redirection/redirection_utils2.c \
+				 srcs/syntax/check_readline.c \
+				 srcs/syntax/check_pipe.c \
+				 srcs/syntax/check_redir.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
