@@ -27,10 +27,9 @@ int	get_index_pipe(char *temp, int index)
 	{
 		if (*(temp + i) == '|')
 		{
-			if (*(temp + i + 1) != '|')
-				break ;
-			else
+			if (*(temp + i + 1) == '|')
 				i++;
+			break ;
 		}
 		i++;
 	}
@@ -43,13 +42,21 @@ char	*add_str_between_pipe(char *str, char *add)
 {
 	char	*temp;
 	char	*new;
+	int		i;
 
-	temp = ft_strjoin(str, add);
+	i = 0;
+	while (add[i] != '|')
+		i++;
+	temp = ft_substr(add, 0, i);
 	if (temp == 0)
 		return (0);
-	new = ft_strjoin(temp, " | ");
-	if (new == 0)
-		return (0);
+	new = ft_strjoin(temp, " ");
+	ft_free((void **)&temp);
+
+	temp = ft_strjoin(str, new);
+	ft_free((void **)&new);
+
+	new = ft_strjoin(temp, add + i);
 	ft_free((void **)&temp);
 	return (new);
 }
@@ -66,7 +73,7 @@ void	sub_cmd_pipe(char *content, int *j, char **cmd)
 		i = get_index_pipe(content, *j);
 		if (i < 0)
 			break ;
-		new = ft_substr(content, *j, i - *j);
+		new = ft_substr(content, *j, i - *j + 1);
 		*cmd = add_str_between_pipe(temp, new);
 		ft_free((void **)&temp);
 		ft_free((void **)&new);
@@ -88,7 +95,7 @@ char	*make_cmd_pipe(char *content)
 	i = get_index_pipe(content, j);
 	if (i < 0)
 		return (ft_strdup(content));
-	new = ft_substr(content, j, i - j);
+	new = ft_substr(content, j, i - j + 1);
 	cmd = add_str_between_pipe("", new);
 	ft_free((void **)&new);
 	j = i + 1;

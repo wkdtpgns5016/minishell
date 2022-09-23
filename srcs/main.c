@@ -35,10 +35,11 @@ int	loop_minishell(t_info info)
 		}
 		set_info(&info, line);
 		exec_cmd(&info);
-		add_history(line);
+		add_history(info.history_cmd);
 		unlink("./here_doc");
 		free_cmds(&(info.cmds));
 		ft_free((void **)&line);
+		ft_free((void **)&(info.history_cmd));
 	}
 	return (0);
 }

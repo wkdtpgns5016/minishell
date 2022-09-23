@@ -63,8 +63,12 @@ int	check_readline(char *line)
 	int		i;
 	int		flag;
 	int		check;
+	char	*new;
 
-	token = ft_split(line, ' ');
+	new = make_cmd_pipe_amd_redir(line);
+	if (new == 0)
+		return (-1);
+	token = ft_split(new, ' ');
 	if (token == 0)
 		return (-1);
 	i = 0;
@@ -80,5 +84,6 @@ int	check_readline(char *line)
 		i++;
 	}
 	ft_free_arr((char ***)&token);
+	ft_free((void **)&new);
 	return (check);
 }

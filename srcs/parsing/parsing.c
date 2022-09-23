@@ -67,29 +67,54 @@ t_cmds	*make_cmds(char *new, t_info *info)
 	return (cmd_list);
 }
 
+int	check_head_pipe(t_info *info, char *line)
+{
+	int		i;
+	char	**word;
+
+	i = 0;
+	word = ft_split(line, ' ');
+	if (word == 0)
+		return (0);
+	while (word[i] != 0)
+		i++;
+	if (i == 1 && ft_strncmp(*word, "|", 1) == 0)
+	{
+		print_error_message_syntax("|");
+		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
+		info->recent_exit_code[0] = 258;
+		ft_free_arr(&word);
+		return (1);
+	}
+	ft_free_arr(&word);
+	return (0);
+}
+
 t_cmds	*set_cmds(t_info *info, char *line)
 {
 	t_cmds	*cmd_list;
 	char	*new;
-	char	*temp;
+	int		flag;
 
-	new = make_cmd_pipe_amd_redir(info, line);
-	if (new == 0)
+	info->history_cmd = ft_strdup(line);
+	if (check_head_pipe(info, line))
 		return (0);
-	if (check_readline(new))
+	flag = check_readline(line);
+	if (flag != 0)
 	{
-		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
-		info->recent_exit_code[0] = 258;
-		ft_free((void **)&new);
+		if (flag == 1)
+		{
+			info->recent_exit_code = \
+			make_exit_code(&(info->recent_exit_code), 1);
+			info->recent_exit_code[0] = 258;
+		}
 		return (0);
 	}
-	temp = new;
-	new = add_last_cmd(temp, info);
-	ft_free((void **)&temp);
+	new = add_last_cmd(line, info);
 	if (new == 0)
-	{
 		return (0);
-	}
+	ft_free((void **)&(info->history_cmd));
+	info->history_cmd = ft_strdup(new);
 	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
 	return (cmd_list);

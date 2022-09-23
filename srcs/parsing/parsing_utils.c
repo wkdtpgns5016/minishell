@@ -105,28 +105,11 @@ char	*make_cmd_redir(char *content)
 	return (cmd);
 }
 
-char	*make_cmd_pipe_amd_redir(t_info *info, char *line)
+char	*make_cmd_pipe_amd_redir(char *line)
 {
 	char	*temp;
 	char	*new;
-	char	**word;
-	int		i;
 
-	i = 0;
-	word = ft_split(line, ' ');
-	if (word == 0)
-		return (0);
-	while (word[i] != 0)
-		i++;
-	if (i == 1 && ft_strncmp(*word, "|", 1) == 0)
-	{
-		print_error_message_syntax("|");
-		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
-		info->recent_exit_code[0] = 258;
-		ft_free_arr(&word);
-		return (0);
-	}
-	ft_free_arr(&word);
 	temp = make_cmd_redir(line);
 	new = make_cmd_pipe(temp);
 	ft_free((void **)&temp);

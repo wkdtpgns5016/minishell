@@ -63,6 +63,7 @@ typedef struct s_info
 	int		backup[2];
 	int		*recent_exit_code;
 	char	**envp;
+	char	*history_cmd;
 }	t_info;
 
 typedef struct s_cursor
@@ -89,7 +90,7 @@ t_cmds	*set_cmds(t_info *info, char *line);
 
 char	*make_cmd_redir(char *content);
 char	*make_cmd_pipe(char *content);
-char	*make_cmd_pipe_amd_redir(t_info *info, char *line);
+char	*make_cmd_pipe_amd_redir(char *line);
 int		check_last_pipe(char *line);
 char	*add_last_cmd(char *str, t_info *info);
 

@@ -26,19 +26,11 @@ int	get_last_index_arr(char **arr)
 
 int	check_last_pipe(char *line)
 {
-	char	**arr;
-	int		i;
+	int	len;
 
-	arr = ft_split(line, ' ');
-	if (arr == 0)
-		return (-1);
-	i = get_last_index_arr(arr);
-	if (ft_strncmp(arr[i], "|", ft_strlen(arr[i])) == 0)
-	{
-		ft_free_arr((char ***)&arr);
+	len = ft_strlen(line);
+	if (line[len - 1] == '|')
 		return (1);
-	}
-	ft_free_arr((char ***)&arr);
 	return (0);
 }
 
@@ -61,12 +53,22 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 	return (1);
 }
 
-void	add_last_redir_pipe(char **temp, char **new)
+// void	add_last_redir_pipe(char **temp, char **new)
+// {
+// 	*temp = make_cmd_redir(*new);
+// 	ft_free((void **)new);
+// 	*new = make_cmd_pipe(*temp);
+// 	ft_free((void **)temp);
+// }
+char	*sum_str_with_space(char *str1, char *str2)
 {
-	*temp = make_cmd_redir(*new);
-	ft_free((void **)new);
-	*new = make_cmd_pipe(*temp);
-	ft_free((void **)temp);
+	char	*temp;
+	char	*new;
+
+	temp = ft_strjoin(" ", str2);
+	new = ft_strjoin(str1, temp);
+	ft_free((void **)&temp);
+	return (new);
 }
 
 char	*add_last_cmd(char *str, t_info *info)
@@ -90,10 +92,9 @@ char	*add_last_cmd(char *str, t_info *info)
 			ft_free((void **)&new);
 			return (0);
 		}
-		new = ft_strjoin(temp, add);
+		new = sum_str_with_space(temp, add);
 		ft_free((void **)&add);
 		ft_free((void **)&temp);
-		add_last_redir_pipe(&temp, &new);
 	}
 	return (new);
 }
