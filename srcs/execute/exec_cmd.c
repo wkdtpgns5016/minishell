@@ -86,15 +86,9 @@ void	exec_cmd(t_info *info)
 	int		size;
 	int		*exit_code;
 
-	if (g_signal_flag == 2)
-	{
-		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
-		info->recent_exit_code[0] = 1;
+	if (quit_exit_cmd(info, g_signal_flag))
 		return ;
-	}
 	cmds = info->cmds;
-	if (cmds == 0)
-		return ;
 	set_info_backup_fd(info);
 	size = get_size_cmds(cmds);
 	exit_code = make_exit_code(&(info->recent_exit_code), size);

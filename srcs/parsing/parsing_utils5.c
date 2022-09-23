@@ -30,8 +30,8 @@ char	**make_heredoc(char *content)
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
 			get_heredoc(cmd[i + 1]);
-			//ft_free((void **)&cmd[i]);
-			//ft_free((void **)&cmd[i + 1]);
+			ft_free((void **)&cmd[i]);
+			ft_free((void **)&cmd[i + 1]);
 			cmd[i] = ft_strdup("<");
 			cmd[i + 1] = ft_strdup("here_doc");
 		}

@@ -98,12 +98,14 @@ int		is_redir(char *c);
 void	process_redir(char **cmd, int flag, int index);
 void	process_redir_with_num(char **cmd, int flag, int index);
 void	out_redir(int src, char *outfile, int flag);
+int		write_heredoc_file(int fd, char *buffer, char *limiter);
 void	get_heredoc(char *limiter);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
 void	redirection(t_cmds *cmds);
 
 int		*make_exit_code(int	**arr, int size);
+int		quit_exit_cmd(t_info *info, int signal_flag);
 
 int		exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size);
 void	exec_another(t_cmds *cmds, char **envp);

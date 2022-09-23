@@ -58,3 +58,19 @@ char	**remove_redir(char **cmd, int start, int end)
 	new[j] = 0;
 	return (new);
 }
+
+int	write_heredoc_file(int fd, char *buffer, char *limiter)
+{
+	int	size;
+
+	size = 0;
+	if (ft_strlen(buffer) > ft_strlen(limiter))
+			size = ft_strlen(buffer);
+	else
+		size = ft_strlen(limiter);
+	if (ft_strncmp(buffer, limiter, size) == 0)
+		return (0);
+	write(fd, buffer, ft_strlen(buffer));
+	write(fd, "\n", 1);
+	return (1);
+}

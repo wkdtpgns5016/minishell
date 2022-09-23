@@ -26,7 +26,6 @@ void	in_redir(int dst, char *infile)
 void	write_heredoc(int fd, char *limiter)
 {
 	char		*buffer;
-	int			size;
 	t_cursor	cursor;
 
 	while (1)
@@ -38,19 +37,12 @@ void	write_heredoc(int fd, char *limiter)
 			move_cursor(cursor.col + 2, cursor.row);
 			break ;
 		}
-		if (ft_strlen(buffer) > ft_strlen(limiter))
-			size = ft_strlen(buffer);
-		else
-			size = ft_strlen(limiter);
-		if (ft_strncmp(buffer, limiter, size) == 0)
-		{
-			ft_free((void **)&buffer);
+		if (write_heredoc_file(fd, buffer, limiter) == 0)
 			break ;
-		}
-		write(fd, buffer, ft_strlen(buffer));
-		write(fd, "\n", 1);
 		ft_free((void **)&buffer);
 	}
+	if (buffer != 0)
+		ft_free((void **)&buffer);
 }
 
 void	get_heredoc(char *limiter)
