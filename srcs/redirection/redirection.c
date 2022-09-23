@@ -32,6 +32,8 @@ void	write_heredoc(int fd, char *limiter)
 	{
 		get_cursor_position(&cursor.col, &cursor.row);
 		buffer = readline("> ");
+		if (g_signal_flag == 2)
+			break ;
 		if (buffer == 0)
 		{
 			move_cursor(cursor.col + 2, cursor.row);
