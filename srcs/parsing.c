@@ -97,11 +97,25 @@ t_cmds	*set_cmds(t_info *info, char *line)
 
 void	set_info(t_info *info, char *line)
 {
-	//t_cursor cursor;
+	int	i;
+	int	length;
 
-	//get_cursor_position(&cursor.col, &cursor.row);
-	//printf("%d %d", cursor.col, cursor.row);
+	i = 0;
+	length = 0;
 	info->cmds = 0;
 	if (*line != 0)
-		info->cmds = set_cmds(info, line);
+	{
+		length = ft_strlen(line);
+		while (i < length)
+		{
+			if (line[i] != ' ')
+			{
+				info->cmds = set_cmds(info, line);
+				break ;
+			}
+			i++;
+		}
+		if (i == length)
+			info->cmds = 0;
+	}
 }
