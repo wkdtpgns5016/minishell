@@ -73,9 +73,9 @@ int	ft_putchar_int(int c)
 
 void	move_cursor(int col, int row)
 {
-	char *cm;
-	struct termios term;
-	struct termios org_term;
+	char			*cm;
+	struct termios	term;
+	struct termios	org_term;
 
 	tcgetattr(STDIN_FILENO, &term);
 	tcgetattr(STDIN_FILENO, &org_term);
@@ -84,11 +84,9 @@ void	move_cursor(int col, int row)
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-
 	tgetent(NULL, "xterm");
 	cm = tgetstr("cm", NULL);
 	tputs(tgoto(cm, col, row), 1, ft_putchar_int);
 	set_terminal();
-	
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
 }

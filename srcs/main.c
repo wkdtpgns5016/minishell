@@ -16,7 +16,8 @@ extern int	g_signal_flag;
 
 int	loop_minishell(t_info info)
 {
-	char	*line;
+	char		*line;
+	t_cursor	cursor;
 
 	while (1)
 	{
@@ -44,13 +45,11 @@ int	loop_minishell(t_info info)
 int	main(int ac, char **av, char **envp)
 {
 	t_info	info;
-	t_cursor cursor;
 
 	if (ac < 1 || av == 0 || envp == 0)
 		exit(1);
 	if (!setting(&info, envp))
 		return (1);
-
 	if (ac < 1 || av == 0 || envp == 0)
 	{
 		ft_putstr_fd("minishell: argument error", 2);
