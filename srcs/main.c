@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 17:41:37 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 11:05:50 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+#include <stdlib.h>
 
 extern int	g_signal_flag;
 
@@ -28,7 +29,7 @@ int	loop_minishell(t_info info)
 		signal_process_in_command();
 		if (!line)
 		{
-			move_cursor(cursor.col + 11, cursor.row -1);
+			move_cursor(cursor.col + 11, cursor.row);
 			printf("exit\n");
 			return (0);
 		}
@@ -56,7 +57,6 @@ int	main(int ac, char **av, char **envp)
 		exit(1);
 	}
 	set_terminal();
-	get_ev(&info.ev, envp);
 	loop_minishell(info);
 	ret_terminal();
 	return (0);

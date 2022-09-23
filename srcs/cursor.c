@@ -3,6 +3,16 @@
 #include <term.h>
 #include <unistd.h>
 
+int	is_end_of_window(int row)
+{
+	struct winsize ws;
+
+	ioctl(0, TIOCGWINSZ, &ws);
+	if(row == --ws.ws_row)
+		return (1);
+	return (0);
+}
+
 int	nbr_length(int n)
 {
 	int	i = 0;
@@ -59,7 +69,7 @@ void	get_cursor_position(int *col, int *rows)
 				idx += nbr_length(*col);
 			}
 			it_s_row = 0;
-			}
+		}
 		idx++;
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
@@ -74,6 +84,7 @@ int	ft_putchar_int(int c)
 void	move_cursor(int col, int row)
 {
 	char			*cm;
+	char			*temp;
 	struct termios	term;
 	struct termios	org_term;
 
@@ -86,7 +97,10 @@ void	move_cursor(int col, int row)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	tgetent(NULL, "xterm");
 	cm = tgetstr("cm", NULL);
-	tputs(tgoto(cm, col, row), 1, ft_putchar_int);
+	if (is_end_of_window(row))
+		row--;
+	temp = tgoto(cm, col, row);
+	tputs(temp, 1, ft_putchar_int);
 	set_terminal();
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
 }

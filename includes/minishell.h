@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 15:54:12 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/23 11:02:51 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdlib.h>
 # include <termios.h>
 # include <term.h>
+# include <sys/ioctl.h>
 # include "./setting.h"
 # include "./builtin_cmd.h"
 # include "./signal.h"
