@@ -45,6 +45,8 @@ t_cmds	*set_last_cmd(t_info *info, char *line)
 		return (0);
 	ft_free((void **)&(info->history_cmd));
 	info->history_cmd = ft_strdup(new);
+	if (info->history_cmd == 0)
+		exit(1);
 	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
 	return (cmd_list);
@@ -56,6 +58,8 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	int		flag;
 
 	info->history_cmd = ft_strdup(line);
+	if (info->history_cmd == 0)
+		exit(1);
 	if (check_head_pipe(info, line))
 		return (0);
 	flag = check_readline(line);
@@ -98,6 +102,4 @@ void	set_info(t_info *info, char *line)
 		if (i == length)
 			info->cmds = 0;
 	}
-	if (info->history_cmd == 0)
-		exit(1);
 }
