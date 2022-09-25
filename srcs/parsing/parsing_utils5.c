@@ -14,29 +14,50 @@
 
 extern int	g_signal_flag;
 
-char	**make_heredoc(char *content)
+int	change_values_arr(char ***cmd, char *str1, char *str2, int i)
+{
+	ft_free((void **)&(*cmd)[i]);
+	ft_free((void **)&(*cmd)[i + 1]);
+	(*cmd)[i] = ft_strdup(str1);
+	if ((*cmd)[i] == 0)
+	{
+		ft_free_arr((char ***)cmd);
+		return (0);
+	}
+	(*cmd)[i + 1] = ft_strdup(str2);
+	if ((*cmd)[i + 1] == 0)
+	{
+		ft_free_arr((char ***)cmd);
+		return (0);
+	}
+	return (1);
+}
+
+char	**make_heredoc(char *content, t_cmds *cmds)
 {
 	char	**cmd;
 	int		i;
 
-	i = 0;
+	i = -1;
 	cmd = ft_split(content, ' ');
 	if (cmd == 0)
 		return (0);
-	while (cmd[i] != 0)
+	while (cmd[++i] != 0)
 	{
 		if (g_signal_flag == 2)
 			break ;
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
-			get_heredoc(cmd[i + 1]);
-			ft_free((void **)&cmd[i]);
-			ft_free((void **)&cmd[i + 1]);
-			cmd[i] = ft_strdup("<");
-			cmd[i + 1] = ft_strdup("here_doc");
+			cmds->heredoc_filepath = get_heredoc(cmd[i + 1]);
+			cmds->heredoc_flag = 1;
+			if (cmds->heredoc_filepath == 0)
+			{
+				ft_free_arr((char ***)&cmd);
+				return (0);
+			}
+			if (change_values_arr(&cmd, "<", cmds->heredoc_filepath, i) == 0)
+				return (0);
 		}
-		i++;
 	}
-	i = 0;
 	return (cmd);
 }

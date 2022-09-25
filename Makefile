@@ -18,6 +18,7 @@ NAME = minishell
 SRCS = 
 
 SRCS_MANDATORY = srcs/main.c \
+				 srcs/parsing/t_cmds_utils.c \
 				 srcs/parsing/parsing.c \
 				 srcs/parsing/parsing_utils.c \
 				 srcs/parsing/parsing_utils2.c \
@@ -30,6 +31,7 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/utils/ft_free.c \
 				 srcs/utils/wait_status.c \
 				 srcs/utils/error_handling.c \
+				 srcs/utils/make_temp_file.c \
 				 srcs/execute/execute_cmd.c \
 				 srcs/execute/exec_cmd.c \
 				 srcs/execute/exec_cmd_utils.c \
