@@ -45,6 +45,7 @@ int	ft_pwd(void)
 	if (!path)
 		return (1);
 	printf("%s\n", path);
+	ft_free((void **)&path);
 	return (0);
 }
 
