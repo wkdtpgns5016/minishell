@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 11:02:51 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/25 20:23:13 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,10 +131,19 @@ int		check_str_before_and_after(char **token_arr, int index);
 int		check_pipe(char **token_arr, int i);
 int		check_redir(char **token, int i);
 int		check_readline(char *line);
-void	change_cmd(char **cmd, t_info	*info);
 char	**make_heredoc(char *content);
 
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
 int		setting(t_info *info, char **envp);
+
+
+char	*we_meet_char(char *cmd, t_list **cmd_char_list);
+char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list);
+char	*we_meet_quotes(char *cmd, t_info *info, t_list **cmd_char_list);
+void	change_first_node(t_list **first_node);
+void	change_node(t_list **first_node, t_info *info);
+void	change_cmd(char **cmd, t_info	*info);
+char	*list2dollar(t_list **first_node);
+
 #endif
