@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirection_utils2.c                               :+:      :+:    :+:   */
+/*   make_temp_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 18:58:41 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 15:45:09 by sunwchoi         ###   ########.fr       */
+/*   Created: 2022/09/25 17:31:54 by sehjang           #+#    #+#             */
+/*   Updated: 2022/09/25 17:31:55 by sehjang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_num_str(char *str)
+char	*make_temp_file(void)
 {
-	while (*str != 0)
-	{
-		if (ft_isdigit(*str))
-			continue ;
-		else
-			return (0);
-	}
-	return (1);
-}
+	char	*filename;
+	char	*temp;
+	int		temp_number;
 
-void	process_redir(char **cmd, int flag, int index, int heredoc_flag)
-{
-	if (flag == INPUT_REDIR)
-		in_redir(0, *(cmd + index + 1), heredoc_flag);
-	else if (flag == OUTPUT_TRUNC_REDIR)
-		out_redir(1, *(cmd + index + 1), 0);
-	else
-		out_redir(1, *(cmd + index + 1), 1);
+	filename = ft_strdup("/tmp/heredoc");
+	temp_number = 0;
+	while (access(filename, F_OK) == 0)
+	{
+		ft_free((void **)&filename);
+		temp = ft_itoa(temp_number);
+		if (temp == 0)
+			return (0);
+		filename = ft_strjoin("/tmp/heredoc", temp);
+		if (filename == 0)
+			return (0);
+		ft_free((void **)&temp);
+		temp_number++;
+	}
+	return (filename);
 }

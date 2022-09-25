@@ -15,12 +15,15 @@
 
 extern int	g_signal_flag;
 
-void	in_redir(int dst, char *infile)
+void	in_redir(int dst, char *infile, int heredoc_flag)
 {
 	int	infile_fd;
 
 	infile_fd = open(infile, O_RDONLY);
 	dup2(infile_fd, dst);
+	close(infile_fd);
+	if (heredoc_flag)
+		unlink(infile);
 }
 
 void	write_heredoc(int fd, char *limiter)
@@ -47,20 +50,25 @@ void	write_heredoc(int fd, char *limiter)
 		ft_free((void **)&buffer);
 }
 
-void	get_heredoc(char *limiter)
+char	*get_heredoc(char *limiter)
 {
 	int		fd;
 	int		backup;
+	char	*filename;
 
 	g_signal_flag = 1;
 	backup = dup(0);
-	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	filename = make_temp_file();
+	if (filename == 0)
+		return (0);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return ;
+		return (0);
 	write_heredoc(fd, limiter);
 	dup2(backup, 0);
 	close(backup);
 	close(fd);
+	return (filename);
 }
 
 void	out_redir(int src, char *outfile, int flag)
@@ -74,6 +82,7 @@ void	out_redir(int src, char *outfile, int flag)
 		mode = O_WRONLY | O_CREAT | O_TRUNC;
 	outfile_fd = open(outfile, mode, 0644);
 	dup2(outfile_fd, src);
+	close(outfile_fd);
 }
 
 void	redirection(t_cmds *cmds)
@@ -89,7 +98,7 @@ void	redirection(t_cmds *cmds)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			process_redir(temp, flag, i);
+			process_redir(temp, flag, i, cmds->heredoc_flag);
 			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}

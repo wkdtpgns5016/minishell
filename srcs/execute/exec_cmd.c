@@ -64,7 +64,6 @@ void	exec_after(int backup[2], t_cmds *cmds)
 	}
 	close(backup[0]);
 	close(backup[1]);
-	unlink("./here_doc");
 }
 
 int	get_size_cmds(t_cmds *cmds)

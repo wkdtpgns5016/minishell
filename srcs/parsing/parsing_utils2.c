@@ -52,10 +52,8 @@ char	*add_str_between_pipe(char *str, char *add)
 		return (0);
 	new = ft_strjoin(temp, " ");
 	ft_free((void **)&temp);
-
 	temp = ft_strjoin(str, new);
 	ft_free((void **)&new);
-
 	new = ft_strjoin(temp, add + i);
 	ft_free((void **)&temp);
 	return (new);
