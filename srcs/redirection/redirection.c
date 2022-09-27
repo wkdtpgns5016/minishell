@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 09:34:42 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/28 08:47:47 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	in_redir(int dst, char *infile)
 	dup2(infile_fd, dst);
 }
 
-void	write_heredoc(int fd, char *limiter)
+void	write_heredoc(int fd, char *limiter, t_info *info)
 {
 	char		*buffer;
 	t_cursor	cursor;
@@ -39,7 +39,7 @@ void	write_heredoc(int fd, char *limiter)
 			move_cursor(cursor.col + 2, cursor.row);
 			break ;
 		}
-		if (write_heredoc_file(fd, buffer, limiter) == 0)
+		if (write_heredoc_file(fd, &buffer, limiter, info) == 0)
 			break ;
 		ft_free((void **)&buffer);
 	}
@@ -47,7 +47,7 @@ void	write_heredoc(int fd, char *limiter)
 		ft_free((void **)&buffer);
 }
 
-void	get_heredoc(char *limiter)
+void	get_heredoc(char *limiter, t_info *info)
 {
 	int		fd;
 	int		backup;
@@ -57,7 +57,7 @@ void	get_heredoc(char *limiter)
 	fd = open("here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		return ;
-	write_heredoc(fd, limiter);
+	write_heredoc(fd, limiter, info);
 	dup2(backup, 0);
 	close(backup);
 	close(fd);
@@ -76,7 +76,7 @@ void	out_redir(int src, char *outfile, int flag)
 	dup2(outfile_fd, src);
 }
 
-void	redirection(t_cmds *cmds)
+void	redirection(t_cmds *cmds, t_info *info)
 {
 	char	**temp;
 	int		i;
@@ -89,7 +89,7 @@ void	redirection(t_cmds *cmds)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			process_redir(temp, flag, i);
+			process_redir(temp, flag, i, info);
 			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}

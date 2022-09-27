@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/25 20:23:13 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/28 08:48:21 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,20 +96,20 @@ char	*add_last_cmd(char *str, t_info *info);
 
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
-void	process_redir(char **cmd, int flag, int index);
-void	process_redir_with_num(char **cmd, int flag, int index);
+void	process_redir(char **cmd, int flag, int index, t_info *info);
+void	process_redir_with_num(char **cmd, int flag, int index, t_info *info);
 void	out_redir(int src, char *outfile, int flag);
-int		write_heredoc_file(int fd, char *buffer, char *limiter);
-void	get_heredoc(char *limiter);
+int		write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info);
+void	get_heredoc(char *limiter, t_info *info);
 void	in_redir(int dst, char *infile);
 int		is_num_str(char *str);
-void	redirection(t_cmds *cmds);
+void	redirection(t_cmds *cmds, t_info *info);
 
 int		*make_exit_code(int	**arr, int size);
 int		quit_exit_cmd(t_info *info, int signal_flag);
 
-int		exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size);
-void	exec_another(t_cmds *cmds, char **envp);
+int		exec_builtin(t_cmds *cmds, t_info *info, int backup[2], int size);
+void	exec_another(t_cmds *cmds, char **envp, t_info *info);
 void	exec_cmd(t_info *info);
 void	execute_cmd(char **cmd, char **envp);
 void	set_info_backup_fd(t_info *info);
@@ -131,7 +131,7 @@ int		check_str_before_and_after(char **token_arr, int index);
 int		check_pipe(char **token_arr, int i);
 int		check_redir(char **token, int i);
 int		check_readline(char *line);
-char	**make_heredoc(char *content);
+char	**make_heredoc(char *content, t_info *info);
 
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
@@ -145,5 +145,7 @@ void	change_first_node(t_list **first_node);
 void	change_node(t_list **first_node, t_info *info);
 void	change_cmd(char **cmd, t_info	*info);
 char	*list2dollar(t_list **first_node);
+char	*list2char(t_list **first_node);
+t_list	*char2list(char *cmd, t_info *info);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:56:48 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:56:49 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/28 08:13:08 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	execute_builtin(char **cmd, t_ev *ev, int flag, int size)
 	return (status);
 }
 
-int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
+int	child_builtin(t_cmds *cmds, t_info *info, t_builtin_info bt_info, int size)
 {
 	pid_t	pid;
 	int		status;
@@ -46,10 +46,10 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, info);
 		close(cmds->fd[0]);
 		dup2(cmds->fd[1], 1);
-		status = execute_builtin(cmds->cmd, ev, info.flag, size);
+		status = execute_builtin(cmds->cmd, &info->ev, bt_info.flag, size);
 		exit(status);
 	}
 	else if (pid > 0)
@@ -61,7 +61,7 @@ int	child_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 	return (status);
 }
 
-int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
+int	last_builtin(t_cmds *cmds, t_info *info, t_builtin_info bt_info, int size)
 {
 	pid_t	pid;
 	int		status;
@@ -73,23 +73,23 @@ int	last_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
-		status = execute_builtin(cmds->cmd, ev, info.flag, size);
+		redirection(cmds, info);
+		status = execute_builtin(cmds->cmd, &info->ev, bt_info.flag, size);
 		exit(status);
 	}
 	return (status);
 }
 
-int	solo_builtin(t_cmds *cmds, t_ev *ev, t_builtin_info info, int size)
+int	solo_builtin(t_cmds *cmds, t_info *info, t_builtin_info bt_info, int size)
 {
 	int	status;
 
-	redirection(cmds);
-	status = execute_builtin(cmds->cmd, ev, info.flag, size);
+	redirection(cmds, info);
+	status = execute_builtin(cmds->cmd, &info->ev, bt_info.flag, size);
 	return (status);
 }
 
-int	exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size)
+int	exec_builtin(t_cmds *cmds, t_info *info, int backup[2], int size)
 {
 	int				status;
 	t_builtin_info	builtin_info;
@@ -105,14 +105,14 @@ int	exec_builtin(t_cmds *cmds, t_ev *ev, int backup[2], int size)
 			printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
 			exit(1);
 		}
-		child_builtin(cmds, ev, builtin_info, size);
+		child_builtin(cmds, info, builtin_info, size);
 	}
 	else
 	{
 		if (size == 1)
-			status = solo_builtin(cmds, ev, builtin_info, size);
+			status = solo_builtin(cmds, info, builtin_info, size);
 		else
-			status = last_builtin(cmds, ev, builtin_info, size);
+			status = last_builtin(cmds, info, builtin_info, size);
 	}
 	return (status);
 }

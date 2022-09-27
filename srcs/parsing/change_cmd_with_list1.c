@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:10 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/26 01:59:53 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/28 07:20:52 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,22 @@ void	change_cmd(char **cmd, t_info *info)
 	}
 }*/
 
+//void	ft_lstfree(t_list **lst)
+//{
+//	t_list	*temp;
+//	t_list	*next;
+//
+//	temp = *lst;
+//	while (temp != 0)
+//	{
+//		next = temp->next;
+//		free(temp->content);
+//		free(temp);
+//		temp = next;
+//	}
+//	*lst = 0;
+//}
+
 char	*we_meet_char(char *cmd, t_list **cmd_char_list)
 {
 	char *new_char;
@@ -217,7 +233,9 @@ void	change_first_node(t_list **first_node)
 	temp = *first_node;
 	*first_node = (*first_node)->next;
 	free(temp->content);
+	temp->content = NULL;
 	free(temp);
+	temp = NULL;
 }
 
 char	*we_meet_quotes(char *cmd, t_info *info, t_list **cmd_char_list)
@@ -263,8 +281,8 @@ char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list)
 	cmd = we_meet_char(cmd, &dollar);
 	while (*cmd)
 	{
-		if (*cmd == '$')
-			cmd = we_meet_dollar(cmd, info, &dollar);
+		//if (*cmd == '$')
+		//	cmd = we_meet_dollar(cmd, info, &dollar);
 		//else if(*cmd == '"')
 		//	cmd = we_meet_quotes(cmd, info, &dollar);
 		if(ft_isalnum(*cmd) || *cmd == '_')
@@ -277,7 +295,7 @@ char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list)
 	return (cmd);
 }
 
-t_list *cmd2list(char *cmd, t_info *info)
+t_list *char2list(char *cmd, t_info *info)
 {
 	t_list	*cmd_char_list;
 
@@ -294,12 +312,12 @@ t_list *cmd2list(char *cmd, t_info *info)
 	return (cmd_char_list);
 }
 
-char	*list2cmd(t_list **first_node)
+char	*list2char(t_list **first_node)
 {
 	char	*dollar;
 	int		idx;
 
-	dollar = (char *)malloc(sizeof(ft_lstsize(*first_node)));
+	dollar = (char *)malloc(sizeof(char) * ft_lstsize(*first_node) + 1);
 	if (!dollar)
 		exit (1);
 	idx = 0;
@@ -319,9 +337,10 @@ void	change_cmd(char **cmd, t_info *info)
 	
 	while (*cmd)
 	{
-		cmd_char_list = cmd2list(*cmd, info);
+		cmd_char_list = char2list(*cmd, info);
 		free(*cmd);
-		*cmd = list2cmd(&cmd_char_list);
+		*cmd = list2char(&cmd_char_list);
 		cmd++;
 	}
+
 }

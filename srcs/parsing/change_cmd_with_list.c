@@ -61,7 +61,7 @@ void change_node(t_list **first_node, t_info *info)
 	}
 	free(dollar);
 	dollar = dollar2env(evl);
-	
 	*first_node = env2node(dollar);
 	free(dollar);
+	dollar = NULL;
 }

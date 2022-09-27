@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:34 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:58:36 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/28 08:52:07 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdlib.h>
 
 int	is_redir(char *c)
 {
@@ -59,18 +60,22 @@ char	**remove_redir(char **cmd, int start, int end)
 	return (new);
 }
 
-int	write_heredoc_file(int fd, char *buffer, char *limiter)
+int	write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info)
 {
 	int	size;
+	t_list	*buffer_char_list;
 
 	size = 0;
-	if (ft_strlen(buffer) > ft_strlen(limiter))
-			size = ft_strlen(buffer);
+	if (ft_strlen(*buffer) > ft_strlen(limiter))
+			size = ft_strlen(*buffer);
 	else
 		size = ft_strlen(limiter);
-	if (ft_strncmp(buffer, limiter, size) == 0)
+	if (ft_strncmp(*buffer, limiter, size) == 0)
 		return (0);
-	write(fd, buffer, ft_strlen(buffer));
+	buffer_char_list = char2list(*buffer, info);
+	free(*buffer);
+	*buffer = list2char(&buffer_char_list);
+	write(fd, *buffer, ft_strlen(*buffer));
 	write(fd, "\n", 1);
 	return (1);
 }
