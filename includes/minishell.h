@@ -105,7 +105,7 @@ int		is_redir(char *c);
 void	process_redir(char **cmd, int flag, int index, int heredoc_flag, t_info *info);
 void	out_redir(int src, char *outfile, int flag);
 int		write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info);
-void	get_heredoc(char *limiter, t_info *info);
+char	*get_heredoc(char *limiter, t_info *info);
 
 void	in_redir(int dst, char *infile, int heredoc_flag);
 int		is_num_str(char *str);

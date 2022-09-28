@@ -50,7 +50,7 @@ void	write_heredoc(int fd, char *limiter, t_info *info)
 		ft_free((void **)&buffer);
 }
 
-void	get_heredoc(char *limiter, t_info *info)
+char	*get_heredoc(char *limiter, t_info *info)
 {
 	int		fd;
 	int		backup;
@@ -63,7 +63,7 @@ void	get_heredoc(char *limiter, t_info *info)
 		return (0);
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		return ;
+		return (0);
 	write_heredoc(fd, limiter, info);
 	dup2(backup, 0);
 	close(backup);
@@ -98,7 +98,7 @@ void	redirection(t_cmds *cmds, t_info *info)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			process_redir(temp, flag, i, cmds->heredoc_flag, info
+			process_redir(temp, flag, i, cmds->heredoc_flag, info);
 			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}

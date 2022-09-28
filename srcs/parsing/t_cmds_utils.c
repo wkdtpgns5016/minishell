@@ -23,7 +23,7 @@ t_cmds	*make_cmd(char *content, t_info *info)
 		return (0);
 	cmd->heredoc_flag = 0;
 	cmd->heredoc_filepath = 0;
-	cmd->cmd = make_heredoc(content, cmd);
+	cmd->cmd = make_heredoc(content, cmd, info);
 	if (cmd->cmd == 0)
 	{
 		ft_free((void **)&cmd);
