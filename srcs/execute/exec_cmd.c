@@ -16,19 +16,19 @@ extern int	g_signal_flag;
 
 int	check_builtin(char **cmd)
 {
-	if (ft_strncmp(*cmd, "echo", ft_strlen(*cmd)) == 0)
+	if (ft_strncmp(*cmd, "echo", 4) == 0)
 		return (1);
-	else if (ft_strncmp(*cmd, "env", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "env", 3) == 0)
 		return (2);
-	else if (ft_strncmp(*cmd, "pwd", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "pwd", 3) == 0)
 		return (3);
-	else if (ft_strncmp(*cmd, "export", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "export", 6) == 0)
 		return (4);
-	else if (ft_strncmp(*cmd, "cd", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "cd", 2) == 0)
 		return (5);
-	else if (ft_strncmp(*cmd, "exit", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "exit", 4) == 0)
 		return (6);
-	else if (ft_strncmp(*cmd, "unset", ft_strlen(*cmd)) == 0)
+	else if (ft_strncmp(*cmd, "unset", 5) == 0)
 		return (7);
 	return (0);
 }
@@ -64,7 +64,6 @@ void	exec_after(int backup[2], t_cmds *cmds)
 	}
 	close(backup[0]);
 	close(backup[1]);
-	unlink("./here_doc");
 }
 
 int	get_size_cmds(t_cmds *cmds)

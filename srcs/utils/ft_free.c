@@ -47,6 +47,8 @@ void	free_cmds(t_cmds **cmds)
 	while (temp != 0)
 	{
 		next = temp->next;
+		if (temp->heredoc_flag)
+			ft_free((void **)&(temp->heredoc_filepath));
 		ft_free_arr((char ***)(&(temp->cmd)));
 		ft_free((void **)(&temp));
 		temp = next;

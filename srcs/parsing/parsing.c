@@ -12,61 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-extern int	g_signal_flag;
-
-t_cmds	*make_cmd(char *content, t_info *info)
-{
-	t_cmds	*cmd;
-
-	cmd = (t_cmds *)malloc(sizeof(t_cmds));
-	if (cmd == 0)
-		return (0);
-	cmd->cmd = make_heredoc(content, info);
-	change_cmd(cmd->cmd, info);
-	cmd->next = 0;
-	cmd->pred = 0;
-	return (cmd);
-}
-
-void	add_cmd_back(t_cmds **cmds, t_cmds *node)
-{
-	t_cmds	*temp;
-
-	temp = *cmds;
-	if (temp == 0)
-		*cmds = node;
-	else
-	{
-		temp = *cmds;
-		while (temp->next != 0)
-			temp = temp->next;
-		temp->next = node;
-	}
-}
-
-t_cmds	*make_cmds(char *new, t_info *info)
-{
-	t_cmds	*cmd_list;
-	char	**cmds;
-	int		i;
-
-	cmds = ft_split(new, '|');
-	i = 0;
-	cmd_list = 0;
-	if (cmds == 0)
-		return (0);
-	while (cmds[i] != 0)
-	{
-		if (g_signal_flag == 2)
-			break ;
-		add_cmd_back(&cmd_list, make_cmd(cmds[i], info));
-		ft_free((void **)(&(cmds[i])));
-		i++;
-	}
-	ft_free((void **)&cmds);
-	return (cmd_list);
-}
-
 int	check_head_pipe(t_info *info, char *line)
 {
 	int		i;
@@ -90,13 +35,31 @@ int	check_head_pipe(t_info *info, char *line)
 	return (0);
 }
 
-t_cmds	*set_cmds(t_info *info, char *line)
+t_cmds	*set_last_cmd(t_info *info, char *line)
 {
 	t_cmds	*cmd_list;
 	char	*new;
+
+	new = add_last_cmd(line, info);
+	if (new == 0)
+		return (0);
+	ft_free((void **)&(info->history_cmd));
+	info->history_cmd = ft_strdup(new);
+	if (info->history_cmd == 0)
+		exit(1);
+	cmd_list = make_cmds(new, info);
+	ft_free((void **)&new);
+	return (cmd_list);
+}
+
+t_cmds	*set_cmds(t_info *info, char *line)
+{
+	t_cmds	*cmd_list;
 	int		flag;
 
 	info->history_cmd = ft_strdup(line);
+	if (info->history_cmd == 0)
+		exit(1);
 	if (check_head_pipe(info, line))
 		return (0);
 	flag = check_readline(line);
@@ -110,13 +73,9 @@ t_cmds	*set_cmds(t_info *info, char *line)
 		}
 		return (0);
 	}
-	new = add_last_cmd(line, info);
-	if (new == 0)
+	cmd_list = set_last_cmd(info, line);
+	if (cmd_list == 0)
 		return (0);
-	ft_free((void **)&(info->history_cmd));
-	info->history_cmd = ft_strdup(new);
-	cmd_list = make_cmds(new, info);
-	ft_free((void **)&new);
 	return (cmd_list);
 }
 

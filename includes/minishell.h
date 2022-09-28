@@ -54,6 +54,8 @@ typedef struct s_cmds
 	pid_t			pid;
 	struct s_cmds	*next;
 	struct s_cmds	*pred;
+	char			*heredoc_filepath;
+	int				heredoc_flag;
 }	t_cmds;
 
 typedef struct s_info
@@ -85,6 +87,10 @@ void	ft_free(void **ptr);
 void	free_cmds(t_cmds **cmds);
 void	ft_free_arr(char ***arr);
 
+t_cmds	*make_cmd(char *content, t_info *info);
+void	add_cmd_back(t_cmds **cmds, t_cmds *node);
+t_cmds	*make_cmds(char *new, t_info *info);
+
 void	set_info(t_info *info, char *line);
 t_cmds	*set_cmds(t_info *info, char *line);
 
@@ -96,14 +102,15 @@ char	*add_last_cmd(char *str, t_info *info);
 
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
-void	process_redir(char **cmd, int flag, int index, t_info *info);
-void	process_redir_with_num(char **cmd, int flag, int index, t_info *info);
+void	process_redir(char **cmd, int flag, int index, int heredoc_flag, t_info *info);
 void	out_redir(int src, char *outfile, int flag);
 int		write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info);
 void	get_heredoc(char *limiter, t_info *info);
-void	in_redir(int dst, char *infile);
+
+void	in_redir(int dst, char *infile, int heredoc_flag);
 int		is_num_str(char *str);
 void	redirection(t_cmds *cmds, t_info *info);
+char	*make_temp_file(void);
 
 int		*make_exit_code(int	**arr, int size);
 int		quit_exit_cmd(t_info *info, int signal_flag);
@@ -131,7 +138,8 @@ int		check_str_before_and_after(char **token_arr, int index);
 int		check_pipe(char **token_arr, int i);
 int		check_redir(char **token, int i);
 int		check_readline(char *line);
-char	**make_heredoc(char *content, t_info *info);
+void	change_cmd(char **cmd, t_info	*info);
+char	**make_heredoc(char *content, t_cmds *cmds, t_info *info);
 
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
