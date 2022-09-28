@@ -6,13 +6,13 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:56:41 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/16 18:56:41 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/09/28 07:58:01 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	child_process(t_cmds *cmds, char **envp)
+void	child_process(t_cmds *cmds, char **envp, t_info *info)
 {
 	pid_t	pid;
 
@@ -22,7 +22,7 @@ void	child_process(t_cmds *cmds, char **envp)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, info);
 		close(cmds->fd[0]);
 		dup2(cmds->fd[1], 1);
 		execute_cmd(cmds->cmd, envp);
@@ -35,7 +35,7 @@ void	child_process(t_cmds *cmds, char **envp)
 	}
 }
 
-void	last_process(t_cmds *cmds, char **envp)
+void	last_process(t_cmds *cmds, char **envp, t_info *info)
 {
 	pid_t	pid;
 
@@ -45,12 +45,12 @@ void	last_process(t_cmds *cmds, char **envp)
 		error_excute(*(cmds->cmd), 0, "Fork function error", 1);
 	if (pid == 0)
 	{
-		redirection(cmds);
+		redirection(cmds, info);
 		execute_cmd(cmds->cmd, envp);
 	}
 }
 
-void	exec_another(t_cmds *cmds, char **envp)
+void	exec_another(t_cmds *cmds, char **envp, t_info *info)
 {
 	if (cmds->next != 0)
 	{
@@ -59,8 +59,8 @@ void	exec_another(t_cmds *cmds, char **envp)
 			printf("minishell: %s: Pipe function error\n", *(cmds->cmd));
 			exit(1);
 		}
-		child_process(cmds, envp);
+		child_process(cmds, envp, info);
 	}
 	else
-		last_process(cmds, envp);
+		last_process(cmds, envp, info);
 }

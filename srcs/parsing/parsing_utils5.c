@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:17 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 15:53:51 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/28 07:49:45 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	change_values_arr(char ***cmd, char *str1, char *str2, int i)
 	return (1);
 }
 
-char	**make_heredoc(char *content, t_cmds *cmds)
+char	**make_heredoc(char *content, t_cmds *cmds, t_info *info)
 {
 	char	**cmd;
 	int		i;
@@ -48,7 +48,7 @@ char	**make_heredoc(char *content, t_cmds *cmds)
 			break ;
 		if (ft_strncmp(cmd[i], "<<", 2) == 0)
 		{
-			cmds->heredoc_filepath = get_heredoc(cmd[i + 1]);
+			cmds->heredoc_filepath = get_heredoc(cmd[i + 1], info);
 			cmds->heredoc_flag = 1;
 			if (cmds->heredoc_filepath == 0)
 			{
