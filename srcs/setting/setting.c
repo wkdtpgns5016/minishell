@@ -28,7 +28,7 @@ void	ret_terminal(void)
 	struct termios	new_term;
 
 	tcgetattr(0, &new_term);
-	new_term.c_lflag &= ECHOCTL;
+	new_term.c_lflag |= ECHOCTL;
 	tcsetattr(0, TCSANOW, &new_term);
 }
 

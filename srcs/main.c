@@ -24,9 +24,11 @@ int	loop_minishell(t_info info)
 	{
 		g_signal_flag = 0;
 		signal_process_in_waiting();
+		set_terminal();
 		get_cursor_position(&cursor.col, &cursor.row);
 		line = readline("minishell$ ");
 		signal_process_in_command();
+		ret_terminal();
 		if (!line)
 		{
 			move_cursor(cursor.col + 11, cursor.row);
@@ -57,8 +59,6 @@ int	main(int ac, char **av, char **envp)
 		ft_putstr_fd("minishell: argument error", 2);
 		exit(1);
 	}
-	set_terminal();
 	loop_minishell(info);
-	ret_terminal();
 	return (0);
 }
