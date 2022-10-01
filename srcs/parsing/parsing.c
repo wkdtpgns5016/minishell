@@ -47,6 +47,7 @@ t_cmds	*set_last_cmd(t_info *info, char *line)
 	info->history_cmd = ft_strdup(new);
 	if (info->history_cmd == 0)
 		exit(1);
+	change_line(&new, info);
 	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
 	return (cmd_list);

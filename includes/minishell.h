@@ -151,9 +151,9 @@ char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list);
 char	*we_meet_quotes(char *cmd, t_info *info, t_list **cmd_char_list);
 void	change_first_node(t_list **first_node);
 void	change_node(t_list **first_node, t_info *info);
-void	change_cmd(char **cmd, t_info	*info);
 char	*list2dollar(t_list **first_node);
 char	*list2char(t_list **first_node);
 t_list	*char2list(char *cmd, t_info *info);
+void	change_line(char **line, t_info *info);
 
 #endif

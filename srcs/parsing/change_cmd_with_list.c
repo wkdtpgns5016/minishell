@@ -53,15 +53,19 @@ void change_node(t_list **first_node, t_info *info)
 
 	evl = info->ev.evl;
 	dollar = list2dollar(first_node);
-	while (evl)
+	if (*dollar == '?')
+		*dollar = *info->recent_exit_code + '0';
+	else
 	{
-		if (check_envl(evl->content, dollar))
-			break;
-		evl = evl->next;
+		while (evl)
+		{
+			if (check_envl(evl->content, dollar))
+				break;
+			evl = evl->next;
+		}
+		free(dollar);
+		dollar = dollar2env(evl);
 	}
-	free(dollar);
-	dollar = dollar2env(evl);
 	*first_node = env2node(dollar);
 	free(dollar);
-	dollar = NULL;
 }
