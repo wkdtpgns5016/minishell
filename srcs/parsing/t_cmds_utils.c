@@ -29,8 +29,6 @@ t_cmds	*make_cmd(char *content, t_info *info)
 		ft_free((void **)&cmd);
 		return (0);
 	}
-	else
-		change_cmd(cmd->cmd, info);
 	cmd->next = 0;
 	cmd->pred = 0;
 	return (cmd);
