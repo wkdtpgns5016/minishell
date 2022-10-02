@@ -22,8 +22,13 @@ typedef struct s_ev
 	t_list	*evl;
 }	t_ev;
 
-void	set_terminal(void);
-void	ret_terminal(void);
+struct termios	set_terminal_for_cursor(void);
+void	set_terminal_in_cmd(void);
+void	set_terminal_in_wait(void);
+void	set_signal_in_wait(void);
+void	set_signal_in_cmd(void);
+void	setting_in_cmd(void);
+void	setting_in_wait(void);
 void	get_ev(t_ev *ev, char **envp);
 
 #endif
