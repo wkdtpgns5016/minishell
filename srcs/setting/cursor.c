@@ -1,7 +1,4 @@
 #include "../../includes/minishell.h"
-#include <sys/fcntl.h>
-#include <term.h>
-#include <unistd.h>
 
 int	is_end_of_window(int row)
 {
@@ -13,19 +10,23 @@ int	is_end_of_window(int row)
 	return (0);
 }
 
-int	nbr_length(int n)
+int	nbr_length_with_atoi(int *nbr, char *buf, int idx)
 {
-	int	i = 0;
+	int	length = 0;
+	int	n;
 
+	n = ft_atoi(&buf[idx]);
+	*nbr = n - 1;
 	if (n <= 0)
-		i++;
+		length++;
 	while (n != 0)
 	{
 		n /= 10;
-		i++;
-	}
-	return (i);
+		length++;
+	}	
+	return (length);
 }
+
 
 
 void	get_cursor_position(int *col, int *rows)
@@ -33,25 +34,12 @@ void	get_cursor_position(int *col, int *rows)
 	int		it_s_row;
 	int		idx;
 	char	buf[255];
-	int		ret;
-	//int	fd;
-	struct termios term;
 	struct termios org_term;
-	
-	tcgetattr(STDIN_FILENO, &term);
-	tcgetattr(STDIN_FILENO, &org_term);
-	term.c_lflag &= ~ICANON;
-	term.c_lflag &= ~ECHO;
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 
-	//fd = open("imsi", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	write(0, "\033[6n" ,4);  //report cursor location
-	ret = read(0, buf, 254);
-	//close(fd);
-	//unlink("imsi");
-	buf[ret] = '\0';
+	org_term = set_terminal_for_cursor();
+	write(0, "\033[6n" ,4); 
+	idx = read(0, buf, 254);
+	buf[idx] = '\0';
 	it_s_row = 1;
 	idx = 0;
 	while (buf[idx])
@@ -59,15 +47,9 @@ void	get_cursor_position(int *col, int *rows)
 		if (buf[idx] >= '0' && buf[idx] <= '9')
 		{
 			if (it_s_row)
-			{
-				*rows = ft_atoi(&buf[idx]) - 1;
-				idx += nbr_length(*rows);
-			}
+				idx += nbr_length_with_atoi(rows, buf, idx);
 			else
-			{
-				*col = ft_atoi(&buf[idx]) - 1;
-				idx += nbr_length(*col);
-			}
+				idx += nbr_length_with_atoi(col, buf, idx);
 			it_s_row = 0;
 		}
 		idx++;
@@ -85,22 +67,14 @@ void	move_cursor(int col, int row)
 {
 	char			*cm;
 	char			*temp;
-	struct termios	term;
 	struct termios	org_term;
 
-	tcgetattr(STDIN_FILENO, &term);
-	tcgetattr(STDIN_FILENO, &org_term);
-	term.c_lflag &= ~ICANON;
-	term.c_lflag &= ~ECHO;
-	term.c_cc[VMIN] = 1;
-	term.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	org_term = set_terminal_for_cursor();
 	tgetent(NULL, "xterm");
 	cm = tgetstr("cm", NULL);
 	if (is_end_of_window(row))
 		row--;
 	temp = tgoto(cm, col, row);
 	tputs(temp, 1, ft_putchar_int);
-	set_terminal();
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
 }

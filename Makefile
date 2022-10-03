@@ -27,6 +27,7 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/parsing/change_cmd_with_list1.c \
 				 srcs/parsing/parsing_utils5.c \
 				 srcs/setting/signal.c \
+				 srcs/setting/terminal.c \
 				 srcs/setting/setting.c \
 				 srcs/setting/cursor.c \
 				 srcs/utils/ft_free.c \

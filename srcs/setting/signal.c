@@ -39,13 +39,13 @@ void	main_handler(int sig)
 	}
 }
 
-void	signal_process_in_waiting(void)
+void	set_signal_in_wait(void)
 {
 	signal(CTRL_C, main_handler);
 	signal(CTRL_SLASH, SIG_IGN);
 }
 
-void	signal_process_in_command(void)
+void	set_signal_in_cmd(void)
 {
 	signal(CTRL_C, sub1_handler);
 	signal(CTRL_SLASH, sub1_handler);
