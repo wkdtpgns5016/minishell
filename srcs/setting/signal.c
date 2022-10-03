@@ -37,11 +37,6 @@ void	main_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (sig == CTRL_SLASH)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-	}
 }
 
 void	signal_process_in_waiting(void)
