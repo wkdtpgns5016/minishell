@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/28 00:25:55 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:42:13 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	loop_minishell(t_info info)
 	while (1)
 	{
 		g_signal_flag = 0;
-		setting_in_wait();
 		get_cursor_position(&cursor.col, &cursor.row);
+		main_setting();
 		line = readline("minishell$ ");
-		setting_in_cmd();
+		cmd_setting();
 		if (!line)
 		{
 			move_cursor(cursor.col + 11, cursor.row);

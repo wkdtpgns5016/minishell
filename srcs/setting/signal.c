@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 12:27:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 12:27:37 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/10/04 20:35:31 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	g_signal_flag;
 
-void	sub1_handler(int sig)
+void	cmd_handler(int sig)
 {
 	if (sig == CTRL_C)
 	{
@@ -28,6 +28,17 @@ void	sub1_handler(int sig)
 		printf("Quit : 3\n");
 }
 
+void	heredoc_handler(int sig)
+{
+	if (sig == CTRL_C)
+	{
+		printf("\n");
+		if (g_signal_flag == 1)
+			close(0);
+		g_signal_flag = 2;
+	}
+}
+
 void	main_handler(int sig)
 {
 	if (sig == CTRL_C)
@@ -37,16 +48,4 @@ void	main_handler(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-}
-
-void	set_signal_in_wait(void)
-{
-	signal(CTRL_C, main_handler);
-	signal(CTRL_SLASH, SIG_IGN);
-}
-
-void	set_signal_in_cmd(void)
-{
-	signal(CTRL_C, sub1_handler);
-	signal(CTRL_SLASH, sub1_handler);
 }
