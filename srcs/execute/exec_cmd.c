@@ -86,9 +86,12 @@ void	exec_cmd(t_info *info)
 	int		*exit_code;
 	int		status;
 
-	if (quit_exit_cmd(info, g_signal_flag))
-		return ;
 	cmds = info->cmds;
+	if (quit_exit_cmd(info, g_signal_flag))
+	{
+		del_heredoc_file(cmds);
+		return ;
+	}
 	status = 0;
 	set_info_backup_fd(info);
 	size = get_size_cmds(cmds);
