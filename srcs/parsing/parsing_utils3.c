@@ -87,7 +87,9 @@ char	*add_last_cmd(char *str, t_info *info)
 	{
 		temp = new;
 		get_cursor_position(&cursor.col, &cursor.row);
+		heredoc_setting();
 		add = readline("> ");
+		cmd_setting();
 		if (check_null_add(add, info, backup, cursor) == 0)
 		{
 			ft_free((void **)&new);

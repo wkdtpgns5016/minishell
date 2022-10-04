@@ -6,12 +6,13 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:24 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/28 08:47:47 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:43:02 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <readline/history.h>
+#include <stdio.h>
 
 extern int	g_signal_flag;
 
@@ -39,7 +40,9 @@ void	write_heredoc(int fd, char *limiter, t_info *info)
 	while (1)
 	{
 		get_cursor_position(&cursor.col, &cursor.row);
+		heredoc_setting();
 		buffer = readline("> ");
+		cmd_setting();
 		if (g_signal_flag == 2)
 			break ;
 		if (buffer == 0)

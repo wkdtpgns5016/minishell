@@ -1,13 +1,22 @@
 #include "../../includes/minishell.h"
 
-void	setting_in_cmd(void)
+void	cmd_setting(void)
 {
-	set_terminal_in_cmd();
-	set_signal_in_cmd();
+	echo_ctrl_char();
+	signal(CTRL_C, cmd_handler);
+	signal(CTRL_SLASH, cmd_handler);
 }
 
-void	setting_in_wait(void)
+void	main_setting(void)
 {
-	set_terminal_in_wait();
-	set_signal_in_wait();
+	dont_echo_ctrl_char();
+	signal(CTRL_C, main_handler);
+	signal(CTRL_SLASH, SIG_IGN);
+}
+
+void	heredoc_setting(void)
+{
+	dont_echo_ctrl_char();
+	signal(CTRL_C, heredoc_handler);
+	signal(CTRL_SLASH, SIG_IGN);
 }

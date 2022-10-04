@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 12:14:01 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:36:30 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	set_terminal_in_wait(void)
+void	dont_echo_ctrl_char(void)
 {
 	struct termios	new_term;
 
@@ -23,7 +23,16 @@ void	set_terminal_in_wait(void)
 	tcsetattr(0, TCSANOW, &new_term);
 }
 
-struct termios	set_terminal_for_cursor()
+void	echo_ctrl_char(void)
+{
+	struct termios	new_term;
+
+	tcgetattr(0, &new_term);
+	new_term.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &new_term);
+}
+
+struct termios	set_terminal_for_cursor(void)
 {
 	struct termios	term;
 	struct termios	org_term;
@@ -38,11 +47,4 @@ struct termios	set_terminal_for_cursor()
 	return (org_term);
 }
 
-void	set_terminal_in_cmd(void)
-{
-	struct termios	new_term;
 
-	tcgetattr(0, &new_term);
-	new_term.c_lflag |= ECHOCTL;
-	tcsetattr(0, TCSANOW, &new_term);
-}

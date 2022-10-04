@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:59:22 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 13:21:47 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:40:19 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ typedef struct s_ev
 }	t_ev;
 
 struct termios	set_terminal_for_cursor(void);
-void	set_terminal_in_cmd(void);
-void	set_terminal_in_wait(void);
-void	set_signal_in_wait(void);
-void	set_signal_in_cmd(void);
-void	setting_in_cmd(void);
-void	setting_in_wait(void);
-void	get_ev(t_ev *ev, char **envp);
+void	echo_ctrl_char(void);
+void	dont_echo_ctrl_char(void);
+void	cmd_handler(int sig);
+void	heredoc_handler(int sig);
+void	main_handler(int sig);
+void	cmd_setting(void);
+void	heredoc_setting(void);
+void	main_setting(void);
 
 #endif
