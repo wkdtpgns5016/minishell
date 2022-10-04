@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:02 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 09:32:17 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 20:44:38 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ char	*add_last_cmd(char *str, t_info *info)
 	{
 		temp = new;
 		get_cursor_position(&cursor.col, &cursor.row);
+		heredoc_setting();
 		add = readline("> ");
+		cmd_setting();
 		if (check_null_add(add, info, backup, cursor) == 0)
 		{
 			ft_free((void **)&new);
