@@ -100,6 +100,7 @@ char	*make_cmd_pipe_amd_redir(char *line);
 int		check_last_pipe(char *line);
 char	*add_last_cmd(char *str, t_info *info);
 
+void	del_heredoc_file(t_cmds *cmds);
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
 void	process_redir(char **cmd, int flag, int index, int heredoc_flag, t_info *info);
@@ -144,7 +145,6 @@ char	**make_heredoc(char *content, t_cmds *cmds, t_info *info);
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
 int		setting(t_info *info, char **envp);
-
 
 char	*we_meet_char(char *cmd, t_list **cmd_char_list);
 char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list);

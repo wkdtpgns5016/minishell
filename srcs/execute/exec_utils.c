@@ -12,6 +12,42 @@
 
 #include "../../includes/minishell.h"
 
+int	get_index_infile(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] != 0)
+	{
+		if (is_redir(cmd[i]) > 0)
+		{
+			i++;
+			return (i);
+		}
+		else
+			i++;
+	}
+	return (-1);
+}
+
+void	del_heredoc_file(t_cmds *cmds)
+{
+	t_cmds	*temp;
+	int		i;
+
+	temp = cmds;
+	i = 0;
+	while (temp != 0)
+	{
+		if (temp->heredoc_flag)
+		{
+			i = get_index_infile(temp->cmd);
+			unlink(temp->cmd[i]);
+		}
+		temp = temp->next;
+	}
+}
+
 void	close_pipe(t_cmds *cmds, int index)
 {
 	int	i;
