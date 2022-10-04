@@ -33,8 +33,15 @@ char	*add_str_between_space(char	*str, char *new, int redir)
 	char	*result;
 	char	*temp;
 
-	result = ft_strjoin(str, new);
+	temp = str;
+	result = ft_strjoin(temp, new);
 	temp = result;
+	if (*str != 0)
+	{
+		result = ft_strjoin(temp, " ");
+		ft_free((void **)&temp);
+		temp = result;
+	}
 	if (redir == INPUT_REDIR)
 		result = ft_strjoin(temp, "<");
 	if (redir == HERE_DOC_REDIR)
