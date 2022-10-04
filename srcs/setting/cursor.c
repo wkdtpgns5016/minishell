@@ -2,19 +2,20 @@
 
 int	is_end_of_window(int row)
 {
-	struct winsize ws;
+	struct winsize	ws;
 
 	ioctl(0, TIOCGWINSZ, &ws);
-	if(row == --ws.ws_row)
+	if (row == --ws.ws_row)
 		return (1);
 	return (0);
 }
 
 int	nbr_length_with_atoi(int *nbr, char *buf, int idx)
 {
-	int	length = 0;
+	int	length;
 	int	n;
 
+	length = 0;
 	n = ft_atoi(&buf[idx]);
 	*nbr = n - 1;
 	if (n <= 0)
@@ -27,17 +28,15 @@ int	nbr_length_with_atoi(int *nbr, char *buf, int idx)
 	return (length);
 }
 
-
-
 void	get_cursor_position(int *col, int *rows)
 {
-	int		it_s_row;
-	int		idx;
-	char	buf[255];
-	struct termios org_term;
+	int				it_s_row;
+	int				idx;
+	char			buf[255];
+	struct termios	org_term;
 
 	org_term = set_terminal_for_cursor();
-	write(0, "\033[6n" ,4); 
+	write(0, "\033[6n", 4);
 	idx = read(0, buf, 254);
 	buf[idx] = '\0';
 	it_s_row = 1;
