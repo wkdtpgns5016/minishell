@@ -6,11 +6,12 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:02 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/23 09:32:17 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 21:21:48 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdio.h>
 
 extern int	g_signal_flag;
 
@@ -92,9 +93,12 @@ char	*add_last_cmd(char *str, t_info *info)
 			ft_free((void **)&new);
 			return (0);
 		}
-		new = sum_str_with_space(temp, add);
+		if (*add)
+		{	
+			new = sum_str_with_space(temp, add);
+			ft_free((void **)&temp);
+		}
 		ft_free((void **)&add);
-		ft_free((void **)&temp);
 	}
 	return (new);
 }
