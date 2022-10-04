@@ -1,17 +1,5 @@
 #include "../../includes/minishell.h"
 
-void	change_first_node(t_list **first_node)
-{
-	t_list	*temp;
-
-	temp = *first_node;
-	*first_node = (*first_node)->next;
-	free(temp->content);
-	temp->content = NULL;
-	free(temp);
-	temp = NULL;
-}
-
 char	*list2char(t_list **first_node)
 {
 	char	*dollar;
@@ -29,6 +17,23 @@ char	*list2char(t_list **first_node)
 	}
 	dollar[idx] = '\0';
 	return (dollar);
+}
+
+t_list	*char2list(char *cmd, t_info *info)
+{
+	t_list	*cmd_char_list;
+
+	cmd_char_list = NULL;
+	while (*cmd)
+	{
+		if (*cmd == '$')
+			cmd = we_meet_dollar(cmd, info, &cmd_char_list);
+		else if (*cmd == '"')
+			cmd = we_meet_quotes(cmd, info, &cmd_char_list);
+		else
+			cmd = we_meet_char(cmd, &cmd_char_list);
+	}
+	return (cmd_char_list);
 }
 
 void	change_line(char **line, t_info *info)

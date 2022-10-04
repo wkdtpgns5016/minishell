@@ -72,3 +72,27 @@ void	change_node(t_list **first_node, t_info *info)
 	*first_node = env2node(str_dollar);
 	free(str_dollar);
 }
+
+char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list)
+{
+	t_list	*dollar;
+
+	dollar = NULL;
+	cmd = we_meet_char(cmd, &dollar);
+	if (*cmd == '?')
+		cmd = we_meet_char(cmd, &dollar);
+	else
+	{
+		while (*cmd)
+		{
+			if (ft_isalnum(*cmd) || *cmd == '_')
+				cmd = we_meet_char(cmd, &dollar);
+			else
+				break ;
+		}
+	}
+	change_node(&dollar, info);
+	ft_lstadd_back(cmd_char_list, dollar);
+	return (cmd);
+}
+
