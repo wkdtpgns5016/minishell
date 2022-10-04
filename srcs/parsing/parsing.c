@@ -23,7 +23,7 @@ int	check_head_pipe(t_info *info, char *line)
 		return (0);
 	while (word[i] != 0)
 		i++;
-	if (i == 1 && ft_strncmp(*word, "|", 1) == 0)
+	if (i == 1 && ft_strncmp(*word, "|", ft_strlen(*word)) == 0)
 	{
 		print_error_message_syntax("|");
 		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);

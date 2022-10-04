@@ -16,6 +16,8 @@ int	*make_exit_code(int	**arr, int size)
 {
 	int	*temp;
 
+	if (*arr != 0)
+		ft_free((void *)arr);
 	temp = *arr;
 	temp = (int *)malloc(sizeof(int) * (size + 1));
 	temp[size] = -1;
