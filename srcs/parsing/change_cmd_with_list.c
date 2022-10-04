@@ -54,7 +54,10 @@ void change_node(t_list **first_node, t_info *info)
 	evl = info->ev.evl;
 	dollar = list2dollar(first_node);
 	if (*dollar == '?')
-		*dollar = *info->recent_exit_code + '0';
+	{
+		free(dollar);
+		dollar = ft_itoa(*info->recent_exit_code);
+	}
 	else
 	{
 		while (evl)
