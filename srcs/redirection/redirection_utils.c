@@ -62,7 +62,7 @@ char	**remove_redir(char **cmd, int start, int end)
 
 int	write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info)
 {
-	int	size;
+	int		size;
 	t_list	*buffer_char_list;
 
 	size = 0;

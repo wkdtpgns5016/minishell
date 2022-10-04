@@ -35,9 +35,6 @@ char	*add_str_between_space(char	*str, char *new, int redir)
 
 	result = ft_strjoin(str, new);
 	temp = result;
-	result = ft_strjoin(temp, " ");
-	ft_free((void **)&temp);
-	temp = result;
 	if (redir == INPUT_REDIR)
 		result = ft_strjoin(temp, "<");
 	if (redir == HERE_DOC_REDIR)
