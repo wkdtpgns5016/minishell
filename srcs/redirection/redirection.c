@@ -20,6 +20,11 @@ void	in_redir(int dst, char *infile, int heredoc_flag)
 	int	infile_fd;
 
 	infile_fd = open(infile, O_RDONLY);
+	if (infile_fd < 0)
+	{
+		print_error_message(infile, "No such file or directory");
+		exit(1);
+	}
 	dup2(infile_fd, dst);
 	close(infile_fd);
 	if (heredoc_flag)
@@ -81,6 +86,11 @@ void	out_redir(int src, char *outfile, int flag)
 	else
 		mode = O_WRONLY | O_CREAT | O_TRUNC;
 	outfile_fd = open(outfile, mode, 0644);
+	if (outfile_fd < 0)
+	{
+		print_error_message(outfile, "Open Error");
+		exit(1);
+	}
 	dup2(outfile_fd, src);
 	close(outfile_fd);
 }

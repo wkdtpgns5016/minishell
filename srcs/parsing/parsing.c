@@ -39,6 +39,7 @@ t_cmds	*set_last_cmd(t_info *info, char *line)
 {
 	t_cmds	*cmd_list;
 	char	*new;
+	char	*temp;
 
 	new = add_last_cmd(line, info);
 	if (new == 0)
@@ -47,6 +48,9 @@ t_cmds	*set_last_cmd(t_info *info, char *line)
 	info->history_cmd = ft_strdup(new);
 	if (info->history_cmd == 0)
 		exit(1);
+	temp = new;
+	new = make_cmd_pipe_amd_redir(temp);
+	ft_free((void **)&temp);
 	change_line(&new, info);
 	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
