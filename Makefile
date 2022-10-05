@@ -6,7 +6,7 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/10/04 18:33:42 by sunwchoi         ###   ########.fr        #
+#    Updated: 2022/10/05 00:24:53 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/parsing/parsing_utils3.c \
 				 srcs/parsing/change_cmd_with_list.c \
 				 srcs/parsing/change_cmd_with_list1.c \
+				 srcs/parsing/change_cmd_with_list2.c \
 				 srcs/parsing/parsing_utils5.c \
 				 srcs/setting/signal.c \
 				 srcs/setting/terminal.c \
