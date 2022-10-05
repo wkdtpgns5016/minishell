@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/05 00:32:49 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/09/28 08:48:21 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,5 @@ char	*list2dollar(t_list **first_node);
 char	*list2char(t_list **first_node);
 t_list	*char2list(char *cmd, t_info *info);
 void	change_line(char **line, t_info *info);
-char	*list2char(t_list **first_node);
 
 #endif
