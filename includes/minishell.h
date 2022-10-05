@@ -41,8 +41,7 @@
 # define OUTPUT_TRUNC_REDIR 3
 # define OUTPUT_APPAND_REDIR 4
 # define PIPE_LINE 5
-
-# define HERE_DOC_PATH "../here_doc"
+# define HERE_STRING_REDIR 6
 
 /*
 ** struct define

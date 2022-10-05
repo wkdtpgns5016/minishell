@@ -18,7 +18,12 @@ int	is_redir(char *c)
 	if (*c == '<' && *(c + 1) != '<')
 		return (INPUT_REDIR);
 	else if (*c == '<' && *(c + 1) == '<')
-		return (HERE_DOC_REDIR);
+	{
+		if (*(c + 2) != '<')
+			return (HERE_DOC_REDIR);
+		else
+			return (HERE_STRING_REDIR);
+	}
 	else if (*c == '>' && *(c + 1) != '>')
 		return (OUTPUT_TRUNC_REDIR);
 	else if (*c == '>' && *(c + 1) == '>')
