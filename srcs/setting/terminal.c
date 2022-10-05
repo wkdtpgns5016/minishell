@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:58:47 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/04 20:36:30 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/04 23:44:33 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,3 @@ struct termios	set_terminal_for_cursor(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	return (org_term);
 }
-
-

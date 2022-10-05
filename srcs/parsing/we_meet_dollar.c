@@ -23,7 +23,7 @@ char	*list2dollar(t_list **first_node)
 
 char	*dollar2env(t_list *evl)
 {
-	char *evp;
+	char	*evp;
 
 	if (!evl)
 		return (ft_strdup(""));
@@ -42,33 +42,57 @@ t_list	*env2node(char *dollar)
 
 	first_node = NULL;
 	while (*dollar)
-		dollar = we_meet_char(dollar, &first_node);	
+		dollar = we_meet_char(dollar, &first_node);
 	return (first_node);
 }
 
-void change_node(t_list **first_node, t_info *info)
+void	change_node(t_list **first_node, t_info *info)
 {
-	char	*dollar;
+	char	*str_dollar;
 	t_list	*evl;
 
 	evl = info->ev.evl;
-	dollar = list2dollar(first_node);
-	if (*dollar == '?')
+	str_dollar = list2dollar(first_node);
+	if (*str_dollar == '?')
 	{
-		free(dollar);
-		dollar = ft_itoa(*info->recent_exit_code);
+		free(str_dollar);
+		str_dollar = ft_itoa(*info->recent_exit_code);
 	}
 	else
 	{
 		while (evl)
 		{
-			if (check_envl(evl->content, dollar))
-				break;
+			if (check_envl(evl->content, str_dollar))
+				break ;
 			evl = evl->next;
 		}
-		free(dollar);
-		dollar = dollar2env(evl);
+		free(str_dollar);
+		str_dollar = dollar2env(evl);
 	}
-	*first_node = env2node(dollar);
-	free(dollar);
+	*first_node = env2node(str_dollar);
+	free(str_dollar);
 }
+
+char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list)
+{
+	t_list	*dollar;
+
+	dollar = NULL;
+	cmd = we_meet_char(cmd, &dollar);
+	if (*cmd == '?')
+		cmd = we_meet_char(cmd, &dollar);
+	else
+	{
+		while (*cmd)
+		{
+			if (ft_isalnum(*cmd) || *cmd == '_')
+				cmd = we_meet_char(cmd, &dollar);
+			else
+				break ;
+		}
+	}
+	change_node(&dollar, info);
+	ft_lstadd_back(cmd_char_list, dollar);
+	return (cmd);
+}
+
