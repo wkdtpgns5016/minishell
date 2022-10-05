@@ -23,7 +23,7 @@ char	*list2dollar(t_list **first_node)
 
 char	*dollar2env(t_list *evl)
 {
-	char	*evp;
+	char *evp;
 
 	if (!evl)
 		return (ft_strdup(""));
@@ -42,33 +42,33 @@ t_list	*env2node(char *dollar)
 
 	first_node = NULL;
 	while (*dollar)
-		dollar = we_meet_char(dollar, &first_node);
+		dollar = we_meet_char(dollar, &first_node);	
 	return (first_node);
 }
 
-void	change_node(t_list **first_node, t_info *info)
+void change_node(t_list **first_node, t_info *info)
 {
-	char	*str_dollar;
+	char	*dollar;
 	t_list	*evl;
 
 	evl = info->ev.evl;
-	str_dollar = list2dollar(first_node);
-	if (*str_dollar == '?')
+	dollar = list2dollar(first_node);
+	if (*dollar == '?')
 	{
-		free(str_dollar);
-		str_dollar = ft_itoa(*info->recent_exit_code);
+		free(dollar);
+		dollar = ft_itoa(*info->recent_exit_code);
 	}
 	else
 	{
 		while (evl)
 		{
-			if (check_envl(evl->content, str_dollar))
-				break ;
+			if (check_envl(evl->content, dollar))
+				break;
 			evl = evl->next;
 		}
-		free(str_dollar);
-		str_dollar = dollar2env(evl);
+		free(dollar);
+		dollar = dollar2env(evl);
 	}
-	*first_node = env2node(str_dollar);
-	free(str_dollar);
+	*first_node = env2node(dollar);
+	free(dollar);
 }
