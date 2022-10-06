@@ -51,7 +51,8 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/redirection/redirection_utils2.c \
 				 srcs/syntax/check_readline.c \
 				 srcs/syntax/check_pipe.c \
-				 srcs/syntax/check_redir.c
+				 srcs/syntax/check_redir.c \
+				 srcs/tokenize/divide_arr.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib

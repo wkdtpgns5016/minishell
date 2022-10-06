@@ -86,7 +86,7 @@ char	*add_last_cmd(char *str, t_info *info)
 		add = readline("> ");
 		cmd_setting();
 		if (check_null_add(add, info, backup, cursor) \
-		|| check_syntax(info, add))
+		|| check_syntax(info, add, 0))
 		{
 			ft_free((void **)&add);
 			ft_free((void **)&new);
