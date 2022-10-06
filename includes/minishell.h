@@ -90,6 +90,7 @@ t_cmds	*make_cmd(char *content, t_info *info);
 void	add_cmd_back(t_cmds **cmds, t_cmds *node);
 t_cmds	*make_cmds(char *new, t_info *info);
 
+int		check_syntax(t_info *info, char *line);
 void	set_info(t_info *info, char *line);
 t_cmds	*set_cmds(t_info *info, char *line);
 
@@ -102,7 +103,7 @@ char	*add_last_cmd(char *str, t_info *info);
 void	del_heredoc_file(t_cmds *cmds);
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
-void	process_redir(char **cmd, int flag, int index, int heredoc_flag, t_info *info);
+void	process_redir(char **cmd, int flag, int index, t_cmds *cmds, t_info *info);
 void	out_redir(int src, char *outfile, int flag);
 int		write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info);
 char	*get_heredoc(char *limiter, t_info *info);

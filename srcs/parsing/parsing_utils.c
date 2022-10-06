@@ -36,25 +36,16 @@ char	*add_str_between_space(char	*str, char *new, int redir)
 	temp = str;
 	result = ft_strjoin(temp, new);
 	temp = result;
-	if (*str != 0)
-	{
-		result = ft_strjoin(temp, " ");
-		ft_free((void **)&temp);
-		temp = result;
-	}
 	if (redir == INPUT_REDIR)
-		result = ft_strjoin(temp, "<");
+		result = ft_strjoin(temp, " < ");
 	if (redir == HERE_DOC_REDIR)
-		result = ft_strjoin(temp, "<<");
+		result = ft_strjoin(temp, " << ");
 	if (redir == OUTPUT_TRUNC_REDIR)
-		result = ft_strjoin(temp, ">");
+		result = ft_strjoin(temp, " > ");
 	if (redir == OUTPUT_APPAND_REDIR)
-		result = ft_strjoin(temp, ">>");
+		result = ft_strjoin(temp, " >> ");
 	if (redir == HERE_STRING_REDIR)
-		result = ft_strjoin(temp, "<<<");
-	ft_free((void **)&temp);
-	temp = result;
-	result = ft_strjoin(temp, " ");
+		result = ft_strjoin(temp, " <<< ");
 	ft_free((void **)&temp);
 	return (result);
 }

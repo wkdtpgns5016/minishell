@@ -47,11 +47,6 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	if (new == 0)
 		return (0);
 	change_line(&new, info);
-	if (check_syntax(info, new))
-	{
-		ft_free((void **)&new);
-		return (0);
-	}
 	ft_free((void **)&(info->history_cmd));
 	info->history_cmd = ft_strdup(new);
 	if (info->history_cmd == 0)

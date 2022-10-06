@@ -111,7 +111,7 @@ void	redirection(t_cmds *cmds, t_info *info)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			process_redir(temp, flag, i, cmds->heredoc_flag, info);
+			process_redir(temp, flag, i, cmds, info);
 			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}
