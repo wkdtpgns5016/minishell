@@ -79,6 +79,8 @@ typedef struct s_builtin_info
 	int		backup[2];
 }	t_builtin_info;
 
+# include "./tokenize.h"
+
 /*
 ** ft_free.c
 */
@@ -90,7 +92,7 @@ t_cmds	*make_cmd(char *content, t_info *info);
 void	add_cmd_back(t_cmds **cmds, t_cmds *node);
 t_cmds	*make_cmds(char *new, t_info *info);
 
-int		check_syntax(t_info *info, char *line);
+int		check_syntax(t_info *info, char *line, char **str);
 void	set_info(t_info *info, char *line);
 t_cmds	*set_cmds(t_info *info, char *line);
 
@@ -141,6 +143,8 @@ int		check_redir(char **token, int i);
 int		check_readline(char *line);
 void	change_cmd(char **cmd, t_info	*info);
 char	**make_heredoc(char *content, t_cmds *cmds, t_info *info);
+int		sub_make_heredoc(t_cmds *cmds, t_info *info, int index, char ***cmd);
+int		check_sub_readline(char **token);
 
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
