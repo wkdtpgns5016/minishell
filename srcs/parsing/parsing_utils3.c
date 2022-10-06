@@ -43,15 +43,15 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 		{
 			dup2(backup, 0);
 			close(backup);
-			return (0);
+			return (1);
 		}
 		move_cursor(cursor.col + 2, cursor.row);
 		print_error_message("syntax error", "unexpected end of file");
 		info->recent_exit_code = make_exit_code(&(info->recent_exit_code), 1);
 		info->recent_exit_code[0] = 258;
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 // void	add_last_redir_pipe(char **temp, char **new)
@@ -90,8 +90,10 @@ char	*add_last_cmd(char *str, t_info *info)
 		heredoc_setting();
 		add = readline("> ");
 		cmd_setting();
-		if (check_null_add(add, info, backup, cursor) == 0)
+		if (check_null_add(add, info, backup, cursor) \
+		|| check_syntax(info, add))
 		{
+			ft_free((void **)&add);
 			ft_free((void **)&new);
 			return (0);
 		}

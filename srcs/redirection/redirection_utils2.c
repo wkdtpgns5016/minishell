@@ -24,14 +24,14 @@ int	is_num_str(char *str)
 	return (1);
 }
 
-void	process_redir(char **cmd, int flag, int index, int heredoc_flag, t_info *info)
+void	process_redir(char **cmd, int flag, int index, t_cmds *cmds, t_info *info)
 {
 	if (flag == INPUT_REDIR)
-		in_redir(0, *(cmd + index + 1), heredoc_flag);
+		in_redir(0, *(cmd + index + 1), cmds->heredoc_flag);
 	else if (flag == HERE_DOC_REDIR)
 	{
 		get_heredoc(*(cmd + index + 1), info);
-		in_redir(0, HERE_DOC_PATH, heredoc_flag);
+		in_redir(0, cmds->heredoc_filepath, cmds->heredoc_flag);
 	}
 	else if (flag == OUTPUT_TRUNC_REDIR)
 		out_redir(1, *(cmd + index + 1), 0);

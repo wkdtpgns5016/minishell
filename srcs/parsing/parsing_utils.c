@@ -36,23 +36,16 @@ char	*add_str_between_space(char	*str, char *new, int redir)
 	temp = str;
 	result = ft_strjoin(temp, new);
 	temp = result;
-	if (*str != 0)
-	{
-		result = ft_strjoin(temp, " ");
-		ft_free((void **)&temp);
-		temp = result;
-	}
 	if (redir == INPUT_REDIR)
-		result = ft_strjoin(temp, "<");
+		result = ft_strjoin(temp, " < ");
 	if (redir == HERE_DOC_REDIR)
-		result = ft_strjoin(temp, "<<");
+		result = ft_strjoin(temp, " << ");
 	if (redir == OUTPUT_TRUNC_REDIR)
-		result = ft_strjoin(temp, ">");
+		result = ft_strjoin(temp, " > ");
 	if (redir == OUTPUT_APPAND_REDIR)
-		result = ft_strjoin(temp, ">>");
-	ft_free((void **)&temp);
-	temp = result;
-	result = ft_strjoin(temp, " ");
+		result = ft_strjoin(temp, " >> ");
+	if (redir == HERE_STRING_REDIR)
+		result = ft_strjoin(temp, " <<< ");
 	ft_free((void **)&temp);
 	return (result);
 }
@@ -74,8 +67,11 @@ char	*sub_make_cmd(char *cmd, char *content, int *i, int *j)
 		str = add_str_between_space(temp, new, is_redir(content + *i));
 		ft_free((void **)&temp);
 		ft_free((void **)&new);
-		if (is_redir(content + *i) % 2 == 0)
+		if (is_redir(content + *i) == HERE_DOC_REDIR || \
+		is_redir(content + *i) == OUTPUT_APPAND_REDIR)
 			*j = *i + 2;
+		else if (is_redir(content + *i) == HERE_STRING_REDIR)
+			*j = *i + 3;
 		else
 			*j = *i + 1;
 	}
@@ -100,6 +96,8 @@ char	*make_cmd_redir(char *content)
 	if (is_redir(content + i) == HERE_DOC_REDIR || \
 	is_redir(content + i) == OUTPUT_APPAND_REDIR)
 		j = i + 2;
+	else if (is_redir(content + i) == HERE_STRING_REDIR)
+		j = i + 3;
 	else
 		j = i + 1;
 	cmd = sub_make_cmd(cmd, content, &i, &j);
