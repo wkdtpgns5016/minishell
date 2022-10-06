@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/05 00:32:49 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/07 03:25:58 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include "./setting.h"
 # include "./builtin_cmd.h"
 # include "./signal.h"
+# include "./tokenizing.h"
+# include "./struct.h"
 /*
 ** flag number
 */
@@ -46,38 +48,6 @@
 /*
 ** struct define
 */
-typedef struct s_cmds
-{
-	char			**cmd;
-	int				fd[2];
-	pid_t			pid;
-	struct s_cmds	*next;
-	struct s_cmds	*pred;
-	char			*heredoc_filepath;
-	int				heredoc_flag;
-}	t_cmds;
-
-typedef struct s_info
-{
-	t_cmds	*cmds;
-	t_ev	ev;
-	int		backup[2];
-	int		*recent_exit_code;
-	char	**envp;
-	char	*history_cmd;
-}	t_info;
-
-typedef struct s_cursor
-{
-	int	col;
-	int	row;
-}	t_cursor;
-
-typedef struct s_builtin_info
-{
-	int		flag;
-	int		backup[2];
-}	t_builtin_info;
 
 # include "./tokenize.h"
 
