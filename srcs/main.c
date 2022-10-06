@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/04 20:42:13 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/07 04:36:20 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,13 @@ int	loop_minishell(t_info info)
 {
 	char		*line;
 	t_cursor	cursor;
+	/*
+	char **line_2d;
+	int	idx;
+	t_info cpy;
 
+	cpy = info;
+	*/
 	while (1)
 	{
 		g_signal_flag = 0;
@@ -61,6 +67,18 @@ int	loop_minishell(t_info info)
 			printf("exit\n");
 			return (0);
 		}
+		/*
+		line_2d = divide_line(line);
+		getchar();
+		idx = 0;
+		while (line_2d[idx])
+		{
+			printf("%s\n",line_2d[idx]);
+			free(line_2d[idx]);
+			idx++;
+		}
+		free(line_2d);
+		*/
 		set_info(&info, line);
 		exec_cmd(&info);
 		if (info.history_cmd != 0)

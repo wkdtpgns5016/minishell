@@ -6,7 +6,7 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/10/05 03:21:28 by sunwchoi         ###   ########.fr        #
+#    Updated: 2022/10/07 03:21:43 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ NAME = minishell
 SRCS = 
 
 SRCS_MANDATORY = srcs/main.c \
+				 srcs/tokenize/divide_line.c \
 				 srcs/parsing/t_cmds_utils.c \
 				 srcs/parsing/parsing.c \
 				 srcs/parsing/parsing_utils.c \
