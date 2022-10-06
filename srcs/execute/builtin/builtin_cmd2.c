@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:55:04 by sehjang           #+#    #+#             */
-/*   Updated: 2022/09/21 12:22:13 by sehjang          ###   ########.fr       */
+/*   Updated: 2022/10/06 22:02:25 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ int	ft_unset(char *arg, t_ev *ev)
 		last = now;
 		now = now->next;
 	}
-	ft_free((void **)&(ev->evp));
 	if (now)
+	{
+		ft_free((void **)&(ev->evp));
 		ev->evp = l_to_p(ev->evl);
+	}	
 	return (0);
 }
 
