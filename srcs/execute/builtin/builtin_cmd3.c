@@ -59,7 +59,8 @@ void	ft_exit(char *arg, int size)
 	num = 0;
 	if (!arg)
 	{
-		printf("exit\n");
+		if (size == 1)
+			printf("exit\n");
 		exit(0);
 	}
 	if (!check_exit_code(arg, &num))
@@ -68,7 +69,8 @@ void	ft_exit(char *arg, int size)
 			printf("exit\n");
 		error_excute("exit", arg, "numeric argument required", 255);
 	}
-	printf("exit\n");
+	if (size == 1)
+		printf("exit\n");
 	exit((unsigned char)num);
 }
 
