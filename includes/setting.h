@@ -23,13 +23,13 @@ typedef struct s_ev
 }	t_ev;
 
 struct termios	set_terminal_for_cursor(void);
-void	echo_ctrl_char(void);
-void	dont_echo_ctrl_char(void);
-void	cmd_handler(int sig);
-void	heredoc_handler(int sig);
-void	main_handler(int sig);
-void	cmd_setting(void);
-void	heredoc_setting(void);
-void	main_setting(void);
+void			echo_ctrl_char(void);
+void			dont_echo_ctrl_char(void);
+void			cmd_handler(int sig);
+void			heredoc_handler(int sig);
+void			main_handler(int sig);
+void			cmd_setting(void);
+void			heredoc_setting(void);
+void			main_setting(void);
 
 #endif

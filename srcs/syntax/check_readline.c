@@ -84,14 +84,18 @@ int	check_readline(char *line)
 	int		check;
 	char	*new;
 
-	new = make_cmd_pipe_amd_redir(line);
-	if (new == 0)
-		return (-1);
-	token = ft_split(new, ' ');
-	if (token == 0)
-		return (-1);
-	check = check_sub_readline(token);
-	ft_free_arr((char ***)&token);
-	ft_free((void **)&new);
+	check = 0;
+	if (*line)
+	{
+		new = make_cmd_pipe_amd_redir(line);
+		if (new == 0)
+			return (-1);
+		token = ft_split(new, ' ');
+		if (token == 0)
+			return (-1);
+		check = check_sub_readline(token);
+		ft_free_arr((char ***)&token);
+		ft_free((void **)&new);
+	}
 	return (check);
 }

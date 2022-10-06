@@ -24,8 +24,26 @@ int	is_num_str(char *str)
 	return (1);
 }
 
-void	process_redir(char **cmd, int flag, int index, t_cmds *cmds, t_info *info)
+t_cmds	*get_cmd_in_info(t_info *info, int index)
 {
+	t_cmds	*cmds;
+	int		i;
+
+	cmds = info->cmds;
+	i = 0;
+	while (i < index)
+	{
+		cmds = cmds->next;
+		i++;
+	}
+	return (cmds);
+}
+
+void	process_redir(char **cmd, int flag, int index, t_info *info)
+{
+	t_cmds	*cmds;
+
+	cmds = get_cmd_in_info(info, index);
 	if (flag == INPUT_REDIR)
 		in_redir(0, *(cmd + index + 1), cmds->heredoc_flag);
 	else if (flag == HERE_DOC_REDIR)

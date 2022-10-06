@@ -54,27 +54,23 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 	return (0);
 }
 
-// void	add_last_redir_pipe(char **temp, char **new)
-// {
-// 	*temp = make_cmd_redir(*new);
-// 	ft_free((void **)new);
-// 	*new = make_cmd_pipe(*temp);
-// 	ft_free((void **)temp);
-// }
-char	*sum_str_with_space(char *str1, char *str2)
+void	sum_str_with_space(char **str1, char *str2)
 {
 	char	*temp;
-	char	*new;
+	char	*temp1;
 
-	temp = ft_strjoin(" ", str2);
-	new = ft_strjoin(str1, temp);
-	ft_free((void **)&temp);
-	return (new);
+	if (*str2)
+	{
+		temp1 = *str1;
+		temp = ft_strjoin(" ", str2);
+		*str1 = ft_strjoin(temp1, temp);
+		ft_free((void **)&temp);
+		ft_free((void **)&temp1);
+	}
 }
 
 char	*add_last_cmd(char *str, t_info *info)
 {
-	char		*temp;
 	char		*new;
 	char		*add;
 	int			backup;
@@ -85,7 +81,6 @@ char	*add_last_cmd(char *str, t_info *info)
 	backup = dup(0);
 	while (check_last_pipe(new))
 	{
-		temp = new;
 		get_cursor_position(&cursor.col, &cursor.row);
 		heredoc_setting();
 		add = readline("> ");
@@ -97,11 +92,7 @@ char	*add_last_cmd(char *str, t_info *info)
 			ft_free((void **)&new);
 			return (0);
 		}
-		if (*add)
-		{	
-			new = sum_str_with_space(temp, add);
-			ft_free((void **)&temp);
-		}
+		sum_str_with_space(&new, add);
 		ft_free((void **)&add);
 	}
 	return (new);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   we_meet_dollar.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/06 17:53:52 by sehjang           #+#    #+#             */
+/*   Updated: 2022/10/06 17:54:21 by sehjang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include <stdio.h>
 
@@ -95,4 +107,3 @@ char	*we_meet_dollar(char *cmd, t_info *info, t_list **cmd_char_list)
 	ft_lstadd_back(cmd_char_list, dollar);
 	return (cmd);
 }
-

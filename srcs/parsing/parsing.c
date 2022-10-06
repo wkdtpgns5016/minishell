@@ -46,11 +46,11 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	ft_free((void **)&temp);
 	if (new == 0)
 		return (0);
-	change_line(&new, info);
 	ft_free((void **)&(info->history_cmd));
 	info->history_cmd = ft_strdup(new);
 	if (info->history_cmd == 0)
 		exit(1);
+	change_line(&new, info);
 	cmd_list = make_cmds(new, info);
 	ft_free((void **)&new);
 	return (cmd_list);
