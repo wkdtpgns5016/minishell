@@ -40,7 +40,7 @@ int	count_redir_garbage(char **token)
 	return (count);
 }
 
-int	insert_divide_redir(char ***arr, char *redir, int index)
+int	insert_divide_redir(char ***arr, char *redir, int *index)
 {
 	char	**divide_redir;
 	int		size;
@@ -53,16 +53,16 @@ int	insert_divide_redir(char ***arr, char *redir, int index)
 		size++;
 	while (i < size)
 	{
-		(*arr)[index + i] = ft_strdup(divide_redir[i]);
+		(*arr)[*index + i] = ft_strdup(divide_redir[i]);
 		i++;
 	}
+	(*index) += size;
 	ft_free_arr(((char ***)&divide_redir));
 	return (size);
 }
 
 char	**divide_redir_garbage(char **token)
 {
-	int		count;
 	int		i;
 	int		j;
 	int		size;
@@ -70,26 +70,15 @@ char	**divide_redir_garbage(char **token)
 
 	i = 0;
 	j = 0;
-	while (token[i] != 0)
-		i++;
 	size = count_redir_garbage(token);
 	new = (char **)malloc(sizeof(char *) * (size + 1));
-	i = 0;
 	while (i < size)
 	{
 		if (is_redir_garbage(token[j]))
-		{
-			insert_divide_redir(&new, token[j], i);
-		}
+			insert_divide_redir(&new, token[j], &i);
 		else
-			new[i++] = token[j++];
+			new[i++] = token[j];
+		j++;
 	}
-	return (0);
-	// 리다이렉션 붙어 있는 개수 계산
-	// 붙어 있는 개수 + token 크기 만큼 배열 할당
-	// new[i++] = token[j++] 으로 넣음
-	// 넣다가 붙은 리다이렉션을 만나면 그거 쪼개서 new에 넣기
-	// 반복
-
-
+	return (new);
 }
