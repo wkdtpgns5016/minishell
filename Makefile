@@ -18,7 +18,6 @@ NAME = minishell
 SRCS = 
 
 SRCS_MANDATORY = srcs/main.c \
-				 srcs/tokenize/divide_line.c \
 				 srcs/parsing/t_cmds_utils.c \
 				 srcs/parsing/parsing.c \
 				 srcs/parsing/parsing_utils.c \
@@ -54,8 +53,10 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/syntax/check_pipe.c \
 				 srcs/syntax/check_redir.c \
 				 srcs/tokenize/divide_arr.c \
-				 srcs/tokenize/divide_redir.c \
-				 srcs/tokenize/create_divide_redir.c
+				 srcs/tokenize/divide_redir_garbage.c \
+				 srcs/tokenize/create_divide_redir.c \
+				 srcs/tokenize/divide_line.c \
+				 srcs/tokenize/set_cmd.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib

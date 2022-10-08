@@ -17,6 +17,7 @@
 ** include header file
 */
 # include "../libft/libft.h"
+# include "./struct.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -34,7 +35,7 @@
 # include "./builtin_cmd.h"
 # include "./signal.h"
 # include "./tokenizing.h"
-# include "./struct.h"
+
 /*
 ** flag number
 */
@@ -44,12 +45,6 @@
 # define OUTPUT_APPAND_REDIR 4
 # define PIPE_LINE 5
 # define HERE_STRING_REDIR 6
-
-/*
-** struct define
-*/
-
-# include "./tokenize.h"
 
 /*
 ** ft_free.c

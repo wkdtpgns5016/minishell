@@ -16,12 +16,6 @@
 # define CTRL_C 2
 # define CTRL_SLASH 3
 
-typedef struct s_ev
-{
-	char	**evp;
-	t_list	*evl;
-}	t_ev;
-
 struct termios	set_terminal_for_cursor(void);
 void			echo_ctrl_char(void);
 void			dont_echo_ctrl_char(void);

@@ -74,7 +74,7 @@ void	set_info(t_info *info, char *line)
 		{
 			if (line[i] != ' ')
 			{
-				info->cmds = set_cmds(info, line);
+				info->cmds = new_set_cmds(info, line);
 				break ;
 			}
 			i++;

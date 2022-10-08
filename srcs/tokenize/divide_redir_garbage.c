@@ -77,8 +77,9 @@ char	**divide_redir_garbage(char **token)
 		if (is_redir_garbage(token[j]))
 			insert_divide_redir(&new, token[j], &i);
 		else
-			new[i++] = token[j];
+			new[i++] = ft_strdup(token[j]);
 		j++;
 	}
+	new[i] = 0;
 	return (new);
 }

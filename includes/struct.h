@@ -12,6 +12,12 @@ typedef struct s_cmds
 	int				heredoc_flag;
 }	t_cmds;
 
+typedef struct s_ev
+{
+	char	**evp;
+	t_list	*evl;
+}	t_ev;
+
 typedef struct s_info
 {
 	t_cmds	*cmds;
