@@ -49,12 +49,10 @@ char *make_dollar_str(t_list *dollar_lst)
 	return (dollar_str);
 }
 
-t_list	*dollar2env(t_list *dollar, t_info *info)
+t_list	*new_dollar2env(t_list *dollar, t_info *info)
 {
 	t_list	*next;
 	t_list	*last;
-	char	*dollar_str;
-	int		idx;
 
 	next = separate_dollar(dollar);
 	//dollar_str = make_dollar_str(dollar);
@@ -64,23 +62,23 @@ t_list	*dollar2env(t_list *dollar, t_info *info)
 	return (dollar);
 }
 
-void	interpret_dollar(t_list *quote_lst, t_info *info)
+void	interpret_dollar(t_list **quote_lst, t_info *info)
 {
 	t_list	*prev;
 	char	c;
 
 	prev = NULL;
 	c = 0;
-	while (quote_lst)
+	while (*quote_lst)
 	{
-		c = *(char *)quote_lst->content;
+		c = *(char *)(*quote_lst)->content;
 		while (c == '$')
 		{
-			prev->next = dollar2env(quote_lst, info);
-			quote_lst = prev->next;
-			c = *(char *)quote_lst->content;
+			prev->next = new_dollar2env(*quote_lst, info);
+			(*quote_lst) = prev->next;
+			c = *(char *)(*quote_lst)->content;
 		}
-		prev = quote_lst;
-		quote_lst = quote_lst->next;
+		prev = *quote_lst;
+		(*quote_lst) = (*quote_lst)->next;
 	}
 }

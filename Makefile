@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = #-Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra 
 
 NAME = minishell
 
@@ -55,6 +55,8 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/tokenize/divide_arr.c \
 				 srcs/tokenize/divide_redir_garbage.c \
 				 srcs/tokenize/create_divide_redir.c \
+				 srcs/tokenize/interpret_cmd.c \
+				 srcs/tokenize/interpret_dollar.c \
 				 srcs/tokenize/divide_line.c \
 				 srcs/tokenize/set_cmd.c
 SRCS_BONUS = 
