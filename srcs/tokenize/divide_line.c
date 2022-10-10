@@ -6,9 +6,10 @@
 int	ft_isspace(int c)
 {
 	if ((9 <= c && c <= 13) || c == ' ')
-			return (1);
+		return (1);
 	return (0);
 }
+
 int	get_line_idx(char *line)
 {
 	int		idx;
@@ -60,7 +61,7 @@ t_list	*line2list(char *line)
 	return (line_lst);
 }
 
-char **list2line(t_list *line_lst)
+char	**list2line(t_list *line_lst)
 {
 	char	**line_2d;
 	t_list	*line_lst_cpy;
@@ -73,15 +74,15 @@ char **list2line(t_list *line_lst)
 	while (line_lst)
 	{
 		line_2d[idx++] = line_lst->content;
-		line_lst_cpy= line_lst;
-		line_lst = line_lst->next;	
+		line_lst_cpy = line_lst;
+		line_lst = line_lst->next;
 		free(line_lst_cpy);
 	}
 	line_2d[idx] = 0;
 	return (line_2d);
 }
 
-char **divide_line(char *line)
+char	**divide_line(char *line)
 {
 	return (list2line(line2list(line)));
 }

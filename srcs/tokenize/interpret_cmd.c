@@ -24,7 +24,7 @@ void	delete_quote(t_list **quote)
 	ft_lstdelone(node_cpy, free);
 }
 
-t_list *interpret_quote(char **p_cmd, t_info *info)
+t_list	*interpret_quote(char **p_cmd, t_info *info)
 {
 	char	*cmd;
 	char	quote;
@@ -43,7 +43,7 @@ t_list *interpret_quote(char **p_cmd, t_info *info)
 				interpret_dollar(&quote_lst, info);
 			delete_quote(&quote_lst);
 			cmd++;
-			break;
+			break ;
 		}
 	}
 	*p_cmd = cmd;

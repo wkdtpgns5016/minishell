@@ -1,7 +1,7 @@
 #include "../../includes/minishell.h"
 #include <stdlib.h>
 
-t_list *separate_dollar(t_list *now)
+t_list	*separate_dollar(t_list *now)
 {
 	char	c;
 	t_list	*prev;
@@ -16,7 +16,7 @@ t_list *separate_dollar(t_list *now)
 		{
 			prev = now;
 			now = now->next;
-			break;
+			break ;
 		}
 		else if (!(ft_isalnum(c) || c == '_'))
 			break ;
@@ -28,7 +28,7 @@ t_list *separate_dollar(t_list *now)
 	return (next);
 }
 
-char *make_dollar_str(t_list *dollar_lst)
+char	*make_dollar_str(t_list *dollar_lst)
 {
 	char	*dollar_str;
 	int		idx;
