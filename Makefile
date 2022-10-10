@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = #-Wall -Werror -Wextra 
 
 NAME = minishell
 
@@ -59,10 +59,10 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/tokenize/set_cmd.c
 SRCS_BONUS = 
 
-COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
-OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
-#COMFILE_FLAGS= -lreadline -L/usr/local/opt/readline/lib
-#OBJ_FLAGS=-I/usr/local/opt/readline/include
+#COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
+#OBJ_FLAGS = -I${HOME}/.brew/opt/readline/include
+COMFILE_FLAGS= -lreadline -L/usr/local/opt/readline/lib
+OBJ_FLAGS=-I/usr/local/opt/readline/include
 OBJS = $(SRCS:.c=.o)
 OBJS_MANDATORY = $(SRCS_MANDATORY:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
