@@ -19,7 +19,7 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	token = divide_line(new_line);
 	// 토큰들 정리
 	temp = token;
-	token = divide_redir_garbage(temp);
+	token = divide_token_garbage(temp);
 	ft_free_arr((char ***)&temp);
 	// 파이프 기준으로 분할하여 구조체에 삽입
 	cmds = insert_cmds(token, info);

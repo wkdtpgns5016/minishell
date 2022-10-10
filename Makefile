@@ -53,8 +53,8 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/syntax/check_pipe.c \
 				 srcs/syntax/check_redir.c \
 				 srcs/tokenize/divide_arr.c \
-				 srcs/tokenize/divide_redir_garbage.c \
-				 srcs/tokenize/create_divide_redir.c \
+				 srcs/tokenize/divide_token_garbage.c \
+				 srcs/tokenize/create_divide_token.c \
 				 srcs/tokenize/interpret_cmd.c \
 				 srcs/tokenize/interpret_dollar.c \
 				 srcs/tokenize/divide_line.c \

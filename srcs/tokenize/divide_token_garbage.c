@@ -1,16 +1,17 @@
 #include "../../includes/minishell.h"
 
-int	is_redir_garbage(char *str)
+int	is_token_garbage(char *str)
 {
 	if (ft_strchr(str, '\"') == 0 && ft_strchr(str, '\'') == 0)
 	{
-		if (ft_strchr(str, '<') != 0 || ft_strchr(str, '>') != 0)
+		if (ft_strchr(str, '<') != 0 || ft_strchr(str, '>') != 0 || \
+		ft_strchr(str, '|') != 0)
 			return (1);
 	}
 	return (0);
 }
 
-int	count_redir_garbage(char **token)
+int	count_token_garbage(char **token)
 {
 	int		i;
 	int		count;
@@ -23,9 +24,9 @@ int	count_redir_garbage(char **token)
 	while (token[i] != 0)
 	{
 		size = 0;
-		if (is_redir_garbage(token[i]))
+		if (is_token_garbage(token[i]))
 		{
-			temp = make_cmd_redir(token[i]);
+			temp = make_cmd_pipe_amd_redir(token[i]);
 			temp_arr = ft_split(temp, ' ');
 			ft_free((void **)&temp);
 			while (temp_arr[size] != 0)
@@ -40,7 +41,7 @@ int	count_redir_garbage(char **token)
 	return (count);
 }
 
-int	insert_divide_redir(char ***arr, char *redir, int *index)
+int	insert_divide_token(char ***arr, char *token, int *index)
 {
 	char	**divide_redir;
 	int		size;
@@ -48,7 +49,7 @@ int	insert_divide_redir(char ***arr, char *redir, int *index)
 
 	size = 0;
 	i = 0;
-	divide_redir = create_divide_redir(redir);
+	divide_redir = create_divide_token(token);
 	while (divide_redir[size] != 0)
 		size++;
 	while (i < size)
@@ -61,7 +62,7 @@ int	insert_divide_redir(char ***arr, char *redir, int *index)
 	return (size);
 }
 
-char	**divide_redir_garbage(char **token)
+char	**divide_token_garbage(char **token)
 {
 	int		i;
 	int		j;
@@ -70,12 +71,12 @@ char	**divide_redir_garbage(char **token)
 
 	i = 0;
 	j = 0;
-	size = count_redir_garbage(token);
+	size = count_token_garbage(token);
 	new = (char **)malloc(sizeof(char *) * (size + 1));
 	while (i < size)
 	{
-		if (is_redir_garbage(token[j]))
-			insert_divide_redir(&new, token[j], &i);
+		if (is_token_garbage(token[j]))
+			insert_divide_token(&new, token[j], &i);
 		else
 			new[i++] = ft_strdup(token[j]);
 		j++;
