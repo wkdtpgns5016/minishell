@@ -8,9 +8,6 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	char	**temp;
 
 	cmds = 0;
-	info->history_cmd = ft_strdup(line);
-	if (info->history_cmd == 0)
-		exit(1);
 	// readline 문자열 syntax error 체크
 	if (check_syntax(info, line, 0))
 		return (0);
@@ -23,6 +20,7 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	// 토큰들 정리
 	temp = token;
 	token = divide_redir_garbage(temp);
+	ft_free_arr((char ***)&temp);
 	// 파이프 기준으로 분할하여 구조체에 삽입
 	cmds = insert_cmds(token, info);
 	ft_free_arr((char ***)&token);
