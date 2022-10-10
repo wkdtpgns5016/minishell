@@ -85,15 +85,22 @@ char	*add_last_cmd(char *str, t_info *info)
 		heredoc_setting();
 		add = readline("> ");
 		cmd_setting();
-		if (check_null_add(add, info, backup, cursor) \
-		|| check_syntax(info, add, 0))
+		if (check_null_add(add, info, backup, cursor))
 		{
 			ft_free((void **)&add);
 			ft_free((void **)&new);
 			return (0);
 		}
 		sum_str_with_space(&new, add);
+		if (check_syntax(info, add, 0))
+		{
+			info->history_cmd = ft_strdup(new);
+			ft_free((void **)&add);
+			ft_free((void **)&new);
+			return (0);
+		}
 		ft_free((void **)&add);
 	}
+	info->history_cmd = ft_strdup(new);
 	return (new);
 }
