@@ -10,5 +10,7 @@ char	**create_divide_token(char *redir);
 t_cmds	*new_set_cmds(t_info *info, char *line);
 void	interpret_cmds(t_cmds *cmds, t_info *info);
 void	interpret_dollar(t_list *quote_lst, t_info *info);
+void	no_quote_interpret_dollar(t_list **cmd_lst, t_info *info, char **cmd);
+void	ft_lstadd_back_with_dup(t_list **lst, char c);
 
 #endif

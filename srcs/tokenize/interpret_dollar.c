@@ -28,25 +28,48 @@ t_list	*separate_dollar(t_list *now)
 	return (next);
 }
 
-char	*make_dollar_str(t_list *dollar_lst)
-{
-	char	*dollar_str;
-	int		idx;
-	t_list	*temp;
+// char	*make_dollar_str(t_list *dollar_lst)
+// {
+// 	char	*dollar_str;
+// 	int		idx;
+// 	t_list	*temp;
 
-	dollar_str = (char *)malloc(sizeof(char) * (ft_lstsize(dollar_lst) + 1));
-	if (!dollar_str)
-		exit(1);
-	idx = -1;
-	while (dollar_lst)
+// 	dollar_str = (char *)malloc(sizeof(char) * (ft_lstsize(dollar_lst) + 1));
+// 	if (!dollar_str)
+// 		exit(1);
+// 	idx = -1;
+// 	while (dollar_lst)
+// 	{
+// 		dollar_str[++idx] = *(char *)dollar_lst->content;
+// 		temp = dollar_lst;
+// 			dollar_lst = dollar_lst->next;
+// 		ft_lstdelone(temp, free);
+// 	}
+// 	dollar_str[idx] = 0;
+// 	return (dollar_str);
+// }
+
+void	no_quote_interpret_dollar(t_list **cmd_lst, t_info *info, char **cmd)
+{
+	t_list	*dollar;
+
+	dollar = NULL;
+	ft_lstadd_back_with_dup(&dollar, **cmd);
+	(*cmd)++;
+	while (**cmd)
 	{
-		dollar_str[++idx] = *(char *)dollar_lst->content;
-		temp = dollar_lst;
-			dollar_lst = dollar_lst->next;
-		ft_lstdelone(temp, free);
+		if (!(ft_isalnum(**cmd) || **cmd == '_'))
+			break ;
+		else
+		{
+			ft_lstadd_back_with_dup(&dollar, **cmd);
+			if (**cmd == '?')
+				break ;
+		}
+		(*cmd)++;
 	}
-	dollar_str[idx] = 0;
-	return (dollar_str);
+	change_node(&dollar, info);
+	ft_lstadd_back(cmd_lst, dollar);
 }
 
 t_list	*new_dollar2env(t_list *dollar, t_info *info)
