@@ -65,6 +65,8 @@ t_cmds	*create_cmds(char ***cmd, t_info *info)
 	if (create_heredoc(cmd, cmds, info))
 		return (0);
 	cmds->cmd = *cmd;
+	cmds->next = 0;
+	cmds->pred = 0;
 	return (cmds);
 }
 
