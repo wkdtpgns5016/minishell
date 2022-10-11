@@ -18,15 +18,13 @@ NAME = minishell
 SRCS = 
 
 SRCS_MANDATORY = srcs/main.c \
-				 srcs/parsing/t_cmds_utils.c \
-				 srcs/parsing/parsing.c \
-				 srcs/parsing/parsing_utils.c \
-				 srcs/parsing/parsing_utils2.c \
-				 srcs/parsing/parsing_utils3.c \
-				 srcs/parsing/change_line.c \
-				 srcs/parsing/we_meet_other.c \
-				 srcs/parsing/we_meet_dollar.c \
-				 srcs/parsing/parsing_utils5.c \
+				 srcs/parsing/set_info.c \
+				 srcs/parsing/set_cmd.c \
+				 srcs/parsing/make_cmd_pipe_amd_redir.c \
+				 srcs/parsing/make_cmd_pipe.c \
+				 srcs/parsing/add_last_cmd.c \
+				 srcs/parsing/make_heredoc.c \
+				 srcs/parsing/insert_cmds.c \
 				 srcs/setting/signal.c \
 				 srcs/setting/terminal.c \
 				 srcs/setting/setting.c \
@@ -52,14 +50,15 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/syntax/check_readline.c \
 				 srcs/syntax/check_pipe.c \
 				 srcs/syntax/check_redir.c \
-				 srcs/tokenize/divide_arr.c \
 				 srcs/tokenize/divide_token_garbage.c \
 				 srcs/tokenize/create_divide_token.c \
 				 srcs/tokenize/interpret_cmd.c \
 				 srcs/tokenize/interpret_dollar.c \
 				 srcs/tokenize/divide_line.c \
 				 srcs/tokenize/add_char_list.c \
-				 srcs/tokenize/set_cmd.c
+				 srcs/tokenize/change_line.c \
+				 srcs/tokenize/we_meet_other.c \
+				 srcs/tokenize/we_meet_dollar.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib
