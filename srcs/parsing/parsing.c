@@ -72,7 +72,7 @@ void	set_info(t_info *info, char *line)
 		length = ft_strlen(line);
 		while (i < length)
 		{
-			if (line[i] != ' ')
+			if (line[i] != ' ' && line[i] != '\t')
 			{
 				info->cmds = new_set_cmds(info, line);
 				break ;
