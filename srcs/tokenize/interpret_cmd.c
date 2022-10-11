@@ -15,13 +15,28 @@ void	ft_lstadd_back_with_dup(t_list **lst, char c)
 
 void	delete_quote(t_list **quote)
 {
-	t_list	*node_cpy;
+	t_list	*temp;
 
-	node_cpy = *quote;
+	if (ft_lstsize(*quote) == 2)
+	{
+		ft_lstclear(quote, free);
+		return ;
+	}
+	temp = *quote;
 	*quote = (*quote)->next;
-	ft_lstdelone(node_cpy, free);
-	node_cpy = ft_lstlast(*quote);
-	ft_lstdelone(node_cpy, free);
+	ft_free((void **)&temp->content);
+	ft_free((void **)&temp);
+	temp = *quote;
+	while (temp != 0)
+	{
+		if (temp->next->next == 0)
+		{
+			ft_free((void **)&temp->next->content);
+			ft_free((void **)&temp->next);
+			break ;
+		}
+		temp = temp->next;
+	}
 }
 
 t_list	*interpret_quote(char **p_cmd, t_info *info)
@@ -40,7 +55,7 @@ t_list	*interpret_quote(char **p_cmd, t_info *info)
 		if (*cmd == quote)
 		{
 			if (quote == '"')
-				interpret_dollar(&quote_lst, info);
+				interpret_dollar(quote_lst, info);
 			delete_quote(&quote_lst);
 			cmd++;
 			break ;

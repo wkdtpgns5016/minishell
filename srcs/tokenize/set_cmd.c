@@ -25,6 +25,6 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	cmds = insert_cmds(token, info);
 	ft_free_arr((char ***)&token);
 	// 환경변수 해석 및 작은 따옴표 제거
-	//interpret_cmds(cmds, info);
+	interpret_cmds(cmds, info);
 	return (cmds);
 }
