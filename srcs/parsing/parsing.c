@@ -12,11 +12,14 @@
 
 #include "../../includes/minishell.h"
 
-int	check_syntax(t_info *info, char *line)
+int	check_syntax(t_info *info, char *line, char **token)
 {
 	int		flag;
 
-	flag = check_readline(line);
+	if (token == 0)
+		flag = check_readline(line);
+	else
+		flag = check_sub_readline(token);
 	if (flag != 0)
 	{
 		if (flag == 1)
@@ -39,7 +42,7 @@ t_cmds	*set_cmds(t_info *info, char *line)
 	info->history_cmd = ft_strdup(line);
 	if (info->history_cmd == 0)
 		exit(1);
-	if (check_syntax(info, line))
+	if (check_syntax(info, line, 0))
 		return (0);
 	temp = make_cmd_pipe_amd_redir(line);
 	new = add_last_cmd(temp, info);
@@ -69,9 +72,9 @@ void	set_info(t_info *info, char *line)
 		length = ft_strlen(line);
 		while (i < length)
 		{
-			if (line[i] != ' ')
+			if (line[i] != ' ' && line[i] != '\t')
 			{
-				info->cmds = set_cmds(info, line);
+				info->cmds = new_set_cmds(info, line);
 				break ;
 			}
 			i++;

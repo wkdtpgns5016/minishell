@@ -6,7 +6,7 @@
 #    By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 15:20:00 by sehjang           #+#    #+#              #
-#    Updated: 2022/10/05 03:21:28 by sunwchoi         ###   ########.fr        #
+#    Updated: 2022/10/07 03:21:43 by sunwchoi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,14 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/redirection/redirection_utils2.c \
 				 srcs/syntax/check_readline.c \
 				 srcs/syntax/check_pipe.c \
-				 srcs/syntax/check_redir.c
+				 srcs/syntax/check_redir.c \
+				 srcs/tokenize/divide_arr.c \
+				 srcs/tokenize/divide_token_garbage.c \
+				 srcs/tokenize/create_divide_token.c \
+				 srcs/tokenize/interpret_cmd.c \
+				 srcs/tokenize/interpret_dollar.c \
+				 srcs/tokenize/divide_line.c \
+				 srcs/tokenize/set_cmd.c
 SRCS_BONUS = 
 
 COMFILE_FLAGS = -lreadline -L${HOME}/.brew/opt/readline/lib

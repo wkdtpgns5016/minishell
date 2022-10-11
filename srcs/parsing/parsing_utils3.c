@@ -54,19 +54,27 @@ int	check_null_add(char *add, t_info *info, int backup, t_cursor cursor)
 	return (0);
 }
 
-void	sum_str_with_space(char **str1, char *str2)
+int	sub_last_cmd(char **new, char **add, t_info *info)
 {
 	char	*temp;
 	char	*temp1;
 
-	if (*str2)
+	if (**add)
 	{
-		temp1 = *str1;
-		temp = ft_strjoin(" ", str2);
-		*str1 = ft_strjoin(temp1, temp);
+		temp1 = *new;
+		temp = ft_strjoin(" ", *add);
+		*new = ft_strjoin(temp1, temp);
 		ft_free((void **)&temp);
 		ft_free((void **)&temp1);
 	}
+	if (check_syntax(info, *add, 0))
+	{
+		info->history_cmd = ft_strdup(*new);
+		ft_free((void **)add);
+		ft_free((void **)new);
+		return (1);
+	}
+	return (0);
 }
 
 char	*add_last_cmd(char *str, t_info *info)
@@ -85,15 +93,15 @@ char	*add_last_cmd(char *str, t_info *info)
 		heredoc_setting();
 		add = readline("> ");
 		cmd_setting();
-		if (check_null_add(add, info, backup, cursor) \
-		|| check_syntax(info, add))
+		if (check_null_add(add, info, backup, cursor))
 		{
-			ft_free((void **)&add);
 			ft_free((void **)&new);
 			return (0);
 		}
-		sum_str_with_space(&new, add);
+		if (sub_last_cmd(&new, &add, info))
+			return (0);
 		ft_free((void **)&add);
 	}
+	info->history_cmd = ft_strdup(new);
 	return (new);
 }

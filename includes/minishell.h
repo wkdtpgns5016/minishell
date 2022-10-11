@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 14:45:00 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/05 00:32:49 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/07 03:25:58 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** include header file
 */
 # include "../libft/libft.h"
+# include "./struct.h"
 # include <stdio.h>
 # include <sys/wait.h>
 # include <unistd.h>
@@ -33,6 +34,8 @@
 # include "./setting.h"
 # include "./builtin_cmd.h"
 # include "./signal.h"
+# include "./tokenizing.h"
+
 /*
 ** flag number
 */
@@ -42,42 +45,6 @@
 # define OUTPUT_APPAND_REDIR 4
 # define PIPE_LINE 5
 # define HERE_STRING_REDIR 6
-
-/*
-** struct define
-*/
-typedef struct s_cmds
-{
-	char			**cmd;
-	int				fd[2];
-	pid_t			pid;
-	struct s_cmds	*next;
-	struct s_cmds	*pred;
-	char			*heredoc_filepath;
-	int				heredoc_flag;
-}	t_cmds;
-
-typedef struct s_info
-{
-	t_cmds	*cmds;
-	t_ev	ev;
-	int		backup[2];
-	int		*recent_exit_code;
-	char	**envp;
-	char	*history_cmd;
-}	t_info;
-
-typedef struct s_cursor
-{
-	int	col;
-	int	row;
-}	t_cursor;
-
-typedef struct s_builtin_info
-{
-	int		flag;
-	int		backup[2];
-}	t_builtin_info;
 
 /*
 ** ft_free.c
@@ -90,7 +57,7 @@ t_cmds	*make_cmd(char *content, t_info *info);
 void	add_cmd_back(t_cmds **cmds, t_cmds *node);
 t_cmds	*make_cmds(char *new, t_info *info);
 
-int		check_syntax(t_info *info, char *line);
+int		check_syntax(t_info *info, char *line, char **str);
 void	set_info(t_info *info, char *line);
 t_cmds	*set_cmds(t_info *info, char *line);
 
@@ -141,6 +108,8 @@ int		check_redir(char **token, int i);
 int		check_readline(char *line);
 void	change_cmd(char **cmd, t_info	*info);
 char	**make_heredoc(char *content, t_cmds *cmds, t_info *info);
+int		sub_make_heredoc(t_cmds *cmds, t_info *info, int index, char ***cmd);
+int		check_sub_readline(char **token);
 
 void	get_cursor_position(int *col, int *rows);
 void	move_cursor(int col, int row);
