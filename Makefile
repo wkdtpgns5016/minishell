@@ -58,6 +58,7 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/tokenize/interpret_cmd.c \
 				 srcs/tokenize/interpret_dollar.c \
 				 srcs/tokenize/divide_line.c \
+				 srcs/tokenize/add_char_list.c \
 				 srcs/tokenize/set_cmd.c
 SRCS_BONUS = 
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   interpret_dollar.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/11 16:01:54 by sehjang           #+#    #+#             */
+/*   Updated: 2022/10/11 16:01:54 by sehjang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 #include <stdlib.h>
 
@@ -27,27 +39,6 @@ t_list	*separate_dollar(t_list *now)
 	next = now;
 	return (next);
 }
-
-// char	*make_dollar_str(t_list *dollar_lst)
-// {
-// 	char	*dollar_str;
-// 	int		idx;
-// 	t_list	*temp;
-
-// 	dollar_str = (char *)malloc(sizeof(char) * (ft_lstsize(dollar_lst) + 1));
-// 	if (!dollar_str)
-// 		exit(1);
-// 	idx = -1;
-// 	while (dollar_lst)
-// 	{
-// 		dollar_str[++idx] = *(char *)dollar_lst->content;
-// 		temp = dollar_lst;
-// 			dollar_lst = dollar_lst->next;
-// 		ft_lstdelone(temp, free);
-// 	}
-// 	dollar_str[idx] = 0;
-// 	return (dollar_str);
-// }
 
 void	no_quote_interpret_dollar(t_list **cmd_lst, t_info *info, char **cmd)
 {
@@ -81,7 +72,6 @@ t_list	*new_dollar2env(t_list *dollar, t_info *info)
 	t_list	*last;
 
 	next = separate_dollar(dollar);
-	//dollar_str = make_dollar_str(dollar);
 	change_node(&dollar, info);
 	last = ft_lstlast(dollar);
 	if (last)

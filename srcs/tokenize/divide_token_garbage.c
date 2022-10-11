@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   divide_token_garbage.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sehjang <sehjang@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/11 16:02:30 by sehjang           #+#    #+#             */
+/*   Updated: 2022/10/11 16:02:30 by sehjang          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/minishell.h"
 
 int	is_token_garbage(char *str)
@@ -11,13 +23,27 @@ int	is_token_garbage(char *str)
 	return (0);
 }
 
+int	count_token_garbage_arr(char *token)
+{
+	char	*temp;
+	char	**temp_arr;
+	int		size;
+
+	size = 0;
+	temp = make_cmd_pipe_amd_redir(token);
+	temp_arr = ft_split(temp, ' ');
+	ft_free((void **)&temp);
+	while (temp_arr[size] != 0)
+		size++;
+	ft_free_arr((char ***)&temp_arr);
+	return (size);
+}
+
 int	count_token_garbage(char **token)
 {
 	int		i;
 	int		count;
 	int		size;
-	char	**temp_arr;
-	char	*temp;
 
 	i = 0;
 	count = 0;
@@ -26,12 +52,7 @@ int	count_token_garbage(char **token)
 		size = 0;
 		if (is_token_garbage(token[i]))
 		{
-			temp = make_cmd_pipe_amd_redir(token[i]);
-			temp_arr = ft_split(temp, ' ');
-			ft_free((void **)&temp);
-			while (temp_arr[size] != 0)
-				size++;
-			ft_free_arr((char ***)&temp_arr);
+			size = count_token_garbage_arr(token[i]);
 			count += size;
 		}
 		else

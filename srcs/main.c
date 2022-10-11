@@ -47,13 +47,7 @@ int	loop_minishell(t_info info)
 {
 	char		*line;
 	t_cursor	cursor;
-	/*
-	char **line_2d;
-	int	idx;
-	t_info cpy;
 
-	cpy = info;
-	*/
 	while (1)
 	{
 		g_signal_flag = 0;
@@ -67,18 +61,6 @@ int	loop_minishell(t_info info)
 			printf("exit\n");
 			return (0);
 		}
-		/*
-		line_2d = divide_line(line);
-		getchar();
-		idx = 0;
-		while (line_2d[idx])
-		{
-			printf("%s\n",line_2d[idx]);
-			free(line_2d[idx]);
-			idx++;
-		}
-		free(line_2d);
-		*/
 		set_info(&info, line);
 		exec_cmd(&info);
 		if (info.history_cmd != 0)
