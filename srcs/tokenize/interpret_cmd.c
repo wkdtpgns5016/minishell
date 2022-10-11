@@ -80,9 +80,7 @@ char	*interpret_cmd(char *cmd, t_info *info)
 		else
 		{
 			if (*cmd == '$')
-			{
-				// no_quote_interpret_dollar(t_list *cmd_lst, t_info *info, char **cmd);
-			}
+				no_quote_interpret_dollar(&cmd_lst, info, &cmd);
 			else
 			{
 				ft_lstadd_back_with_dup(&cmd_lst, *cmd);
