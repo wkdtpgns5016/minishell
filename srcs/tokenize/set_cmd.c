@@ -20,11 +20,15 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	char	**temp;
 
 	cmds = 0;
+	info->history_cmd = ft_strdup(line);
 	if (check_syntax(info, line, 0))
 		return (0);
 	new_line = add_last_cmd(line, info);
 	if (new_line == 0)
 		return (0);
+	if (info->history_cmd != 0)
+		ft_free((void **)&info->history_cmd);
+	info->history_cmd = ft_strdup(new_line);
 	token = divide_line(new_line);
 	temp = token;
 	token = divide_token_garbage(temp);
