@@ -78,8 +78,17 @@ char	*interpret_cmd(char *cmd, t_info *info)
 		if (*cmd == '"' | *cmd == '\'')
 			ft_lstadd_back(&cmd_lst, interpret_quote(&cmd, info));
 		else
-			ft_lstadd_back_with_dup(&cmd_lst, *cmd);
-		cmd++;
+		{
+			if (*cmd == '$')
+			{
+				// no_quote_interpret_dollar(t_list *cmd_lst, t_info *info, char **cmd);
+			}
+			else
+			{
+				ft_lstadd_back_with_dup(&cmd_lst, *cmd);
+				cmd++;
+			}
+		}
 	}
 	free(cmd_cpy);
 	cmd = (char *)malloc(sizeof(char) * (ft_lstsize(cmd_lst) + 1));

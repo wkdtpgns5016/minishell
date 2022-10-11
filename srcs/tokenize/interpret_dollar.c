@@ -58,7 +58,10 @@ t_list	*new_dollar2env(t_list *dollar, t_info *info)
 	//dollar_str = make_dollar_str(dollar);
 	change_node(&dollar, info);
 	last = ft_lstlast(dollar);
-	last->next = next;
+	if (last)
+		last->next = next;
+	else
+		dollar = next;
 	return (dollar);
 }
 
