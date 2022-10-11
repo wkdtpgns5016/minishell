@@ -41,6 +41,7 @@ char	*interpret_cmd(char *cmd, t_info *info)
 		cmd_cpy[i++] = *(char *)cmd_lst->content;
 		cmd_lst = cmd_lst->next;
 	}
+	cmd_cpy[i] = 0;
 	ft_lstclear(&cmd_lst_cpy, free);
 	return (cmd_cpy);
 }
