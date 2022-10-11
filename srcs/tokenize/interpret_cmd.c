@@ -47,13 +47,19 @@ char	*interpret_cmd(char *cmd, t_info *info)
 
 void	interpret_cmds(t_cmds *cmds, t_info *info)
 {
-	int	idx;
+	int		idx;
+	char	*temp;
 
 	while (cmds)
 	{
 		idx = -1;
 		while (cmds->cmd[++idx])
+		{
+			temp = cmds->cmd[idx];
 			cmds->cmd[idx] = interpret_cmd(cmds->cmd[idx], info);
+			if (temp != 0)
+				ft_free((void **)&temp);
+		}
 		cmds = cmds->next;
 	}
 }

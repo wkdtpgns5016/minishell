@@ -69,6 +69,8 @@ int	sub_last_cmd(char **new, char **add, t_info *info)
 	}
 	if (check_syntax(info, *add, 0))
 	{
+		if (info->history_cmd != 0)
+			ft_free((void **)&info->history_cmd);
 		info->history_cmd = ft_strdup(*new);
 		ft_free((void **)add);
 		ft_free((void **)new);
@@ -102,6 +104,5 @@ char	*add_last_cmd(char *str, t_info *info)
 			return (0);
 		ft_free((void **)&add);
 	}
-	info->history_cmd = ft_strdup(new);
 	return (new);
 }
