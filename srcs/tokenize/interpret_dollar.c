@@ -59,13 +59,16 @@ void	no_quote_interpret_dollar(t_list **cmd_lst, t_info *info, char **cmd)
 	while (**cmd)
 	{
 		if (!(ft_isalnum(**cmd) || **cmd == '_'))
-			break ;
-		else
 		{
-			ft_lstadd_back_with_dup(&dollar, **cmd);
 			if (**cmd == '?')
-				break ;
+			{
+				ft_lstadd_back_with_dup(&dollar, **cmd);
+				(*cmd)++;
+			}
+			break ;
 		}
+		else
+			ft_lstadd_back_with_dup(&dollar, **cmd);
 		(*cmd)++;
 	}
 	change_node(&dollar, info);
