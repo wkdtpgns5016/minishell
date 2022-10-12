@@ -58,7 +58,7 @@ void	ft_free_arr(char ***arr);
 */
 void	add_cmd_back(t_cmds **cmds, t_cmds *node);
 int		check_syntax(t_info *info, char *line, char **str);
-t_cmds	*new_set_cmds(t_info *info, char *line);
+t_cmds	*new_set_cmds(t_info *info, char *line, int i);
 void	set_info(t_info *info, char *line);
 t_cmds	*insert_cmds(char **token, t_info *info);
 

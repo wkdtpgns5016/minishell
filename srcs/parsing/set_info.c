@@ -64,7 +64,7 @@ void	set_info(t_info *info, char *line)
 		{
 			if (line[i] != ' ' && line[i] != '\t')
 			{
-				info->cmds = new_set_cmds(info, line);
+				info->cmds = new_set_cmds(info, line, i);
 				break ;
 			}
 			i++;

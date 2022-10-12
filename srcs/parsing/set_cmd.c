@@ -12,12 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-t_cmds	*new_set_cmds(t_info *info, char *line)
+t_cmds	*new_set_cmds(t_info *info, char *line, int i)
 {
 	t_cmds	*cmds;
 	char	*new_line;
 	char	**token;
 	char	**temp;
+	char	*dup_line;
 
 	cmds = 0;
 	info->history_cmd = ft_strdup(line);
@@ -29,7 +30,9 @@ t_cmds	*new_set_cmds(t_info *info, char *line)
 	if (info->history_cmd != 0)
 		ft_free((void **)&info->history_cmd);
 	info->history_cmd = ft_strdup(new_line);
-	token = divide_line(new_line);
+	dup_line = ft_strdup(new_line + i);
+	ft_free((void **)&new_line);
+	token = divide_line(dup_line);
 	temp = token;
 	token = divide_token_garbage(temp);
 	ft_free_arr((char ***)&temp);
