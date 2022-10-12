@@ -25,5 +25,6 @@ void			main_handler(int sig);
 void			cmd_setting(void);
 void			heredoc_setting(void);
 void			main_setting(void);
+int				is_end_of_window(int row);
 
 #endif

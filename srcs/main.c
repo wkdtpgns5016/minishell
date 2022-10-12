@@ -43,6 +43,21 @@ void	get_ev(t_ev *ev, char **envp)
 	ev->evp = p;
 }
 
+int	check_ctrl_d(char *line, t_cursor cursor)
+{
+	if (!line)
+	{
+		get_cursor_position(&cursor.col, &cursor.row);
+		if (!is_end_of_window(cursor.row))
+			cursor.row--;
+		move_cursor(cursor.col + 11, cursor.row);
+		printf("exit\n");
+		return (1);
+	}
+	else
+		return (0);
+}
+
 int	loop_minishell(t_info info)
 {
 	char		*line;
@@ -55,12 +70,8 @@ int	loop_minishell(t_info info)
 		main_setting();
 		line = readline("minishell$ ");
 		cmd_setting();
-		if (!line)
-		{
-			move_cursor(cursor.col + 11, cursor.row);
-			printf("exit\n");
+		if (check_ctrl_d(line, cursor))
 			return (0);
-		}
 		set_info(&info, line);
 		exec_cmd(&info);
 		if (info.history_cmd != 0)
