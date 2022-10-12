@@ -26,5 +26,6 @@ void			cmd_setting(void);
 void			heredoc_setting(void);
 void			main_setting(void);
 int				is_end_of_window(int row);
+void			move_cursor_main(int col, int row);
 
 #endif

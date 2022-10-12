@@ -49,7 +49,7 @@ int	check_ctrl_d(char *line, t_cursor cursor)
 	{
 		if (cursor.col <= 1)
 			get_cursor_position(&cursor.col, &cursor.row);
-		move_cursor(cursor.col + 11, cursor.row);
+		move_cursor_main(cursor.col + 11, cursor.row);
 		printf("exit\n");
 		return (1);
 	}

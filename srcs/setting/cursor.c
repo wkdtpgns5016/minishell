@@ -74,7 +74,7 @@ int	ft_putchar_int(int c)
 	return (0);
 }
 
-void	move_cursor(int col, int row)
+void	move_cursor_main(int col, int row)
 {
 	char			*cm;
 	char			*temp;
@@ -86,6 +86,22 @@ void	move_cursor(int col, int row)
 	row--;
 	if (col > 11 && !is_end_of_window(row + 1))
 		row++;
+	temp = tgoto(cm, col, row);
+	tputs(temp, 1, ft_putchar_int);
+	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
+}
+
+void	move_cursor(int col, int row)
+{
+	char			*cm;
+	char			*temp;
+	struct termios	org_term;
+
+	org_term = set_terminal_for_cursor();
+	tgetent(NULL, "xterm");
+	cm = tgetstr("cm", NULL);
+	if (is_end_of_window(row))
+		row--;
 	temp = tgoto(cm, col, row);
 	tputs(temp, 1, ft_putchar_int);
 	tcsetattr(STDIN_FILENO, TCSANOW, &org_term);
