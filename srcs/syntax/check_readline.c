@@ -81,12 +81,15 @@ int	check_sub_readline(char **token)
 int	check_readline(char *line)
 {
 	char	**token;
+	char	**temp;
 	int		check;
 
 	check = 0;
 	if (*line)
 	{
-		token = divide_line(ft_strdup(line));
+		temp = divide_line(ft_strdup(line));
+		token = divide_token_garbage(temp);
+		ft_free_arr((char ***)&temp);
 		check = check_sub_readline(token);
 		ft_free_arr((char ***)&token);
 	}

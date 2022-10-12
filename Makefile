@@ -29,6 +29,7 @@ SRCS_MANDATORY = srcs/main.c \
 				 srcs/setting/terminal.c \
 				 srcs/setting/setting.c \
 				 srcs/setting/cursor.c \
+				 srcs/setting/move_cursor.c \
 				 srcs/utils/ft_free.c \
 				 srcs/utils/wait_status.c \
 				 srcs/utils/error_handling.c \

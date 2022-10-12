@@ -88,7 +88,7 @@ char	**make_heredoc(char *content, t_cmds *cmds, t_info *info);
 void	del_heredoc_file(t_cmds *cmds);
 char	**remove_redir(char **cmd, int start, int end);
 int		is_redir(char *c);
-void	process_redir(char **cmd, int flag, int index, t_info *info);
+void	process_redir(t_cmds *cmds, int flag, int index, t_info *info);
 void	out_redir(int src, char *outfile, int flag);
 int		write_heredoc_file(int fd, char **buffer, char *limiter, t_info *info);
 char	*get_heredoc(char *limiter, t_info *info);

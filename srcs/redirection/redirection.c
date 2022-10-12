@@ -111,7 +111,7 @@ void	redirection(t_cmds *cmds, t_info *info)
 		if (flag)
 		{
 			temp = cmds->cmd;
-			process_redir(temp, flag, i, info);
+			process_redir(cmds, flag, i, info);
 			cmds->cmd = remove_redir(temp, i, i + 1);
 			ft_free_arr(&temp);
 		}
