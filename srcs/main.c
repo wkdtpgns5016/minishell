@@ -6,7 +6,7 @@
 /*   By: sehjang <sehjang@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 18:57:31 by sehjang           #+#    #+#             */
-/*   Updated: 2022/10/07 04:36:20 by sunwchoi         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:59:33 by sunwchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,8 @@ int	check_ctrl_d(char *line, t_cursor cursor)
 {
 	if (!line)
 	{
-		get_cursor_position(&cursor.col, &cursor.row);
-		if (!is_end_of_window(cursor.row))
-			cursor.row--;
+		if (cursor.col <= 1)
+			get_cursor_position(&cursor.col, &cursor.row);
 		move_cursor(cursor.col + 11, cursor.row);
 		printf("exit\n");
 		return (1);
